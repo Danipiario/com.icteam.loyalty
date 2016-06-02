@@ -1,0 +1,28 @@
+#
+#  BUNDLE 
+#
+
+
+Bundle-Version:					1.0.0.${tstamp}
+
+
+Private-Package:  \
+	com.icteam.loyalty.common.provider
+	
+-buildpath: \
+	osgi.enroute.base.api;version=1.0,\
+	com.icteam.loyalty.api;version=latest
+	
+-testpath: \
+	osgi.enroute.junit.wrapper;version=4.12
+
+-includeresource: {readme.md}
+
+
+-runrequires:  \
+	osgi.identity;filter:='(osgi.identity=com.icteam.loyalty.common.provider)'
+	
+-runbundles: \
+	${error;Resolve first}
+Bundle-Name: Loyalty Common Provider
+Export-Package: com.icteam.loyalty.common.api

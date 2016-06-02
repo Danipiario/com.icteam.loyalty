@@ -1,0 +1,12 @@
+#
+# LOYALTY APPLICATION DEBUG RUN SPECIFICATION
+#
+
+-include: ~com.icteam.loyalty.bndrun
+
+-runrequires.debug:  ${debug-bundles}
+
+-runtrace: true
+
+-runbundles: \
+	${error;Resolve first}
