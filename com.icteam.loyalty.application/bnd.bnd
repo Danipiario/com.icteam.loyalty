@@ -3,12 +3,7 @@
 #
 
 Bundle-Version: 1.0.0.${tstamp}
-Bundle-Description: \
-	This is the  bundle. It carries the configuration for an application \
-	and provides some basic very much application specific stuff.  It provides a button \
-	that calls a REST function that turns a text into upper case. \
-	\
-	${warning;Please update this Bundle-Description in com.icteam.loyalty.application/bnd.bnd}
+Bundle-Description: Application project
 
 Private-Package:  \
 	com.icteam.loyalty.application
@@ -28,3 +23,4 @@ JPM-Command:			loyalty
 	
 -testpath: \
 	osgi.enroute.junit.wrapper;version=4.12
+Bundle-Name: Loyalty Applicaytion

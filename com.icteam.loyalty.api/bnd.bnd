@@ -18,4 +18,4 @@ Require-Capability: \
 -testpath: \
 	osgi.enroute.junit.wrapper;version=4.12
 Bundle-Name: Loyalty Api
-Bundle-Description: Api
+Bundle-Description: Api project
