@@ -2,11 +2,13 @@
 # 
 #
 
-Bundle-Version: 3.0.1.${tstamp}
+Bundle-Version: 1.0.0.${tstamp}
 
 	
-Export-Package:  \
-	com.icteam.loyalty.common.api;provide:=true
+Export-Package: \
+	com.icteam.loyalty.common.api;provide:=true,\
+	com.icteam.loyalty.common.enums,\
+	com.icteam.loyalty.common.interfaces
 
 
 Require-Capability: \

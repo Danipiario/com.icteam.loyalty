@@ -3,15 +3,17 @@
 #
 
 
-Bundle-Version: 3.0.1.${tstamp}
+Bundle-Version: 1.0.0.${tstamp}
 
 
-Private-Package:  \
-	com.icteam.loyalty.common.provider
+Private-Package: \
+	com.icteam.loyalty.common.provider,\
+	com.icteam.loyalty.common.internal
 	
 -buildpath: \
-	osgi.enroute.base.api;version=1.0,\
-	com.icteam.loyalty.api;version=latest
+	osgi.enroute.base.api;version=latest,\
+	com.icteam.loyalty.api;version=latest,\
+	org.apache.commons.lang3;version=3.4
 	
 -testpath: \
 	osgi.enroute.junit.wrapper;version=4.12
@@ -19,10 +21,20 @@ Private-Package:  \
 -includeresource: {readme.md}
 
 
--runrequires:  \
-	osgi.identity;filter:='(osgi.identity=com.icteam.loyalty.common.provider)'
+-runrequires: osgi.identity;filter:='(osgi.identity=com.icteam.loyalty.common.provider)'
 	
 -runbundles: \
 	${error;Resolve first}
 Bundle-Name: Loyalty Common Provider
-Export-Package: com.icteam.loyalty.common.api
+Bundle-Activator: com.icteam.loyalty.common.internal.Activator
+-runrepos: \
+	Workspace,\
+	InfoRepositoryWrapper[1],\
+	Local,\
+	Distro
+Export-Package: \
+	com.icteam.loyalty.common.api,\
+	com.icteam.loyalty.common.enums,\
+	com.icteam.loyalty.common.interfaces
+Enum-Extension: com.icteam.loyalty.common.enums.Alfa, com.icteam.loyalty.common.enums.Beta	
+	
