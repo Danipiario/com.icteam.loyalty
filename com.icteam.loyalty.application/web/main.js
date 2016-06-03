@@ -28,7 +28,7 @@
 		$scope.upper = function() {
 			var name = prompt("Under what name?");
 			if ( name ) {
-				$http.get('/rest/upper/'+name).then(
+				$http.get('/rest/values/'+name).then(
 						function(d) {
 							$scope.alerts.push( { type: 'success', msg: d.data });
 						}, function(d) {

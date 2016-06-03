@@ -13,7 +13,7 @@ import com.icteam.loyalty.common.interfaces.IAlfa;
  *
  */
 
-public class CommonTest {
+public class EnumServiceTest {
 
     private final BundleContext context = FrameworkUtil.getBundle(this.getClass()).getBundleContext();
 
@@ -27,7 +27,7 @@ public class CommonTest {
      *
      */
     @Test
-    public void testCommon() throws Exception {
+    public void contextNotNull() throws Exception {
         Assert.assertNotNull(context);
     }
 

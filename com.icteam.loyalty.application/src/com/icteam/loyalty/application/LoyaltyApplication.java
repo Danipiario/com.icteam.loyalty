@@ -23,8 +23,13 @@ public class LoyaltyApplication implements REST {
     @Reference
     private EnumService enumService;
 
-    public String getValues(String enumClass) throws ClassNotFoundException {
-        return enumService.values((Class< ? extends IEnum>) FrameworkUtil.getBundle(getClass()).loadClass(enumClass)).toString();
+    public String getValues(String enumClass) {
+        try {
+            return enumService.values((Class< ? extends IEnum>) FrameworkUtil.getBundle(getClass()).loadClass(enumClass)).toString();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
 }
