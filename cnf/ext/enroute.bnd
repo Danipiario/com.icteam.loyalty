@@ -41,12 +41,24 @@ test-cases: 			${classes;NAMED;*Test}
 
 -plugin.9.Release: \
 \
-        aQute.bnd.deployer.repository.LocalIndexedRepo; \
-            name                =       Release ; \
-            pretty              =       true ; \
-            local               =       ${build}/release
-
-
+        aQute.bnd.deployer.obr.NexusOBR; \
+            readonly=false; \
+            repositoryUrl=http://nexus:8090/nexus/content/repositories/obr-releases; \
+            username=maven; \
+            password=Gennaio2010.; \
+            name=Release, \
+        aQute.bnd.deployer.obr.NexusOBR; \
+            readonly=false; \
+            repositoryUrl=http://nexus:8090/nexus/content/repositories/obr-libraries; \
+            username=maven; \
+            password=Gennaio2010.; \
+            name=Libraries, \
+        aQute.bnd.deployer.obr.NexusOBR; \
+            readonly=false; \
+            repositoryUrl=http://nexus:8090/nexus/content/repositories/obr-development; \
+            username=maven; \
+            password=Gennaio2010.; \
+            name=Development
 
 
 # Temporary bug fix for bndtools 
