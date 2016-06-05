@@ -1,0 +1,20 @@
+#
+# 
+#
+
+Bundle-Version: 1.0.0.${tstamp}
+
+	
+Export-Package: \
+	com.icteam.loyalty.common.api;provide:=true,\
+	com.icteam.loyalty.common.api.enums,\
+	com.icteam.loyalty.common.api.interfaces
+
+
+Require-Capability: \
+	compile-only
+
+-buildpath: osgi.enroute.base.api;version=1.0
+
+Bundle-Name: Loyalty Common
+Bundle-Description: Loyalty Common project
