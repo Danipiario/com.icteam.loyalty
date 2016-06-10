@@ -8,89 +8,110 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
+import org.eclipse.jetty.util.log.Log;
+import org.eclipse.jetty.util.log.Logger;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleEvent;
 import org.osgi.util.tracker.BundleTracker;
-import org.osgi.util.tracker.ServiceTracker;
-
-import com.icteam.loyalty.common.api.EnumService;
 
 public class AutomaticExtensionTracker extends BundleTracker<Bundle> {
 
-	EnumService enumService;
+    private static final String TRACKER_EXTENSION = "Tracker-Extension";
 
-	private final ServiceTracker<EnumService, EnumService> serviceTracker;
+    private final Map<String, List<BundleTracker< ? >>> bundleTrackers = new HashMap<>();
 
-	private final Map<String, List<BundleTracker<?>>> bundleTrackers = new HashMap<>();
+    private final Logger logger = Log.getLogger(AutomaticExtensionTracker.class);
 
-	public AutomaticExtensionTracker(BundleContext context) {
-		super(context, Bundle.UNINSTALLED | Bundle.ACTIVE, null);
+    public AutomaticExtensionTracker(BundleContext context) {
+        super(context, Bundle.UNINSTALLED | Bundle.ACTIVE, null);
+    }
 
-		serviceTracker = new ServiceTracker<>(context, EnumService.class, null);
-		serviceTracker.open();
-	}
+    @Override
+    public Bundle addingBundle(Bundle bundle, BundleEvent event) {
+        final String extension = bundle.getHeaders().get(TRACKER_EXTENSION);
 
-	@Override
-	public Bundle addingBundle(Bundle bundle, BundleEvent event) {
-		final String extension = bundle.getHeaders().get("Tracker-Extension");
+        if (extension != null) {
+            addTrackerExtension(bundle, extension);
+        }
 
-		if (extension != null) {
-			addTrackerExtension(bundle, extension);
-		}
+        return super.addingBundle(bundle, event);
+    }
 
-		return super.addingBundle(bundle, event);
-	}
+    @Override
+    public void removedBundle(Bundle bundle, BundleEvent event, Bundle object) {
+        removeTrackers(bundle);
 
-	@Override
-	public void removedBundle(Bundle bundle, BundleEvent event, Bundle object) {
-		removeTrackers(bundle);
+        super.removedBundle(bundle, event, object);
+    }
 
-		super.removedBundle(bundle, event, object);
-	}
+    private void removeAllTrackers() {
+        logger.info("untrack all trackers extension");
 
-	private void removeTrackers(Bundle bundle) {
-		final List<BundleTracker<?>> trackers = bundleTrackers.remove(bundle.getSymbolicName());
+        synchronized (bundleTrackers) {
+            for (List<BundleTracker< ? >> trackers : bundleTrackers.values()) {
+                close(trackers);
+            }
+        }
+    }
 
-		if (trackers != null) {
-			for (final BundleTracker<?> tracker : trackers) {
-				tracker.close();
-			}
-		}
-	}
+    private static void close(List<BundleTracker< ? >> trackers) {
+        for (final BundleTracker< ? > tracker : trackers) {
+            tracker.close();
+        }
+    }
 
-	@Override
-	public void close() {
-		super.close();
+    private void removeTrackers(Bundle bundle) {
+        final List<BundleTracker< ? >> trackers;
 
-		serviceTracker.close();
-	}
+        synchronized (bundleTrackers) {
+            trackers = bundleTrackers.remove(bundle.getSymbolicName());
+        }
 
-	private void addTrackerExtension(final Bundle bundle, final String extension) {
-		new Thread(() -> {
-			final String[] trackerClasses = StringUtils.stripAll(StringUtils.split(extension, ","));
+        if (trackers != null) {
+            logger.info("bundle #{} - remove trackers", bundle.getSymbolicName());
 
-			final List<BundleTracker<?>> trackers = new ArrayList<>();
+            for (final BundleTracker< ? > tracker : trackers) {
+                tracker.close();
+            }
+        }
+    }
 
-			for (final String trackerClassName : trackerClasses) {
-				try {
-					final Class<? extends BundleTracker<?>> trackerClass = (Class<? extends BundleTracker<?>>) bundle
-							.loadClass(trackerClassName);
+    @Override
+    public void close() {
+        super.close();
 
-					final Constructor<? extends BundleTracker<?>> constructor = trackerClass
-							.getConstructor(BundleContext.class);
+        removeAllTrackers();
+    }
 
-					final BundleTracker<?> tracker = constructor.newInstance(bundle.getBundleContext());
+    private void addTrackerExtension(final Bundle bundle, final String extension) {
+        new Thread(() -> {
+            logger.info("bundle #{} - track extension #{}", bundle.getSymbolicName(), extension);
 
-					trackers.add(tracker);
-					tracker.open();
-				} catch (ClassNotFoundException | NoSuchMethodException | SecurityException | InstantiationException
-						| IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-					e.printStackTrace();
-				}
-			}
+            final String[] trackerClasses = StringUtils.stripAll(StringUtils.split(extension, ","));
 
-			bundleTrackers.put(bundle.getSymbolicName(), trackers);
-		}).start();
-	}
+            final List<BundleTracker< ? >> trackers = new ArrayList<>();
+
+            for (final String trackerClassName : trackerClasses) {
+                try {
+                    final Class< ? extends BundleTracker< ? >> trackerClass = (Class< ? extends BundleTracker< ? >>) bundle
+                            .loadClass(trackerClassName);
+
+                    final Constructor< ? extends BundleTracker< ? >> constructor = trackerClass.getConstructor(BundleContext.class);
+
+                    final BundleTracker< ? > tracker = constructor.newInstance(bundle.getBundleContext());
+
+                    trackers.add(tracker);
+                    tracker.open();
+                } catch (ClassNotFoundException | NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException
+                        | IllegalArgumentException | InvocationTargetException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            synchronized (bundleTrackers) {
+                bundleTrackers.put(bundle.getSymbolicName(), trackers);
+            }
+        }).start();
+    }
 }

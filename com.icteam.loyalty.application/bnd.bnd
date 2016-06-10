@@ -12,7 +12,7 @@ Private-Package: \
 EnRoute-Application: 	com.icteam.loyalty
 JPM-Command:			loyalty
 
--includeresource: OSGI-INF/configuration=configuration
+-includeresource: OSGI-INF/configuration=resources/configuration
 
 -buildpath: \
 	osgi.enroute.base.api,\
@@ -25,9 +25,10 @@ JPM-Command:			loyalty
 	org.eclipse.equinox.common;version=3.8,\
 	org.eclipse.jdt.annotation;version=2.1,\
 	org.apache.felix.jaas;version=0.0,\
-	com.icteam.loyalty.common.api;version=latest
+	com.icteam.loyalty.common.api;version=latest,\
+	org.eclipse.jetty.util;version=9.3
 	
-Bundle-Name: Loyalty Applicaytion
+Bundle-Name: Loyalty Application
 Export-Package: com.icteam.loyalty.application.handler
 
 Jaas-ModuleClass: com.icteam.loyalty.application.jaas.LoyaltyLoginModule

@@ -14,7 +14,8 @@ Private-Package: \
 	osgi.enroute.base.api;version=latest,\
 	org.apache.commons.lang3;version=3.4,\
 	org.eclipse.equinox.common;version=3.8,\
-	com.icteam.loyalty.common.api;version=latest
+	com.icteam.loyalty.common.api;version=latest,\
+	org.eclipse.jetty.util;version=9.3
 	
 -includeresource: {readme.md}
 

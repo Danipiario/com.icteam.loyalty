@@ -7,17 +7,17 @@ import com.icteam.loyalty.common.provider.tracker.AutomaticExtensionTracker;
 
 public class Activator implements BundleActivator {
 
-	AutomaticExtensionTracker automaticExtensionTracker;
+    private AutomaticExtensionTracker automaticExtensionTracker;
 
-	@Override
-	public void start(BundleContext context) throws Exception {
-		this.automaticExtensionTracker = new AutomaticExtensionTracker(context);
-		this.automaticExtensionTracker.open();
-	}
+    @Override
+    public void start(BundleContext context) throws Exception {
+        this.automaticExtensionTracker = new AutomaticExtensionTracker(context);
+        this.automaticExtensionTracker.open();
+    }
 
-	@Override
-	public void stop(BundleContext context) throws Exception {
-		this.automaticExtensionTracker.close();
-	}
+    @Override
+    public void stop(BundleContext context) throws Exception {
+        this.automaticExtensionTracker.close();
+    }
 
 }

@@ -28,17 +28,17 @@ JPM-Command:					loyalty
 	osgi.identity;filter:='(&(osgi.identity=org.eclipse.rap.ui.workbench)(version>=3.1.0))',\
 	osgi.identity;filter:='(&(osgi.identity=com.ibm.icu.base)(version>=54.1.1))',\
 	osgi.identity;filter:='(&(osgi.identity=javax.inject)(version>=1.0.0))',\
-	osgi.identity;filter:='(&(osgi.identity=slf4j.api)(version>=1.7.7))',\
 	osgi.identity;filter:='(&(osgi.identity=utils.startLazyBundles)(version>=1.0.0))',\
 	osgi.identity;filter:='(&(osgi.identity=org.apache.felix.fileinstall)(version>=3.5.4))',\
 	osgi.identity;filter:='(&(osgi.identity=org.apache.felix.configadmin)(version>=1.8.8))',\
 	osgi.identity;filter:='(&(osgi.identity=org.apache.felix.metatype)(version>=1.1.2))',\
 	osgi.identity;filter:='(&(osgi.identity=org.apache.felix.webconsole.plugins.ds)(version>=2.0.2))',\
-	osgi.identity;filter:='(&(osgi.identity=org.apache.felix.webconsole)(version>=4.2.16))'
+	osgi.identity;filter:='(&(osgi.identity=org.apache.felix.webconsole)(version>=4.2.16))',\
+	osgi.identity;filter:='(&(osgi.identity=osgi.enroute.logger.simple.provider)(version>=1.1.1))',\
+	osgi.identity;filter:='(&(osgi.identity=biz.aQute.bndlib)(version>=3.0.0))'
 
 -runbundles: \
-	ch.qos.logback.classic;version='[1.0.0,1.0.1)',\
-	ch.qos.logback.core;version='[1.0.0,1.0.1)',\
+	biz.aQute.bndlib;version='[3.0.0,3.0.1)',\
 	com.ibm.icu.base;version='[56.1.0,56.1.1)',\
 	com.icteam.loyalty.application;version=snapshot,\
 	com.icteam.loyalty.common.provider;version=snapshot,\
@@ -92,11 +92,11 @@ JPM-Command:					loyalty
 	org.eclipse.rap.rwt.osgi;version='[3.1.0,3.1.1)',\
 	org.eclipse.rap.ui;version='[3.1.0,3.1.1)',\
 	org.eclipse.rap.ui.workbench;version='[3.1.0,3.1.1)',\
+	osgi.enroute.logger.simple.provider;version='[1.1.1,1.1.2)',\
 	osgi.promise;version='[6.0.0,6.0.1)',\
-	slf4j.api;version='[1.7.7,1.7.8)',\
 	utils.startLazyBundles;version='[1.0.0,1.0.1)'
 -runproperties: \
 	org.osgi.service.http.port=9090,\
-	felix.fileinstall.dir=./workspace,\
+	felix.fileinstall.dir=./workspace/configuration,\
 	activate.lazy.bundles=org.eclipse.equinox.http.jetty
 -runee: JavaSE-1.8

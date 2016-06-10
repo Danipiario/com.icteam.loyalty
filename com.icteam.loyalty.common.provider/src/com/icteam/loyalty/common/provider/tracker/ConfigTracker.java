@@ -10,6 +10,8 @@ import java.util.Enumeration;
 import java.util.Properties;
 
 import org.eclipse.core.runtime.FileLocator;
+import org.eclipse.jetty.util.log.Log;
+import org.eclipse.jetty.util.log.Logger;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleEvent;
@@ -17,69 +19,105 @@ import org.osgi.util.tracker.BundleTracker;
 
 public class ConfigTracker extends BundleTracker<Bundle> {
 
-	private static final String CONFIGURATION = "OSGI-INF/configuration";
+    private static final String CONFIGURATION = "OSGI-INF/configuration";
 
-	public ConfigTracker(BundleContext context) {
-		super(context, Bundle.UNINSTALLED | Bundle.ACTIVE, null);
-	}
+    private final Logger logger = Log.getLogger(ConfigTracker.class);
 
-	@Override
-	public Bundle addingBundle(Bundle bundle, BundleEvent event) {
-		if (hasConfiguration(bundle)) {
-			updateConfigurations(bundle);
-		}
+    private final File configuration;
 
-		return super.addingBundle(bundle, event);
-	}
+    public ConfigTracker(BundleContext context) {
+        super(context, Bundle.UNINSTALLED | Bundle.ACTIVE, null);
 
-	private static void updateConfigurations(final Bundle bundle) {
-		new Thread(() -> {
-			// assumiamo che la prima directory di poll sia quella delle
-			// configurazioni
-			final File configuration = new File(System.getProperty("felix.fileinstall.dir").split(",")[0]);
+        configuration = new File(System.getProperty("felix.fileinstall.dir").split(",")[0]);
 
-			if (!configuration.exists()) {
-				configuration.mkdirs();
-			}
+        if (!configuration.exists()) {
+            configuration.mkdirs();
+        }
+    }
 
-			final Enumeration<URL> configurations = bundle.findEntries(CONFIGURATION, "*.cfg", true);
+    @Override
+    public Bundle addingBundle(Bundle bundle, BundleEvent event) {
+        if (hasConfiguration(bundle)) {
+            updateConfigurations(bundle);
+        }
 
-			try {
-				if (configurations != null) {
-					while (configurations.hasMoreElements()) {
-						final URL newConfigURL = configurations.nextElement();
-						final File newConfigFile = new File(FileLocator.toFileURL(newConfigURL).toURI());
-						final String configFileName = newConfigFile.getName();
+        return super.addingBundle(bundle, event);
+    }
 
-						final File configFile = new File(configuration, configFileName);
+    @Override
+    public void removedBundle(Bundle bundle, BundleEvent event, Bundle object) {
+        if (hasConfiguration(bundle)) {
+            removeConfigurations(bundle);
+        }
 
-						final Properties newProperties = new Properties();
-						newProperties.load(new FileInputStream(newConfigFile));
+        super.removedBundle(bundle, event, object);
+    }
 
-						final Properties properties = new Properties();
+    private void removeConfigurations(final Bundle bundle) {
+        new Thread(() -> {
+            final Enumeration<URL> configurations = bundle.findEntries(CONFIGURATION, "*.cfg", true);
 
-						if (configFile.exists()) {
-							try (FileInputStream inStream = new FileInputStream(configFile)){
-								properties.load(inStream);
-							}
-						}
+            try {
+                if (configurations != null) {
+                    while (configurations.hasMoreElements()) {
+                        final URL newConfigURL = configurations.nextElement();
+                        final File newConfigFile = new File(FileLocator.toFileURL(newConfigURL).toURI());
+                        final String configFileName = newConfigFile.getName();
 
-						newProperties.putAll(properties);
+                        final File configFile = new File(configuration, configFileName);
 
-						try (FileOutputStream outStream = new FileOutputStream(configFile)) {
-							newProperties.store(outStream, "");
-						}
+                        configFile.delete();
 
-					}
-				}
-			} catch (URISyntaxException | IOException e1) {
-				e1.printStackTrace();
-			}
-		}).start();
-	}
+                        logger.info("bundle #{} - remove configuration file #{}", bundle.getSymbolicName(), configFileName);
+                    }
+                }
+            } catch (URISyntaxException | IOException e) {
+                logger.warn("error remove configuration files", e);
+            }
+        }).start();
+    }
 
-	private static boolean hasConfiguration(Bundle bundle) {
-		return bundle.getEntry(CONFIGURATION) != null;
-	}
+    private void updateConfigurations(final Bundle bundle) {
+        new Thread(() -> {
+            final Enumeration<URL> configurations = bundle.findEntries(CONFIGURATION, "*.cfg", true);
+
+            try {
+                if (configurations != null) {
+                    while (configurations.hasMoreElements()) {
+                        final URL newConfigURL = configurations.nextElement();
+                        final File newConfigFile = new File(FileLocator.toFileURL(newConfigURL).toURI());
+                        final String configFileName = newConfigFile.getName();
+
+                        final File configFile = new File(configuration, configFileName);
+
+                        final Properties newProperties = new Properties();
+                        newProperties.load(new FileInputStream(newConfigFile));
+
+                        final Properties properties = new Properties();
+
+                        if (configFile.exists()) {
+                            try (FileInputStream inStream = new FileInputStream(configFile)) {
+                                properties.load(inStream);
+                            }
+                        }
+
+                        newProperties.putAll(properties);
+
+                        try (FileOutputStream outStream = new FileOutputStream(configFile)) {
+                            newProperties.store(outStream, "");
+                        }
+
+                        logger.info("bundle #{} - manage configuration file #{}", bundle.getSymbolicName(), configFileName);
+                    }
+                }
+            } catch (URISyntaxException | IOException e) {
+                logger.warn("error manage configuration files", e);
+            }
+        }).start();
+    }
+
+    private static boolean hasConfiguration(Bundle bundle) {
+        return bundle.getEntry(CONFIGURATION) != null;
+    }
 
 }
