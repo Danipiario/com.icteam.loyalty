@@ -17,8 +17,8 @@ Private-Package: \
 	com.icteam.loyalty.common.api;version=latest,\
 	org.eclipse.jetty.util;version=9.3
 	
--includeresource: {readme.md}
-
+-includeresource: {readme.md},\
+                  OSGI-INF/configuration=resources/configuration
 
 -runrequires: osgi.identity;filter:='(osgi.identity=com.icteam.loyalty.common.provider)'
 	
@@ -33,4 +33,5 @@ Tracker-Extension: com.icteam.loyalty.common.provider.tracker.EnumTracker,\
 Export-Package: \
 	com.icteam.loyalty.common.api,\
 	com.icteam.loyalty.common.api.enums,\
-	com.icteam.loyalty.common.api.interfaces
+	com.icteam.loyalty.common.api.interfaces,\
+	com.icteam.loyalty.common.api.nls

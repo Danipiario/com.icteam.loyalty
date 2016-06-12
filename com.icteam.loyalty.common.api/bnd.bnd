@@ -8,13 +8,18 @@ Bundle-Version: 1.0.0.${tstamp}
 Export-Package: \
 	com.icteam.loyalty.common.api;provide:=true,\
 	com.icteam.loyalty.common.api.enums,\
-	com.icteam.loyalty.common.api.interfaces
+	com.icteam.loyalty.common.api.interfaces,\
+	com.icteam.loyalty.common.api.nls
 
 
 Require-Capability: \
 	compile-only
 
--buildpath: osgi.enroute.base.api;version=1.0
+-buildpath: \
+	osgi.enroute.base.api;version=1.0,\
+	org.eclipse.jetty.util;version=9.3,\
+	org.apache.commons.lang3;version=3.4
 
 Bundle-Name: Loyalty Common
 Bundle-Description: Loyalty Common project
+

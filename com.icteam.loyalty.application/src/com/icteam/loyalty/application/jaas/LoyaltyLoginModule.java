@@ -10,18 +10,21 @@ import javax.security.auth.callback.PasswordCallback;
 import javax.security.auth.callback.TextOutputCallback;
 import javax.security.auth.login.LoginException;
 
+import com.icteam.loyalty.application.Messages;
+
 public class LoyaltyLoginModule implements javax.security.auth.spi.LoginModule {
 
 	private CallbackHandler callbackHandler;
-	private boolean loggedIn=true;
+	private boolean loggedIn = true;
 	private Subject subject;
-	//	private OperatorEMFModel operatorEMFModel;
+	// private OperatorEMFModel operatorEMFModel;
 
 	public LoyaltyLoginModule() {
 	}
 
 	@Override
-	public void initialize(Subject subject, CallbackHandler callbackHandler, Map<String, ? > sharedState, Map<String, ? > options) {
+	public void initialize(Subject subject, CallbackHandler callbackHandler, Map<String, ?> sharedState,
+			Map<String, ?> options) {
 		this.subject = subject;
 		this.callbackHandler = callbackHandler;
 
@@ -29,9 +32,9 @@ public class LoyaltyLoginModule implements javax.security.auth.spi.LoginModule {
 
 	@Override
 	public boolean login() throws LoginException {
-		final Callback label = new TextOutputCallback(TextOutputCallback.INFORMATION, "AuthMessages.get().need_login");
-		final NameCallback nameCallback = new NameCallback("AuthMessages.get().login");
-		final PasswordCallback passwordCallback = new PasswordCallback("AuthMessages.get().password", false);
+		final Callback label = new TextOutputCallback(TextOutputCallback.INFORMATION, Messages.get().need_login);
+		final NameCallback nameCallback = new NameCallback(Messages.get().login);
+		final PasswordCallback passwordCallback = new PasswordCallback(Messages.get().password, false);
 		try {
 			callbackHandler.handle(new Callback[] { label, nameCallback, passwordCallback });
 		} catch (final ThreadDeath death) {
@@ -49,38 +52,44 @@ public class LoyaltyLoginModule implements javax.security.auth.spi.LoginModule {
 			String.valueOf(passwordCallback.getPassword());
 		}
 
-		//		AuthEMFService authService;
-		//		ServiceTracker<AuthEMFService, AuthEMFService> serviceTracker = null;
-		//		try {
-		//			serviceTracker = new ServiceTracker<>(FrameworkUtil.getBundle(getClass()).getBundleContext(), AuthEMFService.class, null);
-		//			serviceTracker.open();
-		//			authService = serviceTracker.waitForService(1000);
+		// AuthEMFService authService;
+		// ServiceTracker<AuthEMFService, AuthEMFService> serviceTracker = null;
+		// try {
+		// serviceTracker = new
+		// ServiceTracker<>(FrameworkUtil.getBundle(getClass()).getBundleContext(),
+		// AuthEMFService.class, null);
+		// serviceTracker.open();
+		// authService = serviceTracker.waitForService(1000);
 		//
-		//			final OperatorEMFTemplate operatorTemplate = AuthTemplateFactory.eINSTANCE.createOperatorEMFTemplate();
-		//			operatorTemplate.setLogin(username);
-		//			operatorTemplate.setPassword(password);
-		//			operatorTemplate.setStatus(ModelUtil.valueOf(Status.class, ModelInterfacesPackage.Literals.STATUS__ATTIVO.getName()));
+		// final OperatorEMFTemplate operatorTemplate =
+		// AuthTemplateFactory.eINSTANCE.createOperatorEMFTemplate();
+		// operatorTemplate.setLogin(username);
+		// operatorTemplate.setPassword(password);
+		// operatorTemplate.setStatus(ModelUtil.valueOf(Status.class,
+		// ModelInterfacesPackage.Literals.STATUS__ATTIVO.getName()));
 		//
-		//			operatorEMFModel = authService.login(operatorTemplate);
+		// operatorEMFModel = authService.login(operatorTemplate);
 		//
-		//			operatorEMFModel = ChangePasswordCallbackHandler.checkChangePassword(operatorEMFModel, authService);
+		// operatorEMFModel =
+		// ChangePasswordCallbackHandler.checkChangePassword(operatorEMFModel,
+		// authService);
 		//
-		//			loggedIn = operatorEMFModel != null;
-		//		} catch (final InterruptedException e) {
-		//			e.printStackTrace();
-		//		} finally {
-		//			serviceTracker.close();
-		//		}
+		// loggedIn = operatorEMFModel != null;
+		// } catch (final InterruptedException e) {
+		// e.printStackTrace();
+		// } finally {
+		// serviceTracker.close();
+		// }
 
 		return loggedIn;
 	}
 
 	@Override
 	public boolean commit() {
-		//		subject.getPrincipals().add(operatorEMFModel);
-		//		subject.getPrivateCredentials().addAll(operatorEMFModel.getOperatorGroupList());
+		// subject.getPrincipals().add(operatorEMFModel);
+		// subject.getPrivateCredentials().addAll(operatorEMFModel.getOperatorGroupList());
 		//
-		//		RWT.getUISession().setLocale(operatorEMFModel.getLanguage().getLocale());
+		// RWT.getUISession().setLocale(operatorEMFModel.getLanguage().getLocale());
 
 		return loggedIn;
 	}
@@ -89,7 +98,7 @@ public class LoyaltyLoginModule implements javax.security.auth.spi.LoginModule {
 	public boolean abort() {
 		loggedIn = false;
 		subject = null;
-		//		operatorEMFModel = null;
+		// operatorEMFModel = null;
 
 		return true;
 	}
@@ -98,7 +107,7 @@ public class LoyaltyLoginModule implements javax.security.auth.spi.LoginModule {
 	public boolean logout() {
 		loggedIn = false;
 		subject = null;
-		//		operatorEMFModel = null;
+		// operatorEMFModel = null;
 
 		return true;
 	}
