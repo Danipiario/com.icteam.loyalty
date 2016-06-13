@@ -1,0 +1,27 @@
+#
+#  DEFAULTS
+#
+
+Bundle-Version:					1.0.0.${tstamp}
+Bundle-Description: Loyalty Common Db Project
+
+	
+-buildpath: \
+	osgi.enroute.base.api;version=1.0,\
+	org.openengsb.labs.liquibase.extender;version=1.0,\
+	org.liquibase.core;version=3.5
+	
+Import-Package: \
+	javax.sql,\
+	oracle.jdbc.pool,\
+	*
+	
+Require-Capability: osgi.service;effective:=active;filter:="(&(objectClass=org.apache.aries.blueprint.NamespaceHandler)(osgi.service.blueprint.namespace=http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.2.0))"
+
+-includeresource: OSGI-INF/changelog=resources/changelog,\
+                  OSGI-INF/configuration=resources/configuration,\
+                  OSGI-INF/blueprint=resources/blueprint
+                   
+Liquibase-Persistence: OSGI-INF/changelog/common.db.changelog.xml
+Bundle-Name: Loyalty Common Db
+Private-Package: com.icteam.loyalty.common.db

@@ -1,0 +1,17 @@
+Bundle-Activator: org.openengsb.labs.liquibase.extender.internal.Activator
+Private-Package: org.openengsb.labs.liquibase.extender.internal
+Export-Package: org.openengsb.labs.liquibase.extender
+
+-buildpath: \
+	org.apache.commons.lang3;version=3.4,\
+	org.liquibase.core;version=3.5,\
+	osgi.enroute.base.api;version=1.6
+Bundle-Version: 1.0.5.${tstamp}
+
+Import-Package: \
+	oracle.jdbc;resolution:=optional,\
+	*
+
+-releaserepo: Libraries
+
+Bundle-Name: Liquibase Extender
