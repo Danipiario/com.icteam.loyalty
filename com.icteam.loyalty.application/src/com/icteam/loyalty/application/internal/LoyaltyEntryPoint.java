@@ -23,78 +23,78 @@ import com.icteam.loyalty.application.jaas.LoginCallbackHandler;
 
 public class LoyaltyEntryPoint extends AbstractEntryPoint {
 
-    private static final long serialVersionUID = -3357822020471836468L;
+	private static final long serialVersionUID = -3357822020471836468L;
 
-    @Override
-    protected void createContents(Composite parent) {
-        // nothing
-    }
+	@Override
+	protected void createContents(Composite parent) {
+		// nothing
+	}
 
-    @Override
-    public int createUI() {
-        final Display display = new Display();
+	@Override
+	public int createUI() {
+		final Display display = new Display();
 
-        Object o = org.eclipse.jetty.util.Loader.getResource(org.eclipse.jetty.util.log.Log.class, "jetty-logging.properties");
+		org.eclipse.jetty.util.Loader.getResource(org.eclipse.jetty.util.log.Log.class, "jetty-logging.properties");
 
-        final ServiceTracker<LoginContextFactory, LoginContextFactory> serviceTracker = new ServiceTracker<>(
-                FrameworkUtil.getBundle(getClass()).getBundleContext(), LoginContextFactory.class, null);
-        serviceTracker.open();
-        //		Snippet.run(display);
+		final ServiceTracker<LoginContextFactory, LoginContextFactory> serviceTracker = new ServiceTracker<>(
+				FrameworkUtil.getBundle(getClass()).getBundleContext(), LoginContextFactory.class, null);
+		serviceTracker.open();
+		//		Snippet.run(display);
 
-        final String configName = "loyalty";
+		final String configName = "loyalty";
 
-        LoginContext secureContext;
+		LoginContext secureContext;
 
-        while (true) {
-            try {
-                final Subject subject = new Subject();
+		while (true) {
+			try {
+				final Subject subject = new Subject();
 
-                secureContext = serviceTracker.waitForService(1000).createLoginContext(configName, subject, new LoginCallbackHandler());
-                secureContext.login();
+				secureContext = serviceTracker.waitForService(1000).createLoginContext(configName, subject, new LoginCallbackHandler());
+				secureContext.login();
 
-                RWT.getUISession(display).setAttribute("secureContext", secureContext);
-                break;
-            } catch (final LoginException | InterruptedException exception) {
-                final Throwable cause = exception.getCause();
-                if (cause != null && cause.getCause() instanceof ThreadDeath) {
-                    throw (ThreadDeath) cause.getCause();
-                }
-                final Status status = new Status(IStatus.ERROR, "com.icteam.loyalty.ui", "Login failed", cause);
-                ErrorDialog.openError(null, "Error", "Login failed", status);
-            }
-        }
+				RWT.getUISession(display).setAttribute("secureContext", secureContext);
+				break;
+			} catch (final LoginException | InterruptedException exception) {
+				final Throwable cause = exception.getCause();
+				if (cause != null && cause instanceof ThreadDeath) {
+					throw (ThreadDeath) cause;
+				}
+				final Status status = new Status(IStatus.ERROR, "com.icteam.loyalty.ui", "Login failed", cause);
+				ErrorDialog.openError(null, "Error", "Login failed", status);
+			}
+		}
 
-        int result = 0;
-        try {
-            result = Subject.doAs(secureContext.getSubject(), getRunAction(display));
-        } catch (final Exception e) {
-            e.printStackTrace();
-        } finally {
-            display.dispose();
+		int result = 0;
+		try {
+			result = Subject.doAs(secureContext.getSubject(), getRunAction(display));
+		} catch (final Exception e) {
+			e.printStackTrace();
+		} finally {
+			display.dispose();
 
-            try {
-                secureContext.logout();
-            } catch (final LoginException e) {
-                e.printStackTrace();
-            }
-        }
+			try {
+				secureContext.logout();
+			} catch (final LoginException e) {
+				e.printStackTrace();
+			}
+		}
 
-        return result;
-    }
+		return result;
+	}
 
-    private static PrivilegedAction<Integer> getRunAction(final Display display) {
-        return () -> PlatformUI.createAndRunWorkbench(display, new LoyaltyWorkbenchAdvisor());
-    }
+	private static PrivilegedAction<Integer> getRunAction(final Display display) {
+		return () -> PlatformUI.createAndRunWorkbench(display, new LoyaltyWorkbenchAdvisor());
+	}
 
-    public void stop() {
-        final IWorkbench workbench = PlatformUI.getWorkbench();
-        if (workbench != null) {
-            final Display display = workbench.getDisplay();
-            display.syncExec(() -> {
-                if (!display.isDisposed()) {
-                    workbench.close();
-                }
-            });
-        }
-    }
+	public void stop() {
+		final IWorkbench workbench = PlatformUI.getWorkbench();
+		if (workbench != null) {
+			final Display display = workbench.getDisplay();
+			display.syncExec(() -> {
+				if (!display.isDisposed()) {
+					workbench.close();
+				}
+			});
+		}
+	}
 }

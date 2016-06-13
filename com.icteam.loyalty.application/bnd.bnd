@@ -6,13 +6,15 @@ Bundle-Version: 1.0.0.${tstamp}
 Bundle-Description: Application project
 
 Private-Package: \
-	com.icteam.loyalty.application.internal,\
-	com.icteam.loyalty.application.jaas
+	com.icteam.loyalty.application.jaas,\
+	com.icteam.loyalty.application,\
+	com.icteam.loyalty.application.internal
 
 EnRoute-Application: 	com.icteam.loyalty
 JPM-Command:			loyalty
 
--includeresource: OSGI-INF/configuration=resources/configuration
+-includeresource: OSGI-INF/configuration=resources/configuration,\
+                  OSGI-INF/l10n/bundle=resources/bundle
 
 -buildpath: \
 	osgi.enroute.base.api,\
@@ -25,8 +27,9 @@ JPM-Command:			loyalty
 	org.eclipse.equinox.common;version=3.8,\
 	org.eclipse.jdt.annotation;version=2.1,\
 	org.apache.felix.jaas;version=0.0,\
+	org.eclipse.jetty.util;version=9.3,\
 	com.icteam.loyalty.common.api;version=latest,\
-	org.eclipse.jetty.util;version=9.3
+	org.apache.felix.metatype;version=1.1
 	
 Bundle-Name: Loyalty Application
 Export-Package: com.icteam.loyalty.application.handler

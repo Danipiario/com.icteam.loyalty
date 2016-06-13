@@ -20,6 +20,8 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
+import com.icteam.loyalty.application.Messages;
+
 /**
  * Handles the callbacks to show a RCP/RAP UI for the LoginModule.
  */
@@ -46,7 +48,7 @@ public class LoginCallbackHandler extends AbstractLoginDialog {
 	@Override
 	protected void configureShell(Shell shell) {
 		super.configureShell(shell);
-		shell.setText("AuthMessages.get().login_title");
+		shell.setText(Messages.get().login_title);
 	}
 
 	@Override
