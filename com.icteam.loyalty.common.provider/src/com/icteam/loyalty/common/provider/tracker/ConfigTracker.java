@@ -72,7 +72,7 @@ public class ConfigTracker extends BundleTracker<Bundle> {
                     }
                 }
             } catch (URISyntaxException | IOException e) {
-                logger.warn("error remove configuration files", e);
+                logger.warn("error remove configuration files for bundle #" + bundle.getSymbolicName(), e);
             }
         }).start();
     }
@@ -91,7 +91,9 @@ public class ConfigTracker extends BundleTracker<Bundle> {
                         final File configFile = new File(configuration, configFileName);
 
                         final Properties newProperties = new Properties();
-                        newProperties.load(new FileInputStream(newConfigFile));
+                        try (FileInputStream inStream = new FileInputStream(newConfigFile)) {
+                            newProperties.load(inStream);
+                        }
 
                         final Properties properties = new Properties();
 
@@ -111,7 +113,7 @@ public class ConfigTracker extends BundleTracker<Bundle> {
                     }
                 }
             } catch (URISyntaxException | IOException e) {
-                logger.warn("error manage configuration files", e);
+                logger.warn("error manage configuration files for bundle #" + bundle.getSymbolicName(), e);
             }
         }).start();
     }

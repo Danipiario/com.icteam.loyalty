@@ -6,7 +6,7 @@ Export-Package: org.openengsb.labs.liquibase.extender
 	org.apache.commons.lang3;version=3.4,\
 	org.liquibase.core;version=3.5,\
 	osgi.enroute.base.api;version=1.6
-Bundle-Version: 1.0.5.${tstamp}
+Bundle-Version: 1.0.6.${tstamp}
 
 Import-Package: \
 	oracle.jdbc;resolution:=optional,\

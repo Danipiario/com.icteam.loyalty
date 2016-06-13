@@ -82,7 +82,7 @@ public class EnumTracker extends BundleTracker<Bundle> {
                         }
                     }
                 } catch (ClassNotFoundException | InterruptedException e) {
-                    logger.warn("error remove enum", e);
+                    logger.warn("error remove enum for bundle #" + bundle.getSymbolicName(), e);
                 }
             }
         }).start();
@@ -111,7 +111,7 @@ public class EnumTracker extends BundleTracker<Bundle> {
                         }
                     }
                 } catch (ClassNotFoundException | InterruptedException e) {
-                    logger.warn("error manage enum", e);
+                    logger.warn("error manage enum for bundle #" + bundle.getSymbolicName(), e);
                 }
             }
         }).start();

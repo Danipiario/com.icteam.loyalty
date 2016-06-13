@@ -105,7 +105,7 @@ public class AutomaticExtensionTracker extends BundleTracker<Bundle> {
                     tracker.open();
                 } catch (ClassNotFoundException | NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException
                         | IllegalArgumentException | InvocationTargetException e) {
-                    e.printStackTrace();
+                    logger.warn("error track extension for bundle #" + bundle.getSymbolicName(), e);
                 }
             }
 
