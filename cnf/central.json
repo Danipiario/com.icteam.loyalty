@@ -21,6 +21,7 @@
   "artifactId":"liquibase-core","baseline":"3.5.1","bsn":"org.liquibase.core","created":1462972203893,"description":"Liquibase is a tool for managing and executing database changes.","groupId":"org.liquibase","md5":"40880DFCC0B9E3DBCE71604CB4FCDE75","name":"Liquibase Core","phase":"MASTER","revision":"11F67D8041653BC68B73AE3E7836E814CED39781","size":2020029,"tag":"liquibase-parent-3.5.1","urls":["http://repo1.maven.org/maven2/org/liquibase/liquibase-core/3.5.1/liquibase-core-3.5.1.jar"],"version":"3.5.1"
  },{
   "artifactId":"snakeyaml","baseline":"1.13.0","bsn":"org.yaml.snakeyaml","created":1378404431273,"description":"YAML 1.1 parser and emitter for Java","groupId":"org.yaml","md5":"88E239AB48632E2EAB576EE86F56C47E","name":"SnakeYAML","phase":"MASTER","revision":"73CBB494A912866C4C831A178C3A2A9169F4EAAD","size":273449,"urls":["http://repo1.maven.org/maven2/org/yaml/snakeyaml/1.13/snakeyaml-1.13.jar"],"version":"1.13"
+ },{
   "artifactId":"org.osgi.service.metatype.annotations","baseline":"1.3.0","bsn":"org.osgi.service.metatype.annotations","created":1432153462351,"description":"OSGi Companion Code for org.osgi.service.metatype.annotations Version 1.3.0.","groupId":"org.osgi","md5":"24EA8F241E59463A4F28BCDD6AEC9BFE","name":"org.osgi:org.osgi.service.metatype.annotations","phase":"MASTER","revision":"793A335FB4D18190A2E7A89614001C65853C91C5","size":23575,"urls":["http://repo1.maven.org/maven2/org/osgi/org.osgi.service.metatype.annotations/1.3.0/org.osgi.service.metatype.annotations-1.3.0.jar"],"version":"1.3.0"
  }]
 }
