@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<repository increment="1465851766717" name="com.icteam.loyalty.common.tracker" xmlns="http://www.osgi.org/xmlns/repository/v1.0.0">
+  <resource>
+    <capability namespace="osgi.identity">
+      <attribute name="osgi.identity" value="com.icteam.loyalty.common.tracker"/>
+      <attribute name="type" value="osgi.bundle"/>
+      <attribute name="version" type="Version" value="1.0.0.201606132102"/>
+    </capability>
+    <capability namespace="osgi.content">
+      <attribute name="osgi.content" value="ad33b894c76ebf5ad52d018e3270180371a508cae5e4a1e1fd7e8206169df272"/>
+      <attribute name="url" value="generated/com.icteam.loyalty.common.tracker.jar"/>
+      <attribute name="size" type="Long" value="16464"/>
+      <attribute name="mime" value="application/vnd.osgi.bundle"/>
+    </capability>
+    <capability namespace="osgi.wiring.bundle">
+      <attribute name="osgi.wiring.bundle" value="com.icteam.loyalty.common.tracker"/>
+      <attribute name="bundle-version" type="Version" value="1.0.0.201606132102"/>
+    </capability>
+    <capability namespace="osgi.wiring.host">
+      <attribute name="osgi.wiring.host" value="com.icteam.loyalty.common.tracker"/>
+      <attribute name="bundle-version" type="Version" value="1.0.0.201606132102"/>
+    </capability>
+    <capability namespace="bndtools.workspace">
+      <attribute name="bndtools.workspace" value="file:/C:/Users/Daniele/workspace"/>
+      <attribute name="project.path" value="/com.icteam.loyalty.common.tracker"/>
+    </capability>
+    <requirement namespace="osgi.wiring.package">
+      <directive name="filter" value="(&amp;(osgi.wiring.package=com.icteam.loyalty.common.api.interfaces)(version&gt;=1.0.0)(!(version&gt;=2.0.0)))"/>
+    </requirement>
+    <requirement namespace="osgi.wiring.package">
+      <directive name="filter" value="(&amp;(osgi.wiring.package=com.icteam.loyalty.common.api.service)(version&gt;=1.0.0)(!(version&gt;=2.0.0)))"/>
+    </requirement>
+    <requirement namespace="osgi.wiring.package">
+      <directive name="filter" value="(&amp;(osgi.wiring.package=org.apache.commons.lang3)(version&gt;=3.4.0)(!(version&gt;=4.0.0)))"/>
+    </requirement>
+    <requirement namespace="osgi.wiring.package">
+      <attribute name="common" value="split"/>
+      <directive name="filter" value="(&amp;(osgi.wiring.package=org.eclipse.core.runtime)(version&gt;=3.5.0)(!(version&gt;=4.0.0)))"/>
+    </requirement>
+    <requirement namespace="osgi.wiring.package">
+      <directive name="filter" value="(&amp;(osgi.wiring.package=org.eclipse.jetty.util.log)(version&gt;=9.3.0)(!(version&gt;=10.0.0)))"/>
+    </requirement>
+    <requirement namespace="osgi.wiring.package">
+      <directive name="filter" value="(&amp;(osgi.wiring.package=org.osgi.framework)(version&gt;=1.8.0)(!(version&gt;=2.0.0)))"/>
+    </requirement>
+    <requirement namespace="osgi.wiring.package">
+      <directive name="filter" value="(&amp;(osgi.wiring.package=org.osgi.util.tracker)(version&gt;=1.5.0)(!(version&gt;=2.0.0)))"/>
+    </requirement>
+    <requirement namespace="osgi.ee">
+      <directive name="filter" value="(&amp;(osgi.ee=JavaSE)(version=1.8))"/>
+    </requirement>
+  </resource>
+</repository>
