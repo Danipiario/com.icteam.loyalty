@@ -1,4 +1,4 @@
-package com.icteam.loyalty.common.provider;
+package com.icteam.loyalty.common.internal;
 
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;

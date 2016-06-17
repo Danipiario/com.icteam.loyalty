@@ -1,4 +1,4 @@
-package com.icteam.loyalty.common.provider;
+package com.icteam.loyalty.common.internal.provider;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -13,10 +13,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 import com.icteam.loyalty.common.api.EnumService;
 import com.icteam.loyalty.common.api.interfaces.IEnum;
 
-/**
- *
- */
-@Component(name = "com.icteam.loyalty.common.enumservice", scope = ServiceScope.SINGLETON)
+@Component(scope = ServiceScope.SINGLETON)
 public class EnumProvider implements EnumService {
 
     Map<Class< ? extends IEnum>, List<IEnum>> enumLists = new HashMap<>();

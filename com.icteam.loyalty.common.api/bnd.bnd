@@ -9,7 +9,9 @@ Export-Package: \
 	com.icteam.loyalty.common.api;provide:=true,\
 	com.icteam.loyalty.common.api.enums,\
 	com.icteam.loyalty.common.api.interfaces,\
-	com.icteam.loyalty.common.api.nls
+	com.icteam.loyalty.common.api.nls,\
+	com.icteam.loyalty.common.api.model,\
+	com.icteam.loyalty.common.api.dto
 
 
 Require-Capability: \
