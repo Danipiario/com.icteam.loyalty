@@ -1,4 +1,4 @@
-package com.icteam.loyalty.common.api.nls;
+package com.icteam.loyalty.common.nls;
 
 import java.lang.reflect.Array;
 import java.lang.reflect.Constructor;

@@ -1,4 +1,4 @@
-package com.icteam.loyalty.common.provider.tracker;
+package com.icteam.loyalty.common.tracker;
 
 import java.io.File;
 import java.io.FileInputStream;

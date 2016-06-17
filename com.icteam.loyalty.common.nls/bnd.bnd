@@ -1,0 +1,16 @@
+Bundle-Version: 1.0.0.${tstamp}
+Bundle-Name: Loyalty Common NLS 
+Bundle-Description: Loyalty Common NLS Project
+Export-Package: com.icteam.loyalty.common.nls
+
+-includeresource: {readme.md},\
+                  OSGI-INF/configuration=resources/configuration
+
+-buildpath: \
+	osgi.enroute.base.api;version=latest,\
+	org.apache.commons.lang3;version=3.4,\
+	org.eclipse.equinox.common;version=3.8,\
+	com.icteam.loyalty.common.api;version=latest,\
+	org.eclipse.jetty.util;version=9.3
+
+                  

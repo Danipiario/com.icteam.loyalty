@@ -1,9 +1,7 @@
-package com.icteam.loyalty.common.provider;
+package com.icteam.loyalty.common.tracker;
 
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
-
-import com.icteam.loyalty.common.provider.tracker.AutomaticExtensionTracker;
 
 public class Activator implements BundleActivator {
 

@@ -1,4 +1,4 @@
-package com.icteam.loyalty.common.api.nls;
+package com.icteam.loyalty.common.nls;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;

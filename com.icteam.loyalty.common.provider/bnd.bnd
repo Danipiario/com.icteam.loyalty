@@ -1,14 +1,12 @@
-#
-#  BUNDLE 
-#
-
-
 Bundle-Version: 1.0.0.${tstamp}
-
-
+Bundle-Name: Loyalty Common Provider
+Bundle-Description: Loyalty Common Provider Project
 Private-Package: \
-	com.icteam.loyalty.common.provider,\
-	com.icteam.loyalty.common.provider.tracker
+	com.icteam.loyalty.common.provider
+Export-Package: \
+	com.icteam.loyalty.common.api.service,\
+	com.icteam.loyalty.common.api.enums,\
+	com.icteam.loyalty.common.api.interfaces
 	
 -buildpath: \
 	osgi.enroute.base.api;version=latest,\
@@ -17,21 +15,10 @@ Private-Package: \
 	com.icteam.loyalty.common.api;version=latest,\
 	org.eclipse.jetty.util;version=9.3
 	
--includeresource: {readme.md},\
-                  OSGI-INF/configuration=resources/configuration
+-includeresource: {readme.md}
 
--runrequires: osgi.identity;filter:='(osgi.identity=com.icteam.loyalty.common.provider)'
-	
--runbundles: \
-	${error;Resolve first}
-Bundle-Name: Loyalty Common Provider
-Bundle-Activator: com.icteam.loyalty.common.provider.Activator
 Enum-Extension: com.icteam.loyalty.common.api.enums.Alfa, com.icteam.loyalty.common.api.enums.Beta
-Tracker-Extension: com.icteam.loyalty.common.provider.tracker.EnumTracker,\
-                   com.icteam.loyalty.common.provider.tracker.ConfigTracker 	
 	
-Export-Package: \
-	com.icteam.loyalty.common.api,\
-	com.icteam.loyalty.common.api.enums,\
-	com.icteam.loyalty.common.api.interfaces,\
-	com.icteam.loyalty.common.api.nls
+	
+	
+	

@@ -1,4 +1,4 @@
-package com.icteam.loyalty.common.api.nls;
+package com.icteam.loyalty.common.nls;
 
 import org.osgi.service.metatype.annotations.AttributeDefinition;
 import org.osgi.service.metatype.annotations.ObjectClassDefinition;

@@ -1,0 +1,15 @@
+Bundle-Version: 1.0.0.${tstamp}
+Bundle-Name: Loyalty Common Tracker
+Bundle-Description: Loyalty Common Tracker Project
+Bundle-Activator: com.icteam.loyalty.common.tracker.Activator
+Private-Package: com.icteam.loyalty.common.tracker
+
+-buildpath: \
+	osgi.enroute.base.api;version=latest,\
+	org.apache.commons.lang3;version=3.4,\
+	com.icteam.loyalty.common.api;version=latest,\
+	org.eclipse.equinox.common;version=3.8,\
+	org.eclipse.jetty.util;version=9.3
+
+Tracker-Extension: com.icteam.loyalty.common.tracker.EnumTracker,\
+                   com.icteam.loyalty.common.tracker.ConfigTracker 	

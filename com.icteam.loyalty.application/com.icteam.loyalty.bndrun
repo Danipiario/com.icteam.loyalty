@@ -35,12 +35,12 @@ JPM-Command:					loyalty
 	osgi.identity;filter:='(&(osgi.identity=org.apache.felix.webconsole.plugins.ds)(version>=2.0.2))',\
 	osgi.identity;filter:='(&(osgi.identity=org.apache.felix.webconsole)(version>=4.2.16))',\
 	osgi.identity;filter:='(&(osgi.identity=biz.aQute.bndlib)(version>=3.0.0))',\
-	osgi.identity;filter:='(osgi.identity=com.icteam.loyalty.common.db)',\
-	osgi.identity;filter:='(osgi.identity=com.icteam.loyalty.common.provider)',\
 	osgi.identity;filter:='(&(osgi.identity=org.apache.aries.quiesce.api)(version>=1.0.0))',\
 	osgi.identity;filter:='(&(osgi.identity=org.apache.aries.proxy.api)(version>=1.0.1))',\
 	osgi.identity;filter:='(osgi.identity=org.openengsb.labs.liquibase.extender)',\
-	osgi.identity;filter:='(&(osgi.identity=ojdbc.ojdbc6)(version>=11.2.0))'
+	osgi.identity;filter:='(&(osgi.identity=ojdbc.ojdbc6)(version>=11.2.0))',\
+	osgi.identity;filter:='(osgi.identity=com.icteam.loyalty.common.db)',\
+	osgi.identity;filter:='(osgi.identity=com.icteam.loyalty.common.tracker)'
 
 -runbundles: \
 	biz.aQute.bndlib;version='[3.0.0,3.0.1)',\
@@ -49,7 +49,9 @@ JPM-Command:					loyalty
 	com.ibm.icu.base;version='[56.1.0,56.1.1)',\
 	com.icteam.loyalty.application;version=snapshot,\
 	com.icteam.loyalty.common.db;version=snapshot,\
+	com.icteam.loyalty.common.nls;version=snapshot,\
 	com.icteam.loyalty.common.provider;version=snapshot,\
+	com.icteam.loyalty.common.tracker;version=snapshot,\
 	com.springsource.org.json;version='[1.0.0,1.0.1)',\
 	javax.inject;version='[1.0.0,1.0.1)',\
 	javax.servlet;version='[3.1.0,3.1.1)',\
