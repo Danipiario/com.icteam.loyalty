@@ -3,12 +3,12 @@ package com.icteam.loyalty.common.internal.provider;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
-import com.icteam.loyalty.common.api.AuthService;
-import com.icteam.loyalty.common.api.CryptService;
-import com.icteam.loyalty.common.api.DTOService;
-import com.icteam.loyalty.common.api.dto.OperatorDTO;
-import com.icteam.loyalty.common.api.dto.OperatorLoginDTO;
-import com.icteam.loyalty.common.api.model.Operator;
+import com.icteam.loyalty.common.AuthService;
+import com.icteam.loyalty.common.CryptService;
+import com.icteam.loyalty.common.DTOService;
+import com.icteam.loyalty.common.dto.OperatorDTO;
+import com.icteam.loyalty.common.dto.OperatorLoginDTO;
+import com.icteam.loyalty.common.model.Operator;
 
 @Component
 public class AuthProvider implements AuthService {

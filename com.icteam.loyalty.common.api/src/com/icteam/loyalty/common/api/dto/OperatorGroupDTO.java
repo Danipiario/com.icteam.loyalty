@@ -1,4 +1,4 @@
-package com.icteam.loyalty.common.api.dto;
+package com.icteam.loyalty.common.dto;
 
 import org.osgi.dto.DTO;
 

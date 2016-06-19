@@ -28,8 +28,8 @@ JPM-Command:			loyalty
 	org.eclipse.jdt.annotation;version=2.1,\
 	org.apache.felix.jaas;version=0.0,\
 	org.eclipse.jetty.util;version=9.3,\
-	com.icteam.loyalty.common.api;version=latest,\
-	org.apache.felix.metatype;version=1.1
+	org.apache.felix.metatype;version=1.1,\
+	com.icteam.loyalty.common;version=latest
 	
 Bundle-Name: Loyalty Application
 Export-Package: com.icteam.loyalty.application.handler

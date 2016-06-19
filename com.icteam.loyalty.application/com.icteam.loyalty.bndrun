@@ -7,7 +7,6 @@ Bundle-Version:				1.0.0.${tstamp}
 Bundle-SymbolicName:		com.icteam.loyalty.application.launch
 JPM-Command:					loyalty
 
-
 -runfw: org.eclipse.osgi
 
 -runrequires: \
@@ -35,24 +34,28 @@ JPM-Command:					loyalty
 	osgi.identity;filter:='(&(osgi.identity=org.apache.felix.webconsole.plugins.ds)(version>=2.0.2))',\
 	osgi.identity;filter:='(&(osgi.identity=org.apache.felix.webconsole)(version>=4.2.16))',\
 	osgi.identity;filter:='(&(osgi.identity=biz.aQute.bndlib)(version>=3.0.0))',\
-	osgi.identity;filter:='(osgi.identity=com.icteam.loyalty.common.db)',\
-	osgi.identity;filter:='(osgi.identity=com.icteam.loyalty.common.provider)',\
 	osgi.identity;filter:='(&(osgi.identity=org.apache.aries.quiesce.api)(version>=1.0.0))',\
 	osgi.identity;filter:='(&(osgi.identity=org.apache.aries.proxy.api)(version>=1.0.1))',\
 	osgi.identity;filter:='(osgi.identity=org.openengsb.labs.liquibase.extender)',\
-	osgi.identity;filter:='(&(osgi.identity=ojdbc.ojdbc6)(version>=11.2.0))'
+	osgi.identity;filter:='(&(osgi.identity=ojdbc.ojdbc6)(version>=11.2.0))',\
+	osgi.identity;filter:='(&(osgi.identity=org.everit.osgi.webconsole.blueprint)(version>=1.0.0))',\
+	osgi.identity;filter:='(&(osgi.identity=org.everit.persistence.querydsl.configuration.ecm)(version>=1.0.0))'
 
 -runbundles: \
 	biz.aQute.bndlib;version='[3.0.0,3.0.1)',\
 	ch.qos.logback.classic;version='[1.0.0,1.0.1)',\
 	ch.qos.logback.core;version='[1.0.0,1.0.1)',\
+	com.google.guava;version='[19.0.0,19.0.1)',\
 	com.ibm.icu.base;version='[56.1.0,56.1.1)',\
 	com.icteam.loyalty.application;version=snapshot,\
-	com.icteam.loyalty.common.db;version=snapshot,\
-	com.icteam.loyalty.common.provider;version=snapshot,\
+	com.icteam.loyalty.common;version=snapshot,\
+	com.mysema.commons.lang;version='[0.2.4,0.2.5)',\
+	com.querydsl.core;version='[4.1.2,4.1.3)',\
+	com.querydsl.sql;version='[4.1.2,4.1.3)',\
 	com.springsource.org.json;version='[1.0.0,1.0.1)',\
 	javax.inject;version='[1.0.0,1.0.1)',\
 	javax.servlet;version='[3.1.0,3.1.1)',\
+	joda-time;version='[2.9.3,2.9.4)',\
 	ojdbc.ojdbc6;version='[11.2.0,11.2.1)',\
 	org.apache.aries.blueprint.api;version='[1.0.1,1.0.2)',\
 	org.apache.aries.blueprint.cm;version='[1.0.8,1.0.9)',\
@@ -61,6 +64,7 @@ JPM-Command:					loyalty
 	org.apache.aries.proxy.impl;version='[1.0.5,1.0.6)',\
 	org.apache.aries.quiesce.api;version='[1.0.0,1.0.1)',\
 	org.apache.aries.util;version='[1.1.0,1.1.1)',\
+	org.apache.commons.codec;version='[1.10.0,1.10.1)',\
 	org.apache.commons.fileupload;version='[1.3.1,1.3.2)',\
 	org.apache.commons.io;version='[2.4.0,2.4.1)',\
 	org.apache.commons.lang3;version='[3.4.0,3.4.1)',\
@@ -108,6 +112,7 @@ JPM-Command:					loyalty
 	org.eclipse.rap.rwt.osgi;version='[3.1.0,3.1.1)',\
 	org.eclipse.rap.ui;version='[3.1.0,3.1.1)',\
 	org.eclipse.rap.ui.workbench;version='[3.1.0,3.1.1)',\
+	org.everit.osgi.webconsole.blueprint;version='[1.0.0,1.0.1)',\
 	org.liquibase.core;version='[3.5.1,3.5.2)',\
 	org.openengsb.labs.liquibase.extender;version='[1.0.6,1.0.7)',\
 	org.yaml.snakeyaml;version='[1.13.0,1.13.1)',\

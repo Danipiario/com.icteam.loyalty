@@ -1,0 +1,21 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+	<changeSet id="0001" author="d.pirola">
+		<createTable tableName="OPERATOR">
+			<column name="LOGIN" type="varchar(50)">
+				<constraints primaryKey="true" primaryKeyName="PK_OPERATOR" />
+			</column>
+			<column name="NAME" type="varchar(50)"></column>
+			<column name="SURNAME" type="varchar(50)"></column>
+			<column name="PASSWORD" type="varchar(50)"></column>
+			<column name="CHANGE_PASSWORD" type="boolean"></column>
+		</createTable>
+	</changeSet>
+	<changeSet id="0002" author="d.pirola">
+		<addColumn tableName="OPERATOR">
+			<column name="GROUPS" type="varchar(2000)"></column>
+		</addColumn>
+	</changeSet>
+</databaseChangeLog>

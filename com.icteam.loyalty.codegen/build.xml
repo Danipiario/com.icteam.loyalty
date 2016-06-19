@@ -1,0 +1,12 @@
+<project name="testproject" default="codegen" basedir=".">
+
+	<taskdef name="codegen" classname="com.querydsl.sql.codegen.ant.AntMetaDataExporter" />
+
+	<target name="clean" >
+		<delete dir="target" />
+	</target>
+	<target name="codegen" depends="clean">
+		<codegen jdbcDriver="oracle.jdbc.OracleDriver" jdbcUser="LOYALTY" jdbcPassword="LOYALTY" jdbcUrl="jdbc:oracle:thin:@localhost:1521:XE" packageName="com.icteam.loyalty" namePrefix="" beanAddToString="true" schemaPattern="LOYALTY" targetFolder="target/generated/java">
+		</codegen>
+	</target>
+</project>

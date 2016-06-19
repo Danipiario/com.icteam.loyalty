@@ -13,8 +13,8 @@ import org.osgi.service.component.annotations.ServiceScope;
 import org.osgi.util.tracker.ServiceTracker;
 import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
-import com.icteam.loyalty.common.api.DTOBuilder;
-import com.icteam.loyalty.common.api.DTOService;
+import com.icteam.loyalty.common.DTOBuilder;
+import com.icteam.loyalty.common.DTOService;
 
 @Component(service = DTOService.class, immediate = true, scope = ServiceScope.SINGLETON)
 public class DTOProvider

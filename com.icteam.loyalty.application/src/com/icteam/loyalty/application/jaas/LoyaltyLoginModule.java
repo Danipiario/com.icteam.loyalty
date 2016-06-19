@@ -10,14 +10,20 @@ import javax.security.auth.callback.PasswordCallback;
 import javax.security.auth.callback.TextOutputCallback;
 import javax.security.auth.login.LoginException;
 
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.util.tracker.ServiceTracker;
+
 import com.icteam.loyalty.application.Messages;
+import com.icteam.loyalty.common.dto.OperatorDTO;
+import com.icteam.loyalty.common.dto.OperatorLoginDTO;
+import com.icteam.loyalty.common.service.AuthService;
 
 public class LoyaltyLoginModule implements javax.security.auth.spi.LoginModule {
 
 	private CallbackHandler callbackHandler;
 	private boolean loggedIn = true;
 	private Subject subject;
-	// private OperatorEMFModel operatorEMFModel;
+	private OperatorDTO operatorDTO;
 
 	public LoyaltyLoginModule() {
 	}
@@ -47,49 +53,49 @@ public class LoyaltyLoginModule implements javax.security.auth.spi.LoginModule {
 			throw loginException;
 		}
 
-		nameCallback.getName();
+		final String username = nameCallback.getName();
+		String password = null;
+
 		if (passwordCallback.getPassword() != null) {
-			String.valueOf(passwordCallback.getPassword());
+			password = String.valueOf(passwordCallback.getPassword());
 		}
 
-		// AuthEMFService authService;
-		// ServiceTracker<AuthEMFService, AuthEMFService> serviceTracker = null;
-		// try {
-		// serviceTracker = new
-		// ServiceTracker<>(FrameworkUtil.getBundle(getClass()).getBundleContext(),
-		// AuthEMFService.class, null);
-		// serviceTracker.open();
-		// authService = serviceTracker.waitForService(1000);
-		//
-		// final OperatorEMFTemplate operatorTemplate =
-		// AuthTemplateFactory.eINSTANCE.createOperatorEMFTemplate();
-		// operatorTemplate.setLogin(username);
-		// operatorTemplate.setPassword(password);
-		// operatorTemplate.setStatus(ModelUtil.valueOf(Status.class,
-		// ModelInterfacesPackage.Literals.STATUS__ATTIVO.getName()));
-		//
-		// operatorEMFModel = authService.login(operatorTemplate);
-		//
-		// operatorEMFModel =
-		// ChangePasswordCallbackHandler.checkChangePassword(operatorEMFModel,
-		// authService);
-		//
-		// loggedIn = operatorEMFModel != null;
-		// } catch (final InterruptedException e) {
-		// e.printStackTrace();
-		// } finally {
-		// serviceTracker.close();
-		// }
+		AuthService authService;
+		ServiceTracker<AuthService, AuthService> serviceTracker = null;
+		try {
+			serviceTracker = new ServiceTracker<>(FrameworkUtil.getBundle(getClass()).getBundleContext(),
+					AuthService.class, null);
+			serviceTracker.open();
+			authService = serviceTracker.waitForService(1000);
+
+			final OperatorLoginDTO operatorTemplate = new OperatorLoginDTO();
+			operatorTemplate.login = username;
+			operatorTemplate.password = password;
+
+			operatorDTO = authService.login(operatorTemplate);
+
+			// operatorModel =
+			// ChangePasswordCallbackHandler.checkChangePassword(operatorModel,
+			// authService);
+
+			loggedIn = operatorDTO != null;
+		} catch (final InterruptedException e) {
+			e.printStackTrace();
+		} finally {
+			if (serviceTracker != null) {
+				serviceTracker.close();
+			}
+		}
 
 		return loggedIn;
 	}
 
 	@Override
 	public boolean commit() {
-		// subject.getPrincipals().add(operatorEMFModel);
-		// subject.getPrivateCredentials().addAll(operatorEMFModel.getOperatorGroupList());
+		subject.getPrincipals().add(operatorDTO);
+		// subject.getPrivateCredentials().addAll(operatorModel.getOperatorGroupList());
 		//
-		// RWT.getUISession().setLocale(operatorEMFModel.getLanguage().getLocale());
+		// RWT.getUISession().setLocale(operatorModel.getLanguage().getLocale());
 
 		return loggedIn;
 	}
@@ -98,7 +104,7 @@ public class LoyaltyLoginModule implements javax.security.auth.spi.LoginModule {
 	public boolean abort() {
 		loggedIn = false;
 		subject = null;
-		// operatorEMFModel = null;
+		operatorDTO = null;
 
 		return true;
 	}
@@ -107,7 +113,7 @@ public class LoyaltyLoginModule implements javax.security.auth.spi.LoginModule {
 	public boolean logout() {
 		loggedIn = false;
 		subject = null;
-		// operatorEMFModel = null;
+		operatorDTO = null;
 
 		return true;
 	}

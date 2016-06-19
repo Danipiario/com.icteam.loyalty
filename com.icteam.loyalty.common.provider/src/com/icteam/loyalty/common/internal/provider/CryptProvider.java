@@ -12,7 +12,7 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ServiceScope;
 
-import com.icteam.loyalty.common.api.CryptService;
+import com.icteam.loyalty.common.CryptService;
 
 @Component(scope = ServiceScope.SINGLETON)
 public class CryptProvider implements CryptService {

@@ -12,8 +12,8 @@ import org.osgi.framework.BundleEvent;
 import org.osgi.util.tracker.BundleTracker;
 import org.osgi.util.tracker.ServiceTracker;
 
-import com.icteam.loyalty.common.api.EnumService;
-import com.icteam.loyalty.common.api.interfaces.IEnum;
+import com.icteam.loyalty.common.EnumService;
+import com.icteam.loyalty.common.interfaces.IEnum;
 
 public class EnumTracker extends BundleTracker<Bundle> {
 

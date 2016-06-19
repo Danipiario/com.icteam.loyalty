@@ -1,6 +1,6 @@
 package com.icteam.loyalty.application;
 
-import com.icteam.loyalty.common.api.nls.NLS;
+import com.icteam.loyalty.common.nls.NLS;
 
 public class Messages {
 

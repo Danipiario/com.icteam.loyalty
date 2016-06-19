@@ -1,4 +1,4 @@
-package com.icteam.loyalty.common.api.model;
+package com.icteam.loyalty.common.model;
 
 public class Operator {
 
