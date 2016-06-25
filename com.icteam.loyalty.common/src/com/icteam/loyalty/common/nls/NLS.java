@@ -8,6 +8,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
+import java.util.WeakHashMap;
 
 import org.apache.commons.lang3.LocaleUtils;
 import org.eclipse.jetty.util.log.Log;
@@ -26,7 +27,7 @@ public class NLS implements ManagedService {
 	private static NLSConfiguration configuration = Configurable.createConfigurable(NLSConfiguration.class,
 			new HashMap<>());
 
-	private final static Map<ResourceBundle, Object> map = new HashMap<>();
+	private final static Map<ResourceBundle, Object> map = new WeakHashMap<>();
 
 	/**
 	 * Returns a NLS object for the given resource bundle and type. See class

@@ -20,6 +20,12 @@ public final class Utf8ResourceBundle {
 
 	private final static Map<String, Map<String, ResourceBundle>> resourceBundleMaps = new HashMap<>();
 
+	public static void removeBundle(Bundle bundle) {
+		synchronized (resourceBundleMaps) {
+			resourceBundleMaps.remove(bundle.getSymbolicName());
+		}
+	}
+
 	public static ResourceBundle getBundle(Class<?> clazz, Locale locale) {
 		final Bundle bundle = FrameworkUtil.getBundle(clazz);
 
