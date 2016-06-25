@@ -13,7 +13,7 @@ import javax.security.auth.login.LoginException;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.util.tracker.ServiceTracker;
 
-import com.icteam.loyalty.application.Messages;
+import com.icteam.loyalty.application.internal.Messages;
 import com.icteam.loyalty.common.dto.OperatorDTO;
 import com.icteam.loyalty.common.dto.OperatorLoginDTO;
 import com.icteam.loyalty.common.service.AuthService;

@@ -16,6 +16,8 @@ import org.osgi.service.cm.ConfigurationException;
 import org.osgi.service.cm.ManagedService;
 import org.osgi.service.component.annotations.Component;
 
+import com.icteam.loyalty.common.configuration.Configurable;
+
 @Component(immediate = true, configurationPid = "com.icteam.loyalty.common.nls")
 public class NLS implements ManagedService {
 

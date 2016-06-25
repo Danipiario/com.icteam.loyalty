@@ -32,14 +32,13 @@ public class LoyaltyEntryPoint extends AbstractEntryPoint {
 
 	@Override
 	public int createUI() {
-		final Display display = new Display();
 
-		org.eclipse.jetty.util.Loader.getResource(org.eclipse.jetty.util.log.Log.class, "jetty-logging.properties");
+		final Display display = new Display();
 
 		final ServiceTracker<LoginContextFactory, LoginContextFactory> serviceTracker = new ServiceTracker<>(
 				FrameworkUtil.getBundle(getClass()).getBundleContext(), LoginContextFactory.class, null);
 		serviceTracker.open();
-		//		Snippet.run(display);
+		// Snippet.run(display);
 
 		final String configName = "loyalty";
 
@@ -49,17 +48,21 @@ public class LoyaltyEntryPoint extends AbstractEntryPoint {
 			try {
 				final Subject subject = new Subject();
 
-				secureContext = serviceTracker.waitForService(1000).createLoginContext(configName, subject, new LoginCallbackHandler());
+				secureContext = serviceTracker.waitForService(1000).createLoginContext(configName, subject,
+						new LoginCallbackHandler());
 				secureContext.login();
 
 				RWT.getUISession(display).setAttribute("secureContext", secureContext);
 				break;
 			} catch (final LoginException | InterruptedException exception) {
-				final Throwable cause = exception.getCause();
-				if (cause != null && cause instanceof ThreadDeath) {
+				exception.printStackTrace();
+				final Throwable cause = exception.getCause() == null ? exception : exception.getCause();
+				if (cause instanceof ThreadDeath) {
 					throw (ThreadDeath) cause;
 				}
-				final Status status = new Status(IStatus.ERROR, "com.icteam.loyalty.ui", "Login failed", cause);
+
+				final Status status = new Status(IStatus.ERROR, "com.icteam.loyalty.application", "Login failed",
+						cause);
 				ErrorDialog.openError(null, "Error", "Login failed", status);
 			}
 		}

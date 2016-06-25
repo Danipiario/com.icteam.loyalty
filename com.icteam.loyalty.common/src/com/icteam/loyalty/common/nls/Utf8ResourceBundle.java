@@ -63,6 +63,12 @@ public final class Utf8ResourceBundle {
 			localizationHeader = Constants.BUNDLE_LOCALIZATION_DEFAULT_BASENAME;
 		}
 
+		// la definzione della location contiene anche il prefisso del file di
+		// properties
+		// che deve essere tolto
+		// es OSGI-INF/l10n/bundle -> OSGI-INF/l10n
+		localizationHeader = localizationHeader.substring(0, localizationHeader.lastIndexOf('/'));
+
 		final String[] nlVariants = buildNLVariants(locale.toString());
 
 		URL propertiesURL = null;

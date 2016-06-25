@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="ASCII"?>
+<application:Application xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:advanced="http://www.eclipse.org/ui/2010/UIModel/application/ui/advanced" xmlns:application="http://www.eclipse.org/ui/2010/UIModel/application" xmlns:basic="http://www.eclipse.org/ui/2010/UIModel/application/ui/basic" xmlns:menu="http://www.eclipse.org/ui/2010/UIModel/application/ui/menu" xmi:id="_nb4lQDiMEeaMONTLrsbb4w" elementId="com.icteam.loyalty.application.application">
+  <children xsi:type="basic:TrimmedWindow" xmi:id="_oMuzYDiMEeaMONTLrsbb4w" elementId="com.icteam.loyalty.application.trimmedwindow.0">
+    <persistedState key="styleOverride" value="8"/>
+    <tags>shellMaximized</tags>
+    <children xsi:type="advanced:PerspectiveStack" xmi:id="_gJjVMDiOEeaMONTLrsbb4w" elementId="com.icteam.loyalty.application.perspectivestack.0">
+      <children xsi:type="advanced:Perspective" xmi:id="_hxPEsDiOEeaMONTLrsbb4w" elementId="com.icteam.loyalty.application.perspective.administration" label="%administration">
+        <children xsi:type="basic:PartSashContainer" xmi:id="_x8bg8DiOEeaMONTLrsbb4w" elementId="com.icteam.loyalty.application.partsashcontainer.0" horizontal="true">
+          <children xsi:type="basic:PartStack" xmi:id="_0vL8cDiOEeaMONTLrsbb4w" elementId="com.icteam.loyalty.application.partstack.0" containerData="30">
+            <children xsi:type="basic:Part" xmi:id="_3udxADiOEeaMONTLrsbb4w" elementId="com.icteam.loyalty.application.part.viewoperator" contributionURI="bundleclass://com.icteam.loyalty.application/com.icteam.loyalty.application.view.OperatorView" label="%view.operator"/>
+          </children>
+          <children xsi:type="basic:PartStack" xmi:id="_2TJCgDiOEeaMONTLrsbb4w" elementId="com.icteam.loyalty.application.partstack.1" containerData="70"/>
+        </children>
+      </children>
+    </children>
+    <mainMenu xmi:id="_VXz0cDiPEeaMONTLrsbb4w" elementId="com.icteam.loyalty.application.menu.0">
+      <children xsi:type="menu:Menu" xmi:id="_EUrOIDiQEeaMONTLrsbb4w" elementId="com.icteam.loyalty.application.menu.administrationmenu" label="%administration.menu">
+        <children xsi:type="menu:HandledMenuItem" xmi:id="_JDH6QDiQEeaMONTLrsbb4w" elementId="com.icteam.loyalty.application.handledmenuitem.exit" label="%exit" command="_dCObEDiSEeaMONTLrsbb4w"/>
+      </children>
+    </mainMenu>
+  </children>
+  <handlers xmi:id="_dL18ADiQEeaMONTLrsbb4w" elementId="com.icteam.loyalty.application.handler.0" contributionURI="bundleclass://com.icteam.loyalty.application/com.icteam.loyalty.application.handler.ExitHandler" command="_dCObEDiSEeaMONTLrsbb4w"/>
+  <commands xmi:id="_dCObEDiSEeaMONTLrsbb4w" elementId="com.icteam.loyalty.application.command.exit" commandName="exit"/>
+  <addons xmi:id="_nb4lQTiMEeaMONTLrsbb4w" elementId="org.eclipse.e4.core.commands.service" contributionURI="bundleclass://org.eclipse.e4.core.commands/org.eclipse.e4.core.commands.CommandServiceAddon"/>
+  <addons xmi:id="_nb4lQjiMEeaMONTLrsbb4w" elementId="org.eclipse.e4.ui.contexts.service" contributionURI="bundleclass://org.eclipse.e4.ui.services/org.eclipse.e4.ui.services.ContextServiceAddon"/>
+  <addons xmi:id="_nb4lQziMEeaMONTLrsbb4w" elementId="org.eclipse.e4.ui.bindings.service" contributionURI="bundleclass://org.eclipse.e4.ui.bindings/org.eclipse.e4.ui.bindings.BindingServiceAddon"/>
+  <addons xmi:id="_nb4lRDiMEeaMONTLrsbb4w" elementId="org.eclipse.e4.ui.workbench.commands.model" contributionURI="bundleclass://org.eclipse.e4.ui.workbench/org.eclipse.e4.ui.internal.workbench.addons.CommandProcessingAddon"/>
+  <addons xmi:id="_nb4lRTiMEeaMONTLrsbb4w" elementId="org.eclipse.e4.ui.workbench.contexts.model" contributionURI="bundleclass://org.eclipse.e4.ui.workbench/org.eclipse.e4.ui.internal.workbench.addons.ContextProcessingAddon"/>
+  <addons xmi:id="_nb4lRjiMEeaMONTLrsbb4w" elementId="org.eclipse.e4.ui.workbench.bindings.model" contributionURI="bundleclass://org.eclipse.e4.ui.workbench.swt/org.eclipse.e4.ui.workbench.swt.util.BindingProcessingAddon"/>
+  <addons xmi:id="_nb4lRziMEeaMONTLrsbb4w" elementId="org.eclipse.e4.ui.workbench.handler.model" contributionURI="bundleclass://org.eclipse.e4.ui.workbench/org.eclipse.e4.ui.internal.workbench.addons.HandlerProcessingAddon"/>
+</application:Application>

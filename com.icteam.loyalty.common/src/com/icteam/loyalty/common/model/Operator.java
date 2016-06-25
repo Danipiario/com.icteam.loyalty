@@ -12,9 +12,6 @@ import com.querydsl.core.types.dsl.NumberPath;
 import com.querydsl.core.types.dsl.StringPath;
 import com.querydsl.sql.ColumnMetadata;
 
-
-
-
 /**
  * Operator is a Querydsl query type for Operator
  */
@@ -34,6 +31,8 @@ public class Operator extends com.querydsl.sql.RelationalPathBase<Operator> {
 	public final StringPath name = createString("name");
 
 	public final StringPath password = createString("password");
+
+	public final StringPath status = createString("status");
 
 	public final StringPath surname = createString("surname");
 
@@ -60,13 +59,14 @@ public class Operator extends com.querydsl.sql.RelationalPathBase<Operator> {
 	}
 
 	public void addMetadata() {
-		addMetadata(changePassword, ColumnMetadata.named("CHANGE_PASSWORD").withIndex(5).ofType(Types.DECIMAL).withSize(1));
+		addMetadata(changePassword,
+				ColumnMetadata.named("CHANGE_PASSWORD").withIndex(5).ofType(Types.DECIMAL).withSize(1));
 		addMetadata(groups, ColumnMetadata.named("GROUPS").withIndex(6).ofType(Types.VARCHAR).withSize(2000));
 		addMetadata(login, ColumnMetadata.named("LOGIN").withIndex(1).ofType(Types.VARCHAR).withSize(50).notNull());
 		addMetadata(name, ColumnMetadata.named("NAME").withIndex(2).ofType(Types.VARCHAR).withSize(50));
 		addMetadata(password, ColumnMetadata.named("PASSWORD").withIndex(4).ofType(Types.VARCHAR).withSize(50));
+		addMetadata(status, ColumnMetadata.named("STATUS").withIndex(7).ofType(Types.VARCHAR).withSize(50));
 		addMetadata(surname, ColumnMetadata.named("SURNAME").withIndex(3).ofType(Types.VARCHAR).withSize(50));
 	}
 
 }
-

@@ -1,0 +1,6 @@
+Bundle-Name: Log4j Configurator
+Bundle-SymbolicName: org.apache.logging.log4j.config
+Bundle-Version: 1.0.0
+Fragment-Host: org.apache.logging.log4j
+
+-includeresource: log4j2.xml=resources/log4j2.xml

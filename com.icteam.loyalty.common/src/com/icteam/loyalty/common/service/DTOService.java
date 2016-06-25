@@ -6,8 +6,10 @@ import org.osgi.dto.DTO;
 @ProviderType
 public interface DTOService {
 
-    <D extends DTO, O extends Object> O toObject(D dto, Class<O> objectClass);
+	<D extends DTO> D newDTO(Class<D> dtoClass);
 
-    <D extends DTO, O extends Object> D toDTO(O object, Class<D> dtoClass);
+	void addDTO(Class<? extends DTO> dtoClass, Class<? extends DTO> dtoExtendedClass);
+
+	void removeDTO(Class<? extends DTO> dtoClass);
 
 }

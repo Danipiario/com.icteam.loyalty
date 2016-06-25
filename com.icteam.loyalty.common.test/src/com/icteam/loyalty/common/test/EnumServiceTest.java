@@ -8,7 +8,7 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.util.tracker.ServiceTracker;
 
-import com.icteam.loyalty.common.interfaces.IAlfa;
+import com.icteam.loyalty.common.interfaces.IStatus;
 import com.icteam.loyalty.common.interfaces.IEnum;
 import com.icteam.loyalty.common.service.EnumService;
 
@@ -42,7 +42,7 @@ public class EnumServiceTest {
 
 	 @Test
 	 public void valuesOfIAlfa() throws InterruptedException {
-		 final List< ? extends IEnum> values = getService(EnumService.class).values(IAlfa.class);
+		 final List< ? extends IEnum> values = getService(EnumService.class).values(IStatus.class);
 		 System.out.println(values);
 		 Assert.assertNotNull(values);
 	 }

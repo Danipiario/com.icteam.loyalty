@@ -20,7 +20,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
-import com.icteam.loyalty.application.Messages;
+import com.icteam.loyalty.application.internal.Messages;
 
 /**
  * Handles the callbacks to show a RCP/RAP UI for the LoginModule.

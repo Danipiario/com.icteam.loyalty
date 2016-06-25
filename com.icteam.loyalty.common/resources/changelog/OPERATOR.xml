@@ -18,4 +18,20 @@
 			<column name="GROUPS" type="varchar(2000)"></column>
 		</addColumn>
 	</changeSet>
+	<changeSet id="0003" author="d.pirola">
+		<addColumn tableName="OPERATOR">
+			<column name="STATUS" type="varchar(50)"></column>
+		</addColumn>
+	</changeSet>
+    <changeSet id="0004" author="d.pirola">
+        <insert tableName="OPERATOR">
+            <column name="LOGIN" value="manager" />
+            <column name="NAME" value="manager" />
+            <column name="SURNAME" value="manager" />
+            <column name="PASSWORD" value="7sFri+UTREdjRVe0jk/33w==" /> <!-- Loyalty2015. -->
+            <column name="CHANGE_PASSWORD" valueBoolean="false" />
+            <column name="STATUS" value="ATTIVO" />
+        </insert>
+    </changeSet>
+        
 </databaseChangeLog>

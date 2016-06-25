@@ -61,23 +61,23 @@ public class EnumTracker extends BundleTracker<Bundle> {
 
 	private void removeEnumExtension(final Bundle bundle, final String extension) {
 		new Thread(() -> {
-			final String[] enhancedEnumClasses = StringUtils.stripAll(StringUtils.split(extension, ","));
+			final String[] enumClasses = StringUtils.stripAll(StringUtils.split(extension, ","));
 
-			for (final String enhancedEnumClass : enhancedEnumClasses) {
+			for (final String enumClass : enumClasses) {
 				try {
-					logger.info("bundle #{} - remove enum #{}", bundle.getSymbolicName(), enhancedEnumClass);
+					logger.info("bundle #{} - remove enum #{}", bundle.getSymbolicName(), enumClass);
 
-					final Class< ? extends Enum< ? >> enumClass = (Class< ? extends Enum< ? >>) bundle.loadClass(enhancedEnumClass);
-					final List<Class< ? >> interfaces = ClassUtils.getAllInterfaces(enumClass);
+					final Class<? extends Enum<?>> ec = (Class<? extends Enum<?>>) bundle.loadClass(enumClass);
+					final List<Class<?>> interfaces = ClassUtils.getAllInterfaces(ec);
 
-					for (final Class< ? > interface_ : interfaces) {
+					for (final Class<?> interface_ : interfaces) {
 						if (IEnum.class.isAssignableFrom(interface_)) {
-							final Class< ? extends IEnum> interfaceClass = (Class< ? extends IEnum>) interface_;
+							final Class<? extends IEnum> interfaceClass = (Class<? extends IEnum>) interface_;
 
 							final EnumService enumService = serviceTracker.waitForService(10000);
 
 							if (enumService != null) {
-								enumService.removeEnum(interfaceClass, enumClass);
+								enumService.removeEnum(interfaceClass, ec);
 							}
 						}
 					}
@@ -90,23 +90,23 @@ public class EnumTracker extends BundleTracker<Bundle> {
 
 	private void addEnumExtension(final Bundle bundle, final String extension) {
 		new Thread(() -> {
-			final String[] enhancedEnumClasses = StringUtils.stripAll(StringUtils.split(extension, ","));
+			final String[] enumClasses = StringUtils.stripAll(StringUtils.split(extension, ","));
 
-			for (final String enhancedEnumClass : enhancedEnumClasses) {
+			for (final String enumClass : enumClasses) {
 				try {
-					logger.info("bundle #{} - add enum #{}", bundle.getSymbolicName(), enhancedEnumClass);
+					logger.info("bundle #{} - add enum #{}", bundle.getSymbolicName(), enumClass);
 
-					final Class< ? extends Enum< ? >> enumClass = (Class< ? extends Enum< ? >>) bundle.loadClass(enhancedEnumClass);
-					final List<Class< ? >> interfaces = ClassUtils.getAllInterfaces(enumClass);
+					final Class<? extends Enum<?>> ec = (Class<? extends Enum<?>>) bundle.loadClass(enumClass);
+					final List<Class<?>> interfaces = ClassUtils.getAllInterfaces(ec);
 
-					for (final Class< ? > interface_ : interfaces) {
+					for (final Class<?> interface_ : interfaces) {
 						if (IEnum.class.isAssignableFrom(interface_)) {
-							final Class< ? extends IEnum> interfaceClass = (Class< ? extends IEnum>) interface_;
+							final Class<? extends IEnum> interfaceClass = (Class<? extends IEnum>) interface_;
 
 							final EnumService enumService = serviceTracker.waitForService(10000);
 
 							if (enumService != null) {
-								enumService.addEnum(interfaceClass, enumClass);
+								enumService.addEnum(interfaceClass, ec);
 							}
 						}
 					}

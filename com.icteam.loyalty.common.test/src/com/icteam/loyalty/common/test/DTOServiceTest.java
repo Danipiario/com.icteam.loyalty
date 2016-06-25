@@ -1,20 +1,15 @@
 package com.icteam.loyalty.common.test;
 
-import java.util.Dictionary;
-import java.util.Hashtable;
-
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
-import org.osgi.framework.ServiceRegistration;
 import org.osgi.util.tracker.ServiceTracker;
 
 import com.icteam.loyalty.common.service.DTOBuilder;
 import com.icteam.loyalty.common.service.DTOService;
-
 
 /**
  *
@@ -24,7 +19,7 @@ public class DTOServiceTest {
 
 	private static final BundleContext context = FrameworkUtil.getBundle(DTOServiceTest.class).getBundleContext();
 
-	private static ServiceTracker< ? , ? > serviceTracker = new ServiceTracker<>(context, DTOService.class, null);
+	private static ServiceTracker<?, ?> serviceTracker = new ServiceTracker<>(context, DTOService.class, null);
 
 	class TestDTOBuilder implements DTOBuilder<TestDTO, String> {
 
@@ -63,49 +58,4 @@ public class DTOServiceTest {
 		Assert.assertNotNull(getService());
 	}
 
-	@Test(expected = AssertionError.class)
-	public void nullParametersToDTO() throws InterruptedException {
-		getService().toDTO(null, null);
-	}
-
-	@Test(expected = AssertionError.class)
-	public void nullParametersToObject() throws InterruptedException {
-		getService().toObject(null, null);
-	}
-
-	@Test(expected = IllegalArgumentException.class)
-	public void noBuilder() throws InterruptedException {
-		getService().toDTO(new Object(), TestDTO.class);
-	}
-
-	@Test
-	public void builderRegistered() throws InterruptedException {
-		final DTOBuilder<TestDTO, String> testBuilder = new TestDTOBuilder();
-
-		final Dictionary<String, String> properties = new Hashtable<>();
-		properties.put(DTOBuilder.PROPERTY_DTO_CLASS_NAME, TestDTO.class.getSimpleName());
-		properties.put(DTOBuilder.PROPERTY_OBJECT_CLASS_NAME, String.class.getSimpleName());
-
-		FrameworkUtil.getBundle(getClass()).getBundleContext().registerService(DTOBuilder.class, testBuilder, properties);
-
-		Assert.assertNotNull(getService().toDTO("", TestDTO.class));
-	}
-
-	@Test(expected = IllegalArgumentException.class)
-	public void builderDeregistered() throws InterruptedException {
-		final DTOBuilder<TestDTO, String> testBuilder = new TestDTOBuilder();
-
-		final Dictionary<String, String> properties = new Hashtable<>();
-		properties.put(DTOBuilder.PROPERTY_DTO_CLASS_NAME, TestDTO.class.getSimpleName());
-		properties.put(DTOBuilder.PROPERTY_OBJECT_CLASS_NAME, String.class.getSimpleName());
-
-		final ServiceRegistration< ? > serviceRegistration = FrameworkUtil.getBundle(getClass()).getBundleContext()
-				.registerService(DTOBuilder.class.getName(), testBuilder, properties);
-
-		Assert.assertNotNull(getService().toDTO("", TestDTO.class));
-
-		serviceRegistration.unregister();
-
-		getService().toDTO("", TestDTO.class);
-	}
 }

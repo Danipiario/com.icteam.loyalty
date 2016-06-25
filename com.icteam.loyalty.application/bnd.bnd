@@ -7,31 +7,44 @@ Bundle-Description: Application project
 
 Private-Package: \
 	com.icteam.loyalty.application.jaas,\
-	com.icteam.loyalty.application,\
 	com.icteam.loyalty.application.internal
 
 EnRoute-Application: 	com.icteam.loyalty
 JPM-Command:			loyalty
 
--includeresource: OSGI-INF/configuration=resources/configuration,\
-                  OSGI-INF/l10n/bundle=resources/bundle
+                  #resources/jetty-logging.xml=jetty-logging.xml,\
+                  #resources/logging.properties=logging.properties                  
+
+-includeresource: OSGI-INF=resources                  
 
 -buildpath: \
 	osgi.enroute.base.api,\
 	org.eclipse.rap.rwt;version=3.1,\
 	org.eclipse.core.runtime;version=3.12,\
 	org.eclipse.rap.jface;version=3.1,\
-	org.eclipse.rap.ui;version=3.1,\
-	org.eclipse.rap.ui.workbench;version=3.1,\
 	org.eclipse.osgi;version=3.11,\
 	org.eclipse.equinox.common;version=3.8,\
 	org.eclipse.jdt.annotation;version=2.1,\
 	org.apache.felix.jaas;version=0.0,\
 	org.eclipse.jetty.util;version=9.3,\
 	org.apache.felix.metatype;version=1.1,\
-	com.icteam.loyalty.common;version=latest
+	com.icteam.loyalty.common;version=latest,\
+	org.eclipse.rap.e4;version=0.9,\
+	org.eclipse.e4.ui.workbench;version=1.3,\
+	org.eclipse.e4.ui.model.workbench;version=1.2,\
+	org.eclipse.e4.ui.workbench.swt;version=0.13,\
+	org.eclipse.e4.core.contexts;version=1.5,\
+	javax.inject;version=1.0,\
+	org.eclipse.rap.ui;version=3.1,\
+	org.eclipse.rap.ui.workbench;version=3.1,\
+	org.eclipse.e4.core.di.annotations;version=1.5,\
+	org.eclipse.core.commands;version=3.8,\
+	org.eclipse.e4.core.commands;version=0.11
 	
 Bundle-Name: Loyalty Application
-Export-Package: com.icteam.loyalty.application.handler
+Export-Package: \
+	com.icteam.loyalty.application.handler,\
+	com.icteam.loyalty.application.util,\
+	com.icteam.loyalty.application.view
 
 Jaas-ModuleClass: com.icteam.loyalty.application.jaas.LoyaltyLoginModule

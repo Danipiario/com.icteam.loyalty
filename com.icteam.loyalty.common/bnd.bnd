@@ -1,16 +1,7 @@
 Bundle-Version: 1.0.0.${tstamp}
 Bundle-Name: Loyalty Common
 Bundle-Description: Loyalty Common Project
--buildpath: \
-	org.apache.commons.lang3;version=3.4,\
-	org.eclipse.jetty.util;version=9.3,\
-	osgi.enroute.base.api;version=1.6,\
-	org.eclipse.equinox.common;version=3.8,\
-	org.apache.commons.codec;version=1.10,\
-	org.liquibase.core;version=3.5,\
-	com.querydsl.core;version=4.1,\
-	com.querydsl.sql;version=4.1,\
-	javax.inject;version=1.0
+Bundle-Activator: com.icteam.loyalty.common.internal.Activator
 Import-Package: \
 	javax.sql,\
 	oracle.jdbc.pool,\
@@ -23,19 +14,26 @@ Export-Package: \
 	com.icteam.loyalty.common.enums,\
 	com.icteam.loyalty.common.interfaces,\
 	com.icteam.loyalty.common.model,\
-	com.icteam.loyalty.common.nls
-	
+	com.icteam.loyalty.common.nls,\
+	com.icteam.loyalty.common.configuration	
 Require-Capability: osgi.service;effective:=active;filter:="(&(objectClass=org.apache.aries.blueprint.NamespaceHandler)(osgi.service.blueprint.namespace=http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.2.0))"
+Provide-Capability: osgi.service;effective:=active;objectClass=com.querydsl.sql.Configuration
 
- 
-
--includeresource: OSGI-INF/changelog=resources/changelog,\
-                  OSGI-INF/configuration=resources/configuration,\
-                  OSGI-INF/blueprint=resources/blueprint
+-buildpath: \
+	org.apache.commons.lang3;version=3.4,\
+	org.eclipse.jetty.util;version=9.3,\
+	osgi.enroute.base.api;version=1.6,\
+	org.eclipse.equinox.common;version=3.8,\
+	org.apache.commons.codec;version=1.10,\
+	org.liquibase.core;version=3.5,\
+	com.querydsl.core;version=4.1,\
+	com.querydsl.sql;version=4.1,\
+	javax.inject;version=1.0
+-includeresource: OSGI-INF=resources
                    
 Liquibase-Persistence: OSGI-INF/changelog/common.changelog.xml
-
-Tracker-Extension: com.icteam.loyalty.common.internal.tracker.EnumTracker, com.icteam.loyalty.common.internal.tracker.ConfigTracker
-Enum-Extension: com.icteam.loyalty.common.enums.Alfa, com.icteam.loyalty.common.enums.Beta
+Tracker-Extension: com.icteam.loyalty.common.internal.tracker.EnumTracker,\
+                   com.icteam.loyalty.common.internal.tracker.ConfigTracker,\
+                   com.icteam.loyalty.common.internal.tracker.DTOTracker                   
+Enum-Extension: com.icteam.loyalty.common.enums.EStatus
 	
-Bundle-Activator: com.icteam.loyalty.common.internal.Activator

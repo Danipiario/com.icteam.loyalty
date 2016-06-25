@@ -9,12 +9,12 @@ usere=LOYALTY
 password=LOYALTY
 URL=jdbc:oracle:thin:@localhost:1521:XE
  -->
-    <cm:property-placeholder id="dbPropertyPlaceholder" persistent-id="com.icteam.loyalty.common.db" update-strategy="reload">
+    <cm:property-placeholder id="dbPropertyPlaceholder" persistent-id="com.icteam.loyalty.common.internal.db" update-strategy="reload">
     </cm:property-placeholder>
     <bean id="dataSource" class="oracle.jdbc.pool.OracleDataSource" depends-on="dbPropertyPlaceholder">
         <property name="URL" value="${URL}" />
         <property name="user" value="${user}" />
         <property name="password" value="${password}" />
     </bean>
-    <service ref="dataSource" interface="javax.sql.DataSource" ></service>
+    <service ref="dataSource" interface="javax.sql.DataSource"></service>
 </blueprint>

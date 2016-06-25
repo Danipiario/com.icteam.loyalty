@@ -1,0 +1,13 @@
+Bundle-Name: Loyalty Common Mock
+Bundle-Description: Loyalty Common Mock Project
+Bundle-Version: 1.0.0.${tstamp}
+
+-buildpath: \
+	osgi.enroute.base.api;version=1.6,\
+	com.icteam.loyalty.common;version=latest,\
+	com.querydsl.sql;version=4.1,\
+	javax.inject;version=1.0,\
+	com.querydsl.core;version=4.1,\
+	org.apache.commons.lang3;version=3.4
+	
+Private-Package: com.icteam.loyalty.common.mock
