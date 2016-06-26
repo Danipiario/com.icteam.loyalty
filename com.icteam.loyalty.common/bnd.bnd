@@ -1,6 +1,7 @@
 Bundle-Version: 1.0.0.${tstamp}
 Bundle-Name: Loyalty Common
 Bundle-Description: Loyalty Common Project
+Bundle-SymbolicName: com.icteam.loyalty.common;singleton:=true
 Bundle-Activator: com.icteam.loyalty.common.internal.Activator
 Import-Package: \
 	javax.sql,\
@@ -9,18 +10,21 @@ Import-Package: \
 Private-Package: \
 	com.icteam.loyalty.common.internal*
 Export-Package: \
+	com.icteam.loyalty.common.view,\
 	com.icteam.loyalty.common.service,\
 	com.icteam.loyalty.common.dto,\
 	com.icteam.loyalty.common.enums,\
 	com.icteam.loyalty.common.interfaces,\
 	com.icteam.loyalty.common.model,\
 	com.icteam.loyalty.common.nls,\
-	com.icteam.loyalty.common.configuration	
+	com.icteam.loyalty.common.configuration
 Require-Capability: osgi.service;effective:=active;filter:="(&(objectClass=org.apache.aries.blueprint.NamespaceHandler)(osgi.service.blueprint.namespace=http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.2.0))"
-Provide-Capability: osgi.service;effective:=active;objectClass=com.querydsl.sql.Configuration
+Provide-Capability: osgi.service;effective:=active;objectClass=com.querydsl.sql.Configuration,\
+                    osgi.service;effective:=active;objectClass=javax.sql.DataSource
 
 -buildpath: \
 	org.apache.commons.lang3;version=3.4,\
+	org.eclipse.rap.rwt;version=3.1,\
 	org.eclipse.jetty.util;version=9.3,\
 	osgi.enroute.base.api;version=1.6,\
 	org.eclipse.equinox.common;version=3.8,\
@@ -28,8 +32,12 @@ Provide-Capability: osgi.service;effective:=active;objectClass=com.querydsl.sql.
 	org.liquibase.core;version=3.5,\
 	com.querydsl.core;version=4.1,\
 	com.querydsl.sql;version=4.1,\
-	javax.inject;version=1.0
--includeresource: OSGI-INF=resources
+	javax.inject;version=1.0,\
+	org.eclipse.e4.core.di;version=1.6,\
+	org.eclipse.e4.core.di.annotations;version=1.5,\
+	org.eclipse.e4.ui.model.workbench;version=1.2
+-includeresource: OSGI-INF=resources,\
+                  plugin.xml
                    
 Liquibase-Persistence: OSGI-INF/changelog/common.changelog.xml
 Tracker-Extension: com.icteam.loyalty.common.internal.tracker.EnumTracker,\

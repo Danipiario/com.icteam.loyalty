@@ -10,7 +10,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.osgi.framework.Constants;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
 
 import com.icteam.loyalty.common.dto.GroupDTO;
 import com.icteam.loyalty.common.dto.OperatorDTO;
@@ -28,7 +27,7 @@ public class AuthProviderMock implements AuthService {
 	@Reference
 	private DTOService dtoService;
 
-	@Reference(cardinality = ReferenceCardinality.OPTIONAL)
+	@Reference
 	private DataSource dataSource;
 
 	@Reference
@@ -38,10 +37,10 @@ public class AuthProviderMock implements AuthService {
 	public OperatorDTO login(OperatorLoginDTO operatorLoginDTO) {
 		final SQLQueryFactory queryFactory = new SQLQueryFactory(configuration, dataSource);
 
-		Operator o = new Operator("o");
-		Tuple tuple = queryFactory.select(o.all()).from(o).where(o.login.eq("manager")).fetchOne();
+		final Operator o = new Operator("o");
+		final Tuple tuple = queryFactory.select(o.all()).from(o).where(o.login.eq("manager")).fetchOne();
 
-		OperatorDTO operatorDTO = dtoService.newDTO(OperatorDTO.class);
+		final OperatorDTO operatorDTO = dtoService.newDTO(OperatorDTO.class);
 		operatorDTO.changePassword = BooleanUtils.toBooleanObject(tuple.get(o.changePassword));
 		operatorDTO.login = tuple.get(o.login);
 		operatorDTO.name = tuple.get(o.name);
