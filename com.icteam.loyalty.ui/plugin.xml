@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<plugin
+   id="com.icteam.loyalty.ui"
+   name="Loyalty UI"
+   version="0.0.0"
+>
+	<extension
+       id="1"
+       point="org.eclipse.ui.perspectives">
+		<perspective class="com.icteam.loyalty.ui.internal.AdministrationPerspective" icon="icons/administration.gif" id="administration_perspective" name="%administration_perspective">
+		</perspective>
+		<perspective class="com.icteam.loyalty.ui.internal.ConfigurationPerspective" icon="icons/configuration.gif" id="configuration_perspective" name="%configuration_perspective">
+		</perspective>
+	</extension>
+	<extension
+       id="1"
+       point="org.eclipse.ui.views">
+		<category id="administration_menu" name="%administration_menu">
+		</category>
+		<category id="configuration_menu" name="%configuration_menu">
+		</category>
+
+		<view category="org.eclipse.ui" class="org.eclipse.ui.ExtensionFactory:progressView" icon="icons/pview.gif" id="org.eclipse.ui.views.ProgressView" name="Progress View">		</view>
+
+	</extension>
+	<extension
+       id="1"
+       point="org.eclipse.ui.statusHandlers">
+		<statusHandler class="com.icteam.loyalty.ui.handler.DefaultStatusHandler" id="statushandler">
+		</statusHandler>
+	</extension>
+	<extension
+       id="1"
+       point="org.eclipse.ui.commands">
+		<command defaultHandler="com.icteam.loyalty.ui.handler.ExitHandler" id="exit" name="%exit">
+		</command>
+		<command defaultHandler="com.icteam.loyalty.ui.handler.OpenViewHandler" id="view_open" name="%view_open">
+			<commandParameter id="view_open_parameter" name="viewId" optional="false">
+			</commandParameter>
+		</command>
+	</extension>
+	<extension
+       id="1"
+       point="org.eclipse.ui.handlers">
+        <handler class="com.icteam.loyalty.ui.handler.SaveEditorHandler" commandId="editor_save">
+        </handler>
+        <handler class="com.icteam.loyalty.ui.handler.CloseEditorHandler" commandId="editor_cancel">
+        </handler>
+        <handler class="com.icteam.loyalty.ui.handler.OpenEditorHandler" commandId="view_open_editor">
+        </handler>
+        <handler class="com.icteam.loyalty.ui.handler.ViewFilterColumnsEMFHandler" commandId="view_filter_columns">
+        </handler>
+        <handler class="com.icteam.loyalty.ui.handler.ViewAdvancedFilterEMFHandler" commandId="view_advanced_filter">
+        </handler>
+        <handler class="com.icteam.loyalty.ui.handler.ViewRefreshEMFHandler" commandId="view_refresh">
+        </handler>
+        <handler class="com.icteam.loyalty.ui.handler.ViewSelectColumnEMFHandler" commandId="view_select_column">
+        </handler>
+        <handler class="com.icteam.loyalty.ui.handler.NToMAllToSrcHandler" commandId="ntom_all_to_src">
+        </handler>
+        <handler class="com.icteam.loyalty.ui.handler.NToMToSrcHandler" commandId="ntom_to_src">
+        </handler>
+        <handler class="com.icteam.loyalty.ui.handler.NToMAllToDestHandler" commandId="ntom_all_to_dest">
+        </handler>
+        <handler class="com.icteam.loyalty.ui.handler.NToMToDestHandler" commandId="ntom_to_dest">
+        </handler>
+    </extension>
+	
+	<extension
+       id="1"
+       point="org.eclipse.ui.menus">
+		<menuContribution allPopups="false" locationURI="menu:org.eclipse.ui.main.menu">
+			<menu id="com.icteam.loyalty.ui.main.menu" label="%main_menu">
+			    <command commandId="org.eclipse.ui.window.resetPerspective" label="%resetperspective" style="push">
+			    </command>
+<!--
+				<command
+                   commandId="org.eclipse.ui.views.showView"
+                   style="push">
+			       <visibleWhen
+			             checkEnabled="false">
+			          <with
+			                variable="activeWorkbenchWindow">
+			             <test
+			                   property="org.eclipse.ui.workbenchWindow.isPerspectiveOpen">
+			             </test>
+			          </with>
+			       </visibleWhen>
+             	</command>			    
+-->
+   <command commandId="view_open" icon="icons/pview.gif" label="%open_progressview" style="push">
+      <parameter name="view_open_parameter" value="org.eclipse.ui.views.ProgressView">
+      </parameter>
+   </command>
+			<command commandId="exit" style="push">
+				</command>
+			</menu>
+			<menu id="configuration_menu" label="%configuration_menu">
+		      <visibleWhen checkEnabled="false">
+		            <and>
+						<with variable="activeWorkbenchWindow">
+			             <test property="org.eclipse.ui.workbenchWindow.isPerspectiveOpen">
+			             </test>
+			          </with>
+			          					<with variable="activeWorkbenchWindow.activePerspective">
+						<equals value="configuration_perspective">
+						</equals>
+					</with>
+					</and>
+		      </visibleWhen>
+			</menu>
+			<menu id="administration_menu" label="%administration_menu">
+		      <visibleWhen checkEnabled="false">
+		            <and>
+						<with variable="activeWorkbenchWindow">
+			             <test property="org.eclipse.ui.workbenchWindow.isPerspectiveOpen">
+			             </test>
+			          </with>
+			         <with variable="activeWorkbenchWindow.activePerspective">
+			            <equals value="administration_perspective">
+			            </equals>
+			         </with>
+					</and>
+		      </visibleWhen>
+			</menu>
+		</menuContribution>
+		 <menuContribution allPopups="false" locationURI="toolbar:org.eclipse.ui.trim.status?after=END_GROUP">
+           <toolbar id="version_status_line">
+              <control class="com.icteam.loyalty.ui.internal.VersionStatusLine">
+              </control>
+           </toolbar>
+           <toolbar id="database_status_line">
+              <control class="com.icteam.loyalty.ui.internal.DatabaseStatusLine">
+              </control>
+           </toolbar>
+        </menuContribution>
+	</extension>	
+	<extension
+       id="1"
+       point="org.eclipse.core.expressions.definitions">
+		<definition id="elements_selected">
+			<with variable="selection">
+    			<not>
+			       	<count
+			             value="0">
+       				</count>
+    			</not> 
+    		</with>
+		</definition>
+		<definition id="oneelement_selected">
+			<with variable="selection">
+		       	<count
+		             value="1">
+   				</count>
+    		</with>
+		</definition>
+		<definition id="administration_perspective_view">
+            <with variable="permission">
+                <iterate ifEmpty="false" operator="or">
+                    <equals value="administration_perspective_view">
+                    </equals>
+                </iterate>
+            </with>
+        </definition>
+		<definition id="configuration_perspective_view">
+            <with variable="permission">
+                <iterate ifEmpty="false" operator="or">
+                    <equals value="configuration_perspective_view">
+                    </equals>
+                </iterate>
+            </with>
+        </definition>
+	</extension>
+<extension
+      id="1"
+      point="org.eclipse.ui.activities">
+   <activity id="administration_perspective_view" name="%administration_perspective_view">
+	    <enabledWhen>
+	        <reference definitionId="administration_perspective_view">
+	        </reference>
+	    </enabledWhen>
+   </activity>
+   <activity id="configuration_perspective_view" name="%configuration_perspective_view">
+            <enabledWhen>
+                <reference definitionId="configuration_perspective_view">
+                </reference>
+            </enabledWhen>
+   </activity>
+   <activityPatternBinding activityId="configuration_perspective_view" isEqualityPattern="false" pattern=".*/configuration_perspective">
+   </activityPatternBinding>
+   <activityPatternBinding activityId="administration_perspective_view" isEqualityPattern="false" pattern=".*/administration_perspective">
+   </activityPatternBinding>
+    </extension>
+<extension
+      id="1"
+      point="org.eclipse.emf.ecp.ui.view.viewModelProviders">
+   <viewModelProvider class="com.icteam.loyalty.ui.provider.xmi.LoyaltyExtensionXMIViewModelProvider">
+   </viewModelProvider>
+</extension>
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated ui -->
+      <package
+            uri="http://com.icteam.loyalty/ui/model"
+            class="com.icteam.loyalty.ui.model.UIModelPackage"
+            genModel="resources/model/ui.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated ui -->
+      <package
+            uri="http://com.icteam.loyalty/ui/interfaces"
+            class="com.icteam.loyalty.ui.interfaces.UIInterfacesPackage"
+            genModel="resources/model/ui.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.edit.itemProviderAdapterFactories">
+      <!-- @generated ui -->
+      <factory
+            uri="http://com.icteam.loyalty/ui/model"
+            class="com.icteam.loyalty.ui.model.provider.UIModelItemProviderAdapterFactory"
+            supportedTypes=
+              "org.eclipse.emf.edit.provider.IEditingDomainItemProvider
+               org.eclipse.emf.edit.provider.IStructuredItemContentProvider
+               org.eclipse.emf.edit.provider.ITreeItemContentProvider
+               org.eclipse.emf.edit.provider.IItemLabelProvider
+               org.eclipse.emf.edit.provider.IItemPropertySource"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.edit.itemProviderAdapterFactories">
+      <!-- @generated ui -->
+      <factory
+            uri="http://com.icteam.loyalty/ui/interfaces"
+            class="com.icteam.loyalty.ui.interfaces.provider.UIInterfacesItemProviderAdapterFactory"
+            supportedTypes=
+              "org.eclipse.emf.edit.provider.IEditingDomainItemProvider
+               org.eclipse.emf.edit.provider.IStructuredItemContentProvider
+               org.eclipse.emf.edit.provider.ITreeItemContentProvider
+               org.eclipse.emf.edit.provider.IItemLabelProvider
+               org.eclipse.emf.edit.provider.IItemPropertySource"/>
+   </extension>
+<!--
+	<extension
+       id="1"
+       point="org.eclipse.emf.ecp.ui.view.swt.renderers">
+  <renderer renderer="com.icteam.loyalty.ui.control.EnhancedEnumComboViewerRenderer">
+     <dynamicTest testClass="com.icteam.loyalty.ui.model.EnhancedEnumControlRendererService">
+     </dynamicTest>
+  </renderer>
+  <renderer renderer="com.icteam.loyalty.ui.control.NToMControlRenderer">
+      <dynamicTest testClass="com.icteam.loyalty.ui.model.NToMControlRendererTest">
+      </dynamicTest>
+   </renderer>
+   <renderer renderer="com.icteam.loyalty.ui.control.TableControlSWTRenderer">
+      <dynamicTest testClass="com.icteam.loyalty.ui.model.TableControlSWTRendererService">
+      </dynamicTest>
+   </renderer>
+   <renderer renderer="com.icteam.loyalty.ui.control.PasswordTextControlRenderer">
+      <dynamicTest testClass="com.icteam.loyalty.ui.model.PasswordTextControlRendererService">
+      </dynamicTest>
+   </renderer>
+   <renderer renderer="com.icteam.loyalty.ui.control.TextControlRenderer">
+      <dynamicTest testClass="com.icteam.loyalty.ui.model.TextControlRendererService">
+      </dynamicTest>
+   </renderer>
+   <renderer renderer="com.icteam.loyalty.ui.control.BooleanControlRenderer">
+      <dynamicTest testClass="com.icteam.loyalty.ui.model.BooleanControlRendererService">
+      </dynamicTest>
+   </renderer>
+   <renderer renderer="com.icteam.loyalty.ui.control.FilterTextControlRenderer">
+      <dynamicTest testClass="com.icteam.loyalty.ui.model.FilterTextControlRendererService">
+      </dynamicTest>
+   </renderer>
+   <renderer
+         renderer="com.icteam.loyalty.ui.control.CommandControlSWTControlSWTRenderer">
+      <dynamicTest
+            testClass="com.icteam.loyalty.ui.model.CommandControlRendererTest">
+      </dynamicTest>
+   </renderer>
+      <renderer
+            renderer="com.icteam.loyalty.ui.control.LoyaltyViewSWTRenderer">
+         <staticTest
+               element="org.eclipse.emf.ecp.view.spi.model.VView"
+               priority="10">
+         </staticTest>
+      </renderer>
+   <renderer
+            renderer="com.icteam.loyalty.ui.control.CustomGroupSWTRenderer">
+         <staticTest
+               element="org.eclipse.emf.ecp.view.spi.group.model.VGroup"
+               priority="10">
+         </staticTest>
+      </renderer>
+</extension>
+-->
+<extension
+      id="1"
+      point="org.eclipse.emf.ecp.view.model.provider.xmi.file">
+	<file filePath="OSGI-INF/viewmodel/ListEMFModel.view"/>
+	<file filePath="OSGI-INF/viewmodel/DefaultEditorEMFModel.view">
+		<filter
+           		key="class"
+           		value="DefaultEMFEditor">
+		</filter>
+	</file>
+	<file filePath="OSGI-INF/viewmodel/VirtualViewEMFModel.view">
+		<filter
+           		key="class"
+           		value="VirtualEMFView">
+		</filter>
+	</file>
+</extension>
+<extension
+      id="1"
+      point="org.eclipse.emf.ecp.ui.view.swt.layoutProvider">
+      <layoutProvider
+            class="com.icteam.loyalty.ui.internal.LoyaltyECPLayoutProvider">
+      </layoutProvider>
+   </extension>
+</plugin>

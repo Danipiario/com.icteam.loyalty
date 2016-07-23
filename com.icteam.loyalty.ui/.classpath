@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" output="bin" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
+	<classpathentry kind="con" path="aQute.bnd.classpath.container"/>
+	<classpathentry kind="lib" path="swing2swt.jar"/>
+	<classpathentry kind="lib" path="C:/Users/d.pirola/.bnd/cache/http%3A%2F%2F10.0.0.233%3A8090%2Fnexus%2Fcontent%2Frepositories%2Fobr-libraries%2Forg.eclipse.emfforms.core.services.emf/org.eclipse.emfforms.core.services.emf-1.6.1.20150626-1237.jar" sourcepath="C:/Users/d.pirola/.bnd/cache/http%3A%2F%2F10.0.0.233%3A8090%2Fnexus%2Fcontent%2Frepositories%2Fobr-libraries%2Forg.eclipse.emfforms.core.services.emf.source/org.eclipse.emfforms.core.services.emf.source-1.6.1.20150626-1237.jar"/>
+	<classpathentry kind="lib" path="C:/Users/d.pirola/.bnd/cache/http%3A%2F%2F10.0.0.233%3A8090%2Fnexus%2Fcontent%2Frepositories%2Fobr-libraries%2Forg.eclipse.emfforms.core.services.databinding.featurepath/org.eclipse.emfforms.core.services.databinding.featurepath-1.6.1.20150626-1237.jar" sourcepath="C:/Users/DDB33~1.PIR/BND~1/cache/HTFD49~1.SOU/org.eclipse.emfforms.core.services.databinding.featurepath.source-1.6.1.20150626-1237.jar"/>
+	<classpathentry kind="lib" path="C:/Users/d.pirola/.bnd/cache/http%3A%2F%2F10.0.0.233%3A8090%2Fnexus%2Fcontent%2Frepositories%2Fobr-libraries%2Forg.eclipse.jetty.server/org.eclipse.jetty.server-9.2.9.v20150224.jar" sourcepath="C:/Users/d.pirola/.bnd/cache/http%3A%2F%2F10.0.0.233%3A8090%2Fnexus%2Fcontent%2Frepositories%2Fobr-libraries%2Forg.eclipse.jetty.server.source/org.eclipse.jetty.server.source-9.2.9.v20150224.jar"/>
+	<classpathentry kind="lib" path="C:/Users/d.pirola/.bnd/cache/http%3A%2F%2F10.0.0.233%3A8090%2Fnexus%2Fcontent%2Frepositories%2Fobr-libraries%2Forg.eclipse.jetty.util/org.eclipse.jetty.util-9.2.9.v20150224.jar" sourcepath="C:/Users/d.pirola/.bnd/cache/http%3A%2F%2F10.0.0.233%3A8090%2Fnexus%2Fcontent%2Frepositories%2Fobr-libraries%2Forg.eclipse.jetty.util.source/org.eclipse.jetty.util.source-9.2.9.v20150224.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/com.icteam.loyalty.model/src" editDirectory="/com.icteam.loyalty.model/src"
+    modelPluginID="com.icteam.loyalty.model" redirection="" modelName="Model" editPluginClass="com.icteam.loyalty.model.provider.ModelEditPlugin"
+    rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container" importerID="org.eclipse.emf.importer.ecore"
+    bundleManifest="false" complianceLevel="7.0" suppressGenModelAnnotations="false"
+    copyrightFields="false" providerRootExtendsClass="com.icteam.loyalty.model.provider.LoyaltyItemProviderAdapter"
+    operationReflection="true" runtimePlatform="RAP" importOrganizing="true" cleanup="true">
+  <foreignModel>model.template.ecore</foreignModel>
+  <foreignModel>model.ecore</foreignModel>
+  <foreignModel>model.interfaces.ecore</foreignModel>
+  <genPackages prefix="ModelTemplate" basePackage="com.icteam.loyalty.model" disposableProviderFactory="true"
+      ecorePackage="model.template.ecore#/">
+    <genClasses image="false" ecoreClass="model.template.ecore#//AbstractEMFTemplate">
+      <genTypeParameters ecoreTypeParameter="model.template.ecore#//AbstractEMFTemplate/T"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.template.ecore#//AbstractEMFTemplate/entityManager"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.template.ecore#//AbstractEMFTemplate/wheres"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.template.ecore#//AbstractEMFTemplate/builder"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.template.ecore#//AbstractEMFTemplate/criteria"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.template.ecore#//AbstractEMFTemplate/root"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.template.ecore#//AbstractEMFTemplate/excludedFeatures"/>
+      <genOperations ecoreOperation="model.template.ecore#//AbstractEMFTemplate/getMetamodel"/>
+      <genOperations ecoreOperation="model.template.ecore#//AbstractEMFTemplate/buildFetches"/>
+      <genOperations ecoreOperation="model.template.ecore#//AbstractEMFTemplate/checkDynamicFilters">
+        <genParameters ecoreParameter="model.template.ecore#//AbstractEMFTemplate/checkDynamicFilters/dynamicFilterFeatures"/>
+        <genParameters ecoreParameter="model.template.ecore#//AbstractEMFTemplate/checkDynamicFilters/dynamicFilters"/>
+      </genOperations>
+      <genOperations ecoreOperation="model.template.ecore#//AbstractEMFTemplate/buildWheres"/>
+    </genClasses>
+    <genClasses ecoreClass="model.template.ecore#//DictionaryEMFTemplate">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.template.ecore#//DictionaryEMFTemplate/key"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.template.ecore#//DictionaryEMFTemplate/value"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EReference model.template.ecore#//DictionaryEMFTemplate/language"/>
+    </genClasses>
+  </genPackages>
+  <genPackages prefix="ModelInterfaces" basePackage="com.icteam.loyalty.model" disposableProviderFactory="true"
+      ecorePackage="model.interfaces.ecore#/">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="model.interfaces.ecore#//DistinctEMF">
+      <genEnumLiterals ecoreEnumLiteral="model.interfaces.ecore#//DistinctEMF/SQL"/>
+      <genEnumLiterals ecoreEnumLiteral="model.interfaces.ecore#//DistinctEMF/CODE"/>
+      <genEnumLiterals ecoreEnumLiteral="model.interfaces.ecore#//DistinctEMF/NONE"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="model.interfaces.ecore#//OrderDirectionEMF">
+      <genEnumLiterals ecoreEnumLiteral="model.interfaces.ecore#//OrderDirectionEMF/NONE"/>
+      <genEnumLiterals ecoreEnumLiteral="model.interfaces.ecore#//OrderDirectionEMF/ASC"/>
+      <genEnumLiterals ecoreEnumLiteral="model.interfaces.ecore#//OrderDirectionEMF/DESC"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="model.interfaces.ecore#//EWhereClauseEMF">
+      <genEnumLiterals ecoreEnumLiteral="model.interfaces.ecore#//EWhereClauseEMF/EQUAL"/>
+      <genEnumLiterals ecoreEnumLiteral="model.interfaces.ecore#//EWhereClauseEMF/LIKE_IGNORE_CASE"/>
+      <genEnumLiterals ecoreEnumLiteral="model.interfaces.ecore#//EWhereClauseEMF/GREATER_EQUAL"/>
+      <genEnumLiterals ecoreEnumLiteral="model.interfaces.ecore#//EWhereClauseEMF/I18N"/>
+      <genEnumLiterals ecoreEnumLiteral="model.interfaces.ecore#//EWhereClauseEMF/NONE"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="model.interfaces.ecore#//EWhereTemplateClauseEMF">
+      <genEnumLiterals ecoreEnumLiteral="model.interfaces.ecore#//EWhereTemplateClauseEMF/EQUAL"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="model.interfaces.ecore#//EDynamicFilterableEMF">
+      <genEnumLiterals ecoreEnumLiteral="model.interfaces.ecore#//EDynamicFilterableEMF/NO"/>
+      <genEnumLiterals ecoreEnumLiteral="model.interfaces.ecore#//EDynamicFilterableEMF/FILTER"/>
+      <genEnumLiterals ecoreEnumLiteral="model.interfaces.ecore#//EDynamicFilterableEMF/DEFAULT_FILTER"/>
+    </genEnums>
+    <genDataTypes ecoreDataType="model.interfaces.ecore#//Image"/>
+    <genDataTypes ecoreDataType="model.interfaces.ecore#//EStructuralFeature"/>
+    <genDataTypes ecoreDataType="model.interfaces.ecore#//EntityManager"/>
+    <genDataTypes ecoreDataType="model.interfaces.ecore#//Predicate"/>
+    <genDataTypes ecoreDataType="model.interfaces.ecore#//CriteriaBuilder"/>
+    <genDataTypes ecoreDataType="model.interfaces.ecore#//CriteriaQuery">
+      <genTypeParameters ecoreTypeParameter="model.interfaces.ecore#//CriteriaQuery/T"/>
+    </genDataTypes>
+    <genDataTypes ecoreDataType="model.interfaces.ecore#//From">
+      <genTypeParameters ecoreTypeParameter="model.interfaces.ecore#//From/Z"/>
+      <genTypeParameters ecoreTypeParameter="model.interfaces.ecore#//From/X"/>
+    </genDataTypes>
+    <genDataTypes ecoreDataType="model.interfaces.ecore#//ManagedType">
+      <genTypeParameters ecoreTypeParameter="model.interfaces.ecore#//ManagedType/X"/>
+    </genDataTypes>
+    <genDataTypes ecoreDataType="model.interfaces.ecore#//Locale"/>
+    <genDataTypes ecoreDataType="model.interfaces.ecore#//ISearchProvider"/>
+    <genClasses image="false" ecoreClass="model.interfaces.ecore#//IEMFModel">
+      <genOperations ecoreOperation="model.interfaces.ecore#//IEMFModel/copyTo">
+        <genParameters ecoreParameter="model.interfaces.ecore#//IEMFModel/copyTo/destModel"/>
+        <genParameters ecoreParameter="model.interfaces.ecore#//IEMFModel/copyTo/deliver"/>
+        <genTypeParameters ecoreTypeParameter="model.interfaces.ecore#//IEMFModel/copyTo/C"/>
+      </genOperations>
+      <genOperations ecoreOperation="model.interfaces.ecore#//IEMFModel/equals">
+        <genParameters ecoreParameter="model.interfaces.ecore#//IEMFModel/equals/obj"/>
+      </genOperations>
+    </genClasses>
+    <genClasses image="false" ecoreClass="model.interfaces.ecore#//IEditable">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.interfaces.ecore#//IEditable/editable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.interfaces.ecore#//IEditable/dirty"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="model.interfaces.ecore#//IEMFEnhancedEnum">
+      <genTypeParameters ecoreTypeParameter="model.interfaces.ecore#//IEMFEnhancedEnum/E"/>
+      <genOperations ecoreOperation="model.interfaces.ecore#//IEMFEnhancedEnum/compareTo">
+        <genParameters ecoreParameter="model.interfaces.ecore#//IEMFEnhancedEnum/compareTo/o"/>
+      </genOperations>
+      <genOperations ecoreOperation="model.interfaces.ecore#//IEMFEnhancedEnum/getName"/>
+      <genOperations ecoreOperation="model.interfaces.ecore#//IEMFEnhancedEnum/equals">
+        <genParameters ecoreParameter="model.interfaces.ecore#//IEMFEnhancedEnum/equals/obj"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="model.interfaces.ecore#//Permission">
+      <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference model.interfaces.ecore#//Permission/ADMINISTRATION_PERSPECTIVE_VIEW"/>
+      <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference model.interfaces.ecore#//Permission/CONFIGURATION_PERSPECTIVE_VIEW"/>
+      <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute model.interfaces.ecore#//Permission/object"/>
+      <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute model.interfaces.ecore#//Permission/action"/>
+      <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute model.interfaces.ecore#//Permission/name"/>
+      <genOperations ecoreOperation="model.interfaces.ecore#//Permission/isStarPermission"/>
+      <genOperations ecoreOperation="model.interfaces.ecore#//Permission/getPermission"/>
+      <genOperations ecoreOperation="model.interfaces.ecore#//Permission/getPermissions"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="model.interfaces.ecore#//IEMFTemplate">
+      <genTypeParameters ecoreTypeParameter="model.interfaces.ecore#//IEMFTemplate/T"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.interfaces.ecore#//IEMFTemplate/distinct"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.interfaces.ecore#//IEMFTemplate/firstResult"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.interfaces.ecore#//IEMFTemplate/maxResults"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.interfaces.ecore#//IEMFTemplate/singleResult"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.interfaces.ecore#//IEMFTemplate/lightSearch"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.interfaces.ecore#//IEMFTemplate/nested"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.interfaces.ecore#//IEMFTemplate/orderFeatures"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.interfaces.ecore#//IEMFTemplate/orderDirections"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.interfaces.ecore#//IEMFTemplate/dynamicFilterFeatures"/>
+      <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute model.interfaces.ecore#//IEMFTemplate/dynamicFilters"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.interfaces.ecore#//IEMFTemplate/dynamicOrderFeature"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.interfaces.ecore#//IEMFTemplate/dynamicOrderDirection"/>
+      <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute model.interfaces.ecore#//IEMFTemplate/dynamicFilterableFeatures"/>
+      <genOperations ecoreOperation="model.interfaces.ecore#//IEMFTemplate/initialized"/>
+      <genOperations ecoreOperation="model.interfaces.ecore#//IEMFTemplate/getResultCount">
+        <genParameters ecoreParameter="model.interfaces.ecore#//IEMFTemplate/getResultCount/em"/>
+      </genOperations>
+      <genOperations ecoreOperation="model.interfaces.ecore#//IEMFTemplate/getFirstResult">
+        <genParameters ecoreParameter="model.interfaces.ecore#//IEMFTemplate/getFirstResult/em"/>
+        <genTypeParameters ecoreTypeParameter="model.interfaces.ecore#//IEMFTemplate/getFirstResult/R"/>
+      </genOperations>
+      <genOperations ecoreOperation="model.interfaces.ecore#//IEMFTemplate/getResultList">
+        <genParameters ecoreParameter="model.interfaces.ecore#//IEMFTemplate/getResultList/em"/>
+        <genTypeParameters ecoreTypeParameter="model.interfaces.ecore#//IEMFTemplate/getResultList/R"/>
+      </genOperations>
+      <genOperations ecoreOperation="model.interfaces.ecore#//IEMFTemplate/hasDynamicFilters"/>
+      <genOperations ecoreOperation="model.interfaces.ecore#//IEMFTemplate/setDynamicFilterFeatures">
+        <genParameters ecoreParameter="model.interfaces.ecore#//IEMFTemplate/setDynamicFilterFeatures/dynamicFilterFeatures"/>
+      </genOperations>
+      <genOperations ecoreOperation="model.interfaces.ecore#//IEMFTemplate/setRawFilter">
+        <genParameters ecoreParameter="model.interfaces.ecore#//IEMFTemplate/setRawFilter/rawFilter"/>
+      </genOperations>
+      <genOperations ecoreOperation="model.interfaces.ecore#//IEMFTemplate/hasDynamicOrder"/>
+      <genOperations ecoreOperation="model.interfaces.ecore#//IEMFTemplate/getDbModelClass"/>
+      <genOperations ecoreOperation="model.interfaces.ecore#//IEMFTemplate/getIdValue"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="model.interfaces.ecore#//IPerspectiveProvider">
+      <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference model.interfaces.ecore#//IPerspectiveProvider/defaultPerspective"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="model.interfaces.ecore#//IStatusEMFTemplate">
+      <genFeatures createChild="false" ecoreFeature="ecore:EReference model.interfaces.ecore#//IStatusEMFTemplate/status"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="model.interfaces.ecore#//IEMFSelectable">
+      <genTypeParameters ecoreTypeParameter="model.interfaces.ecore#//IEMFSelectable/S"/>
+      <genOperations ecoreOperation="model.interfaces.ecore#//IEMFSelectable/getKey"/>
+      <genOperations ecoreOperation="model.interfaces.ecore#//IEMFSelectable/getDescription"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="model.interfaces.ecore#//Comparable">
+      <genTypeParameters ecoreTypeParameter="model.interfaces.ecore#//Comparable/T"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="model.interfaces.ecore#//Serializable"/>
+    <genClasses ecoreClass="model.interfaces.ecore#//Status">
+      <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference model.interfaces.ecore#//Status/ATTIVO"/>
+      <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference model.interfaces.ecore#//Status/DISATTIVO"/>
+      <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute model.interfaces.ecore#//Status/name"/>
+    </genClasses>
+    <genClasses ecoreClass="model.interfaces.ecore#//StatusReason">
+      <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference model.interfaces.ecore#//StatusReason/OK"/>
+      <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference model.interfaces.ecore#//StatusReason/ERROR"/>
+      <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference model.interfaces.ecore#//StatusReason/OBJECT_UNKNOWN"/>
+      <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference model.interfaces.ecore#//StatusReason/MAX_LENGTH_IN_IN_CLAUSE_REACHED"/>
+      <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference model.interfaces.ecore#//StatusReason/REFERENCED_OBJECT_FOUND"/>
+      <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference model.interfaces.ecore#//StatusReason/CUSTOM_MESSAGE_ADD_ERROR"/>
+      <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference model.interfaces.ecore#//StatusReason/DELEGATED_SERVICE_NOT_FOUND"/>
+      <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference model.interfaces.ecore#//StatusReason/MIN_CHARACTER_SEARCH_LENGTH"/>
+      <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference model.interfaces.ecore#//StatusReason/CRON_EXPRESSION_INVALID"/>
+      <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference model.interfaces.ecore#//StatusReason/SERVICE_NOT_FOUND"/>
+      <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute model.interfaces.ecore#//StatusReason/code"/>
+      <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute model.interfaces.ecore#//StatusReason/pluginId"/>
+      <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute model.interfaces.ecore#//StatusReason/name"/>
+    </genClasses>
+    <genClasses ecoreClass="model.interfaces.ecore#//Perspective">
+      <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference model.interfaces.ecore#//Perspective/ADMINISTRATION"/>
+      <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference model.interfaces.ecore#//Perspective/CONFIGURATION"/>
+      <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute model.interfaces.ecore#//Perspective/id"/>
+      <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute model.interfaces.ecore#//Perspective/name"/>
+    </genClasses>
+    <genClasses ecoreClass="model.interfaces.ecore#//Language">
+      <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference model.interfaces.ecore#//Language/ITALIAN"/>
+      <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference model.interfaces.ecore#//Language/ENGLISH"/>
+      <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute model.interfaces.ecore#//Language/defaultLanguage"/>
+      <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute model.interfaces.ecore#//Language/locale"/>
+      <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute model.interfaces.ecore#//Language/name"/>
+    </genClasses>
+    <genClasses ecoreClass="model.interfaces.ecore#//Action">
+      <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute model.interfaces.ecore#//Action/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.interfaces.ecore#//Action/iconPath"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.interfaces.ecore#//Action/permission"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.interfaces.ecore#//Action/general"/>
+      <genOperations ecoreOperation="model.interfaces.ecore#//Action/isAllowed">
+        <genParameters ecoreParameter="model.interfaces.ecore#//Action/isAllowed/eObject"/>
+        <genParameters ecoreParameter="model.interfaces.ecore#//Action/isAllowed/feature"/>
+      </genOperations>
+      <genOperations ecoreOperation="model.interfaces.ecore#//Action/execute">
+        <genParameters ecoreParameter="model.interfaces.ecore#//Action/execute/eObject"/>
+        <genParameters ecoreParameter="model.interfaces.ecore#//Action/execute/feature"/>
+      </genOperations>
+      <genOperations ecoreOperation="model.interfaces.ecore#//Action/getCommandId">
+        <genParameters ecoreParameter="model.interfaces.ecore#//Action/getCommandId/eObject"/>
+      </genOperations>
+    </genClasses>
+    <genClasses image="false" ecoreClass="model.interfaces.ecore#//Cloneable"/>
+    <genClasses image="false" ecoreClass="model.interfaces.ecore#//IContained">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference model.interfaces.ecore#//IContained/mainEObject"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="model.interfaces.ecore#//IContainedFeature">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.interfaces.ecore#//IContainedFeature/mainFeature"/>
+    </genClasses>
+  </genPackages>
+  <genPackages prefix="Model" basePackage="com.icteam.loyalty" disposableProviderFactory="true"
+      ecorePackage="model.ecore#/">
+    <genClasses image="false" ecoreClass="model.ecore#//EMFModel">
+      <genOperations ecoreOperation="model.ecore#//EMFModel/getModelName"/>
+      <genOperations ecoreOperation="model.ecore#//EMFModel/hasEditor"/>
+      <genOperations ecoreOperation="model.ecore#//EMFModel/getPermissionObject"/>
+    </genClasses>
+    <genClasses ecoreClass="model.ecore#//ResultEMFModel">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.ecore#//ResultEMFModel/exception"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference model.ecore#//ResultEMFModel/statusReason"/>
+    </genClasses>
+    <genClasses ecoreClass="model.ecore#//ListEMFModel">
+      <genTypeParameters ecoreTypeParameter="model.ecore#//ListEMFModel/D"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference model.ecore#//ListEMFModel/list"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.ecore#//ListEMFModel/selectedModel"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

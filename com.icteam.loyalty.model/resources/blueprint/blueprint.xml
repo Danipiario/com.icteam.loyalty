@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<blueprint xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jpa="http://aries.apache.org/xmlns/jpa/v1.0.0"
+	xmlns:tx="http://aries.apache.org/xmlns/transactions/v1.2.0" xmlns:cm="http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.2.0"
+	xsi:schemaLocation="http://www.osgi.org/xmlns/blueprint/v1.0.0 http://www.osgi.org/xmlns/blueprint/v1.0.0/blueprint.xsd http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.1.0 http://svn.apache.org/repos/asf/aries/trunk/blueprint/blueprint-cm/src/main/resources/org/apache/aries/blueprint/compendium/cm/blueprint-cm-1.1.0.xsd">
+	<bean id="modelProperties" class="com.icteam.loyalty.model.ModelProperties" activation="eager" init-method="init">
+	</bean>
+	<service interface="org.osgi.service.cm.ManagedService" ref="modelProperties">
+		<service-properties>
+			<entry key="service.pid" value="com.icteam.loyalty.model"></entry>
+		</service-properties>
+	</service>
+	<bean id="modelService" class="com.icteam.loyalty.model.internal.ModelServiceImpl">
+		<tx:transaction method="*" value="Required" />
+		<jpa:context property="entityManager" unitname="ApiPU" />
+		<property name="logService" ref="logService"></property>
+		<property name="databaseMigrationCenter" ref="databaseMigrationCenter"></property>
+	</bean>
+	<service interface="com.icteam.loyalty.model.ModelService" ref="modelService"></service>
+	<service ref="dataSource" interface="javax.sql.DataSource">
+		<service-properties>
+			<entry key="osgi.jndi.service.name" value="jdbc/LoyaltyDS" />
+		</service-properties>
+	</service>
+	<reference interface="javax.sql.DataSource" id="dataSource"></reference>
+	<reference id="logService" interface="org.osgi.service.log.LogService" />
+	<reference id="databaseMigrationCenter" filter="(objectClass=org.openengsb.labs.liquibase.extender.DatabaseMigrationCenter)" availability="mandatory" />
+</blueprint>

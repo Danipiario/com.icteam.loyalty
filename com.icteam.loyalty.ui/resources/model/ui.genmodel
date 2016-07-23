@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/com.icteam.loyalty.ui/src" editDirectory="/com.icteam.loyalty.ui/src"
+    modelPluginID="com.icteam.loyalty.ui" modelName="Ui" modelPluginClass="" editPluginClass="com.icteam.loyalty.ui.provider.UIEditPlugin"
+    rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container" rootImplementsInterface=""
+    featureMapWrapperInternalInterface="" codeFormatting="true" booleanFlagsField=""
+    importerID="org.eclipse.emf.importer.ecore" bundleManifest="false" complianceLevel="7.0"
+    copyrightFields="false" providerRootExtendsClass="com.icteam.loyalty.model.provider.LoyaltyItemProviderAdapter"
+    language="" usedGenPackages="../../../org.eclipse.emf.ecore/model/Ecore.genmodel#//ecore ../../../com.icteam.loyalty.model/resources/model/model.genmodel#//template ../../../com.icteam.loyalty.model/resources/model/model.genmodel#//interfaces ../../../com.icteam.loyalty.model/resources/model/model.genmodel#//model ../../../org.eclipse.emf.ecp.view.model/model/view.genmodel#//model"
+    operationReflection="true" runtimePlatform="RAP" importOrganizing="true" cleanup="true">
+  <foreignModel>ui.model.ecore</foreignModel>
+  <genPackages prefix="UIModel" basePackage="com.icteam.loyalty.ui" disposableProviderFactory="true"
+      ecorePackage="ui.model.ecore#/">
+    <genClasses ecoreClass="ui.model.ecore#//NToMEMFModel">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ui.model.ecore#//NToMEMFModel/allToSrcAction"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ui.model.ecore#//NToMEMFModel/toSrcAction"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ui.model.ecore#//NToMEMFModel/toDestAction"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ui.model.ecore#//NToMEMFModel/allToDestAction"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EReference ui.model.ecore#//NToMEMFModel/srcList"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EReference ui.model.ecore#//NToMEMFModel/destList"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ui.model.ecore#//NToMEMFModel/selectedDestList"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ui.model.ecore#//NToMEMFModel/selectedSrcList"/>
+      <genOperations ecoreOperation="ui.model.ecore#//NToMEMFModel/move">
+        <genParameters ecoreParameter="ui.model.ecore#//NToMEMFModel/move/direction"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="ui.model.ecore#//DefaultEditorEMFModel">
+      <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference ui.model.ecore#//DefaultEditorEMFModel/saveAction"/>
+      <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference ui.model.ecore#//DefaultEditorEMFModel/cancelAction"/>
+    </genClasses>
+    <genClasses ecoreClass="ui.model.ecore#//VirtualViewEMFModel">
+      <genTypeParameters ecoreTypeParameter="ui.model.ecore#//VirtualViewEMFModel/T"/>
+      <genTypeParameters ecoreTypeParameter="ui.model.ecore#//VirtualViewEMFModel/D"/>
+      <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference ui.model.ecore#//VirtualViewEMFModel/template"/>
+      <genFeatures createChild="false" propertyCategory="" propertyDescription=""
+          ecoreFeature="ecore:EAttribute ui.model.ecore#//VirtualViewEMFModel/filter"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ui.model.ecore#//VirtualViewEMFModel/list"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ui.model.ecore#//VirtualViewEMFModel/searchProvider"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ui.model.ecore#//VirtualViewEMFModel/selectedList"/>
+      <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference ui.model.ecore#//VirtualViewEMFModel/openEditorAction"/>
+      <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference ui.model.ecore#//VirtualViewEMFModel/filterColumnsAction"/>
+      <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference ui.model.ecore#//VirtualViewEMFModel/advancedFilterAction"/>
+      <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference ui.model.ecore#//VirtualViewEMFModel/refreshAction"/>
+      <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference ui.model.ecore#//VirtualViewEMFModel/selectColumnAction"/>
+      <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference ui.model.ecore#//VirtualViewEMFModel/addAction"/>
+      <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference ui.model.ecore#//VirtualViewEMFModel/removeAction"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ui.model.ecore#//VirtualViewEMFModel/columnWidths"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ui.model.ecore#//VirtualViewEMFModel/itemCount"/>
+      <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute ui.model.ecore#//VirtualViewEMFModel/editorID"/>
+      <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute ui.model.ecore#//VirtualViewEMFModel/viewID"/>
+      <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute ui.model.ecore#//VirtualViewEMFModel/modelClass"/>
+      <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute ui.model.ecore#//VirtualViewEMFModel/templateClass"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EAttribute ui.model.ecore#//VirtualViewEMFModel/columnDomainModelReferences"/>
+      <genOperations ecoreOperation="ui.model.ecore#//VirtualViewEMFModel/buildTemplate"/>
+      <genOperations ecoreOperation="ui.model.ecore#//VirtualViewEMFModel/openEditor"/>
+      <genOperations ecoreOperation="ui.model.ecore#//VirtualViewEMFModel/setAdvancedSearchTemplate">
+        <genParameters ecoreParameter="ui.model.ecore#//VirtualViewEMFModel/setAdvancedSearchTemplate/template"/>
+      </genOperations>
+      <genOperations ecoreOperation="ui.model.ecore#//VirtualViewEMFModel/reload">
+        <genParameters ecoreParameter="ui.model.ecore#//VirtualViewEMFModel/reload/closeEditors"/>
+      </genOperations>
+      <genOperations ecoreOperation="ui.model.ecore#//VirtualViewEMFModel/setFilterFeatures">
+        <genParameters ecoreParameter="ui.model.ecore#//VirtualViewEMFModel/setFilterFeatures/filterFeatures"/>
+        <genParameters ecoreParameter="ui.model.ecore#//VirtualViewEMFModel/setFilterFeatures/reload"/>
+      </genOperations>
+      <genOperations ecoreOperation="ui.model.ecore#//VirtualViewEMFModel/closeEditors"/>
+    </genClasses>
+  </genPackages>
+  <genPackages prefix="UIInterfaces" basePackage="com.icteam.loyalty.ui" disposableProviderFactory="true"
+      ecorePackage="ui.interfaces.ecore#/">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="ui.interfaces.ecore#//NToMDirection">
+      <genEnumLiterals ecoreEnumLiteral="ui.interfaces.ecore#//NToMDirection/ALL_TO_SRC"/>
+      <genEnumLiterals ecoreEnumLiteral="ui.interfaces.ecore#//NToMDirection/TO_SRC"/>
+      <genEnumLiterals ecoreEnumLiteral="ui.interfaces.ecore#//NToMDirection/ALL_TO_DEST"/>
+      <genEnumLiterals ecoreEnumLiteral="ui.interfaces.ecore#//NToMDirection/TO_DEST"/>
+    </genEnums>
+    <genClasses image="false" ecoreClass="ui.interfaces.ecore#//IBaseClassProvider">
+      <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute ui.interfaces.ecore#//IBaseClassProvider/baseClass"/>
+    </genClasses>
+    <genClasses ecoreClass="ui.interfaces.ecore#//UIAction">
+      <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference ui.interfaces.ecore#//UIAction/NTOM_ALL_TO_SRC"/>
+      <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference ui.interfaces.ecore#//UIAction/NTOM_TO_SRC"/>
+      <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference ui.interfaces.ecore#//UIAction/NTOM_ALL_TO_DEST"/>
+      <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference ui.interfaces.ecore#//UIAction/NTOM_TO_DEST"/>
+      <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference ui.interfaces.ecore#//UIAction/EDITOR_SAVE"/>
+      <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference ui.interfaces.ecore#//UIAction/EDITOR_CANCEL"/>
+      <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference ui.interfaces.ecore#//UIAction/VIEW_OPEN_EDITOR"/>
+      <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference ui.interfaces.ecore#//UIAction/VIEW_FILTER_COLUMNS"/>
+      <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference ui.interfaces.ecore#//UIAction/VIEW_ADVANCED_FILTER"/>
+      <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference ui.interfaces.ecore#//UIAction/VIEW_REFRESH"/>
+      <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference ui.interfaces.ecore#//UIAction/VIEW_SELECT_COLUMN"/>
+      <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference ui.interfaces.ecore#//UIAction/VIEW_ADD"/>
+      <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference ui.interfaces.ecore#//UIAction/VIEW_REMOVE"/>
+    </genClasses>
+    <genClasses ecoreClass="ui.interfaces.ecore#//EStructuralFeatureToIntMap">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ui.interfaces.ecore#//EStructuralFeatureToIntMap/key"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ui.interfaces.ecore#//EStructuralFeatureToIntMap/value"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

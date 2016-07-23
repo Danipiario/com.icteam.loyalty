@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="ASCII"?>
+<org.eclipse.emf.ecp.view.model:View xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:org.eclipse.emf.ecp.view.horizontal.model="http://org/eclipse/emf/ecp/view/horizontal/model" xmlns:org.eclipse.emf.ecp.view.label.model="http://org/eclipse/emf/ecp/view/label/model" xmlns:org.eclipse.emf.ecp.view.model="http://org/eclipse/emf/ecp/view/model" xmlns:org.eclipse.emf.ecp.view.table.model="http://org/eclipse/emf/ecp/view/table/model" ecorePath="/com.icteam.loyalty.ui/resources/model/ui.model.ecore">
+  <rootEClass href="http://com.icteam.loyalty/ui/model#//VirtualViewEMFModel"/>
+  <children xsi:type="org.eclipse.emf.ecp.view.horizontal.model:HorizontalLayout">
+    <children xsi:type="org.eclipse.emf.ecp.view.model:Control" name="Control filter" labelAlignment="None">
+      <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference">
+        <domainModelEFeature xsi:type="ecore:EAttribute" href="http://com.icteam.loyalty/ui/model#//VirtualViewEMFModel/filter"/>
+      </domainModelReference>
+    </children>
+    <children xsi:type="org.eclipse.emf.ecp.view.model:Control" name="Control filterColumnsAction" labelAlignment="None">
+      <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference">
+        <domainModelEFeature xsi:type="ecore:EReference" href="http://com.icteam.loyalty/ui/model#//VirtualViewEMFModel/filterColumnsAction"/>
+      </domainModelReference>
+    </children>
+    <children xsi:type="org.eclipse.emf.ecp.view.model:Control" name="Control advancedFilterAction" labelAlignment="None">
+      <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference">
+        <domainModelEFeature xsi:type="ecore:EReference" href="http://com.icteam.loyalty/ui/model#//VirtualViewEMFModel/advancedFilterAction"/>
+      </domainModelReference>
+    </children>
+  </children>
+  <children xsi:type="org.eclipse.emf.ecp.view.label.model:Label" style="Separator"/>
+  <children xsi:type="org.eclipse.emf.ecp.view.table.model:TableControl" labelAlignment="None">
+    <domainModelReference xsi:type="org.eclipse.emf.ecp.view.table.model:TableDomainModelReference">
+      <domainModelEFeature xsi:type="ecore:EReference" href="http://com.icteam.loyalty/ui/model#//VirtualViewEMFModel/list"/>
+    </domainModelReference>
+  </children>
+</org.eclipse.emf.ecp.view.model:View>
