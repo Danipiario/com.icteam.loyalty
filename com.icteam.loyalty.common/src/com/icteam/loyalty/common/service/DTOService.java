@@ -1,15 +1,16 @@
 package com.icteam.loyalty.common.service;
 
 import org.osgi.annotation.versioning.ProviderType;
-import org.osgi.dto.DTO;
+
+import com.icteam.loyalty.common.dto.IDTO;
 
 @ProviderType
 public interface DTOService {
 
-	<D extends DTO> D newDTO(Class<D> dtoClass);
+	<D extends IDTO> D newDTO(Class<D> dtoClass);
 
-	void addDTO(Class<? extends DTO> dtoClass, Class<? extends DTO> dtoExtendedClass);
+	void addDTO(Class<? extends IDTO> dtoClass, Class<? extends IDTO> dtoExtendedClass);
 
-	void removeDTO(Class<? extends DTO> dtoClass);
+	void removeDTO(Class<? extends IDTO> dtoClass);
 
 }

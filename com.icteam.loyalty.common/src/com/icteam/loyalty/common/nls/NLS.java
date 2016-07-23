@@ -45,7 +45,7 @@ public class NLS implements ManagedService {
 		return internalGet(resourceBundle, clazz);
 	}
 
-	private static Locale getLocale() {
+	public static Locale getLocale() {
 		return LocaleUtils.toLocale(configuration.defaultLocale());
 	}
 
@@ -90,6 +90,26 @@ public class NLS implements ManagedService {
 		}
 
 		return result;
+	}
+
+	public static <T> String get(Class<T> clazz, String key) {
+		final ResourceBundle resourceBundle = Utf8ResourceBundle.getBundle(clazz, getLocale());
+
+		if (resourceBundle != null && resourceBundle.containsKey(key)) {
+			return resourceBundle.getString(key);
+		}
+
+		for (Map<String, ResourceBundle> map : Utf8ResourceBundle.getResourceBundleMaps().values()) {
+			for (ResourceBundle rb : map.values()) {
+				if (rb.containsKey(key)) {
+					return rb.getString(key);
+				}
+			}
+		}
+
+		logger.warn("Failed to get localized message for class {} and field {}", clazz.getName(), key);
+
+		return "";
 	}
 
 	@Override

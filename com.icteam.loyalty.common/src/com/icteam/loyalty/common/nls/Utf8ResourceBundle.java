@@ -26,10 +26,24 @@ public final class Utf8ResourceBundle {
 		}
 	}
 
+	public static void addBundle(Bundle bundle) {
+		synchronized (resourceBundleMaps) {
+			resourceBundleMaps.remove(bundle.getSymbolicName());
+		}
+	}
+
 	public static ResourceBundle getBundle(Class<?> clazz, Locale locale) {
 		final Bundle bundle = FrameworkUtil.getBundle(clazz);
 
-		final String classLocaleKey = clazz.getSimpleName().toLowerCase() + "_" + locale.toString();
+		return getBundle(bundle, clazz.getSimpleName().toLowerCase(), locale);
+	}
+
+	static synchronized Map<String, Map<String, ResourceBundle>> getResourceBundleMaps() {
+		return resourceBundleMaps;
+	}
+
+	public static ResourceBundle getBundle(Bundle bundle, String baseName, Locale locale) {
+		final String classLocaleKey = baseName + "_" + locale.toString();
 		ResourceBundle result = null;
 
 		Map<String, ResourceBundle> resourceBundleMap;
@@ -45,22 +59,32 @@ public final class Utf8ResourceBundle {
 		}
 
 		if (result == null) {
-			final URL propertiesURL = getPropertiesURL(bundle, clazz.getSimpleName().toLowerCase(), locale);
+			final URL propertiesURL = getPropertiesURL(bundle, baseName, locale);
 
-			if (propertiesURL != null) {
-				ResourceBundle resourceBundle;
-				try {
-					resourceBundle = new PropertyResourceBundle(propertiesURL.openStream());
-
-					result = createUtf8Bundle(resourceBundle);
-					resourceBundleMap.put(classLocaleKey, result);
-				} catch (final IOException e) {
-					e.printStackTrace();
-				}
-			}
+			result = loadResourceBundle(bundle, classLocaleKey, propertiesURL);
 		}
 
 		return result;
+	}
+
+	public static ResourceBundle loadResourceBundle(Bundle bundle, String classLocaleKey, final URL propertiesURL) {
+		ResourceBundle resourceBundle = null;
+
+		if (propertiesURL != null) {
+			try {
+				resourceBundle = new PropertyResourceBundle(propertiesURL.openStream());
+
+				resourceBundle = createUtf8Bundle(resourceBundle);
+
+				synchronized (resourceBundleMaps) {
+					resourceBundleMaps.get(bundle.getSymbolicName()).put(classLocaleKey, resourceBundle);
+				}
+			} catch (final IOException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return resourceBundle;
 	}
 
 	private static URL getPropertiesURL(Bundle bundle, String baseName, Locale locale) {
@@ -75,7 +99,7 @@ public final class Utf8ResourceBundle {
 		// es OSGI-INF/l10n/bundle -> OSGI-INF/l10n
 		localizationHeader = localizationHeader.substring(0, localizationHeader.lastIndexOf('/'));
 
-		final String[] nlVariants = buildNLVariants(locale.toString());
+		final String[] nlVariants = getNLVariants(locale);
 
 		URL propertiesURL = null;
 		for (final String nlVariant : nlVariants) {
@@ -90,7 +114,9 @@ public final class Utf8ResourceBundle {
 		return propertiesURL;
 	}
 
-	private static String[] buildNLVariants(String nl) {
+	public static String[] getNLVariants(Locale locale) {
+		String nl = locale.toString();
+
 		final List<String> result = new ArrayList<>();
 		while (nl.length() > 0) {
 			result.add(nl);

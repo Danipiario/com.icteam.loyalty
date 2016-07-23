@@ -8,7 +8,6 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.util.tracker.ServiceTracker;
 
-import com.icteam.loyalty.common.service.DTOBuilder;
 import com.icteam.loyalty.common.service.DTOService;
 
 /**
@@ -20,19 +19,6 @@ public class DTOServiceTest {
 	private static final BundleContext context = FrameworkUtil.getBundle(DTOServiceTest.class).getBundleContext();
 
 	private static ServiceTracker<?, ?> serviceTracker = new ServiceTracker<>(context, DTOService.class, null);
-
-	class TestDTOBuilder implements DTOBuilder<TestDTO, String> {
-
-		@Override
-		public String buildObject(TestDTO dto) {
-			return "";
-		}
-
-		@Override
-		public TestDTO buildDTO(String object) {
-			return new TestDTO();
-		}
-	};
 
 	DTOService getService() throws InterruptedException {
 		return (DTOService) serviceTracker.waitForService(1000);

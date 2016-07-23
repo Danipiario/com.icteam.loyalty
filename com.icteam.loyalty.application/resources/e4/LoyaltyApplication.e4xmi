@@ -7,26 +7,18 @@
       <children xsi:type="advanced:Perspective" xmi:id="_hxPEsDiOEeaMONTLrsbb4w" elementId="com.icteam.loyalty.application.perspective.administration" label="%administration">
         <children xsi:type="basic:PartSashContainer" xmi:id="_x8bg8DiOEeaMONTLrsbb4w" elementId="com.icteam.loyalty.application.partsashcontainer.0" horizontal="true">
           <children xsi:type="basic:PartStack" xmi:id="_0vL8cDiOEeaMONTLrsbb4w" elementId="com.icteam.loyalty.application.partstack.left" containerData="30"/>
-          <children xsi:type="basic:PartStack" xmi:id="_2TJCgDiOEeaMONTLrsbb4w" elementId="com.icteam.loyalty.application.partstack.1" containerData="70">
-            <children xsi:type="basic:Part" xmi:id="_GdgcoDviEeaQV-YkHvJSVg" elementId="com.icteam.loyalty.application.part.alfa" label="alfa" closeable="true"/>
-          </children>
+          <children xsi:type="advanced:Area" xmi:id="_98XcMDxIEeadbYlql7oshg" elementId="com.icteam.loyalty.application.area.main" containerData="70"/>
         </children>
       </children>
     </children>
     <mainMenu xmi:id="_VXz0cDiPEeaMONTLrsbb4w" elementId="com.icteam.loyalty.application.menu.0">
       <children xsi:type="menu:Menu" xmi:id="_EUrOIDiQEeaMONTLrsbb4w" elementId="com.icteam.loyalty.application.menu.administrationmenu" label="%administration.menu">
         <children xsi:type="menu:HandledMenuItem" xmi:id="_JDH6QDiQEeaMONTLrsbb4w" elementId="org.eclipse.ui.file.exit" label="%exit" command="_dCObEDiSEeaMONTLrsbb4w"/>
-        <children xsi:type="menu:HandledMenuItem" xmi:id="_je_6EDvbEeaQV-YkHvJSVg" elementId="org.eclipse.ui.views.showView" label="%showview" command="_AhyzgDvfEeaQV-YkHvJSVg"/>
       </children>
     </mainMenu>
   </children>
   <handlers xmi:id="_dL18ADiQEeaMONTLrsbb4w" elementId="com.icteam.loyalty.application.handler.0" contributionURI="bundleclass://com.icteam.loyalty.application/com.icteam.loyalty.application.handler.ExitHandler" command="_dCObEDiSEeaMONTLrsbb4w"/>
-  <handlers xmi:id="_6d_BgDvfEeaQV-YkHvJSVg" elementId="com.icteam.loyalty.application.handler.1" contributionURI="bundleclass://org.eclipse.e4.ui.workbench.swt/org.eclipse.e4.ui.internal.workbench.swt.handlers.ShowViewHandler" command="_AhyzgDvfEeaQV-YkHvJSVg"/>
-  <descriptors xmi:id="_Jj7lkDvjEeaQV-YkHvJSVg" elementId="com.icteam.loyalty.application.partdescriptor.beta" label="beta">
-    <tags>View</tags>
-  </descriptors>
   <commands xmi:id="_dCObEDiSEeaMONTLrsbb4w" elementId="org.eclipse.ui.file.exit" commandName="exit"/>
-  <commands xmi:id="_AhyzgDvfEeaQV-YkHvJSVg" elementId="org.eclipse.ui.views.showView" commandName="showView"/>
   <addons xmi:id="_nb4lQTiMEeaMONTLrsbb4w" elementId="org.eclipse.e4.core.commands.service" contributionURI="bundleclass://org.eclipse.e4.core.commands/org.eclipse.e4.core.commands.CommandServiceAddon"/>
   <addons xmi:id="_nb4lQjiMEeaMONTLrsbb4w" elementId="org.eclipse.e4.ui.contexts.service" contributionURI="bundleclass://org.eclipse.e4.ui.services/org.eclipse.e4.ui.services.ContextServiceAddon"/>
   <addons xmi:id="_nb4lQziMEeaMONTLrsbb4w" elementId="org.eclipse.e4.ui.bindings.service" contributionURI="bundleclass://org.eclipse.e4.ui.bindings/org.eclipse.e4.ui.bindings.BindingServiceAddon"/>

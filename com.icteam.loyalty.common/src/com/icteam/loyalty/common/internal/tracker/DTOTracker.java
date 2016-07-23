@@ -3,13 +3,13 @@ package com.icteam.loyalty.common.internal.tracker;
 import org.apache.commons.lang3.StringUtils;
 import org.eclipse.jetty.util.log.Log;
 import org.eclipse.jetty.util.log.Logger;
-import org.osgi.dto.DTO;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleEvent;
 import org.osgi.util.tracker.BundleTracker;
 import org.osgi.util.tracker.ServiceTracker;
 
+import com.icteam.loyalty.common.dto.IDTO;
 import com.icteam.loyalty.common.service.DTOService;
 
 public class DTOTracker extends BundleTracker<Bundle> {
@@ -64,8 +64,8 @@ public class DTOTracker extends BundleTracker<Bundle> {
 				try {
 					logger.info("bundle #{} - remove DTO #{}", bundle.getSymbolicName(), dtoClass);
 
-					final Class<? extends DTO> dtoExtendedClass = (Class<? extends DTO>) bundle.loadClass(dtoClass);
-					final Class<? extends DTO> dc = (Class<? extends DTO>) dtoExtendedClass.getSuperclass();
+					final Class<? extends IDTO> dtoExtendedClass = (Class<? extends IDTO>) bundle.loadClass(dtoClass);
+					final Class<? extends IDTO> dc = (Class<? extends IDTO>) dtoExtendedClass.getSuperclass();
 
 					final DTOService dtoService = serviceTracker.waitForService(10000);
 
@@ -87,8 +87,8 @@ public class DTOTracker extends BundleTracker<Bundle> {
 				try {
 					logger.info("bundle #{} - add DTO #{}", bundle.getSymbolicName(), dtoClass);
 
-					final Class<? extends DTO> dtoExtendedClass = (Class<? extends DTO>) bundle.loadClass(dtoClass);
-					final Class<? extends DTO> dc = (Class<? extends DTO>) dtoExtendedClass.getSuperclass();
+					final Class<? extends IDTO> dtoExtendedClass = (Class<? extends IDTO>) bundle.loadClass(dtoClass);
+					final Class<? extends IDTO> dc = (Class<? extends IDTO>) dtoExtendedClass.getSuperclass();
 
 					final DTOService dtoService = serviceTracker.waitForService(10000);
 
