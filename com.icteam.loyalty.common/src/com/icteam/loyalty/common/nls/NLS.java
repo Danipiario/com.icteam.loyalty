@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.MissingResourceException;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.WeakHashMap;
 
@@ -40,9 +41,9 @@ public class NLS implements ManagedService {
 	 *            the class of the NLS object to load.
 	 */
 	public static <T> T getUTF8Encoded(Class<T> clazz) {
-		final ResourceBundle resourceBundle = Utf8ResourceBundle.getBundle(clazz, getLocale());
+		final Optional<ResourceBundle> resourceBundle = Utf8ResourceBundle.getBundle(clazz, getLocale());
 
-		return internalGet(resourceBundle, clazz);
+		return internalGet(resourceBundle.get(), clazz);
 	}
 
 	public static Locale getLocale() {
@@ -93,14 +94,14 @@ public class NLS implements ManagedService {
 	}
 
 	public static <T> String get(Class<T> clazz, String key) {
-		final ResourceBundle resourceBundle = Utf8ResourceBundle.getBundle(clazz, getLocale());
+		final Optional<ResourceBundle> resourceBundle = Utf8ResourceBundle.getBundle(clazz, getLocale());
 
-		if (resourceBundle != null && resourceBundle.containsKey(key)) {
-			return resourceBundle.getString(key);
+		if (resourceBundle.isPresent() && resourceBundle.get().containsKey(key)) {
+			return resourceBundle.get().getString(key);
 		}
 
-		for (Map<String, ResourceBundle> map : Utf8ResourceBundle.getResourceBundleMaps().values()) {
-			for (ResourceBundle rb : map.values()) {
+		for (final Map<String, ResourceBundle> map : Utf8ResourceBundle.getResourceBundleMaps().values()) {
+			for (final ResourceBundle rb : map.values()) {
 				if (rb.containsKey(key)) {
 					return rb.getString(key);
 				}
@@ -109,7 +110,7 @@ public class NLS implements ManagedService {
 
 		logger.warn("Failed to get localized message for class {} and field {}", clazz.getName(), key);
 
-		return "";
+		return "???"+ key+ "???";
 	}
 
 	@Override

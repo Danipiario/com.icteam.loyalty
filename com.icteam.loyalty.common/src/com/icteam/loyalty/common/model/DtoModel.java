@@ -15,7 +15,7 @@ import javax.persistence.Id;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang3.StringUtils;
 
-import com.icteam.loyalty.common.enums.Property;
+import com.icteam.loyalty.common.annotations.Property;
 import com.icteam.loyalty.common.interfaces.IDtoModel;
 
 public class DtoModel implements Serializable, IDtoModel {

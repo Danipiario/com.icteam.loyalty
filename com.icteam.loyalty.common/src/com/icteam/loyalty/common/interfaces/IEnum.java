@@ -1,7 +1,9 @@
 package com.icteam.loyalty.common.interfaces;
 
-public interface IEnum {
+import java.io.Serializable;
 
-    String name();
+public interface IEnum extends Serializable {
+
+	String name();
 
 }

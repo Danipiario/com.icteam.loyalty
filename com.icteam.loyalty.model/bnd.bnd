@@ -1,7 +1,7 @@
 Bundle-Version: 5.0.0.${tstamp}
 Bundle-Localization: OSGI-INF/l10n/bundle/plugin
 -includeresource: OSGI-INF/blueprint/blueprint.xml=resources/blueprint/blueprint.xml, OSGI-INF/l10n/bundle/plugin.properties=plugin.properties, META-INF/persistence.xml=resources/persistence/persistence.xml, \
-                  OSGI-INF/model=resources/model, plugin.xml=plugin.xml, icons=icons
+                  OSGI-INF/model=resources/model, plugin.xml=plugin.xml, icons=resources/icons
 Import-Package: javax.sql,\
 	*
 Export-Package:  \

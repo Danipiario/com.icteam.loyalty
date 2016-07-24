@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Optional;
 import java.util.PropertyResourceBundle;
 import java.util.ResourceBundle;
 
@@ -32,8 +33,12 @@ public final class Utf8ResourceBundle {
 		}
 	}
 
-	public static ResourceBundle getBundle(Class<?> clazz, Locale locale) {
-		final Bundle bundle = FrameworkUtil.getBundle(clazz);
+	public static Optional<ResourceBundle> getBundle(Class<?> clazz, Locale locale) {
+		Bundle bundle = FrameworkUtil.getBundle(clazz);
+
+		if (bundle == null) {
+			bundle = FrameworkUtil.getBundle(Utf8ResourceBundle.class);
+		}
 
 		return getBundle(bundle, clazz.getSimpleName().toLowerCase(), locale);
 	}
@@ -42,23 +47,13 @@ public final class Utf8ResourceBundle {
 		return resourceBundleMaps;
 	}
 
-	public static ResourceBundle getBundle(Bundle bundle, String baseName, Locale locale) {
+	public static Optional<ResourceBundle> getBundle(Bundle bundle, String baseName, Locale locale) {
 		final String classLocaleKey = baseName + "_" + locale.toString();
-		ResourceBundle result = null;
+		Optional<ResourceBundle> result = Optional.empty();
 
-		Map<String, ResourceBundle> resourceBundleMap;
+		result = getResourceBundle(bundle, classLocaleKey);
 
-		synchronized (resourceBundleMaps) {
-			resourceBundleMap = resourceBundleMaps.get(bundle.getSymbolicName());
-
-			if (resourceBundleMap == null) {
-				resourceBundleMaps.put(bundle.getSymbolicName(), resourceBundleMap = new HashMap<>());
-			}
-
-			result = resourceBundleMap.get(classLocaleKey);
-		}
-
-		if (result == null) {
+		if (!result.isPresent()) {
 			final URL propertiesURL = getPropertiesURL(bundle, baseName, locale);
 
 			result = loadResourceBundle(bundle, classLocaleKey, propertiesURL);
@@ -67,18 +62,35 @@ public final class Utf8ResourceBundle {
 		return result;
 	}
 
-	public static ResourceBundle loadResourceBundle(Bundle bundle, String classLocaleKey, final URL propertiesURL) {
-		ResourceBundle resourceBundle = null;
+	private static Optional<ResourceBundle> getResourceBundle(Bundle bundle, final String classLocaleKey) {
+		return Optional.ofNullable(getResourceBundleMap(bundle).get(classLocaleKey));
+	}
+
+	private static Map<String, ResourceBundle> getResourceBundleMap(Bundle bundle) {
+		Map<String, ResourceBundle> resourceBundleMap;
+
+		synchronized (resourceBundleMaps) {
+			resourceBundleMap = resourceBundleMaps.get(bundle.getSymbolicName());
+
+			if (resourceBundleMap == null) {
+				resourceBundleMaps.put(bundle.getSymbolicName(), resourceBundleMap = new HashMap<>());
+			}
+		}
+
+		return resourceBundleMap;
+	}
+
+	public static Optional<ResourceBundle> loadResourceBundle(Bundle bundle, String classLocaleKey,
+			final URL propertiesURL) {
+		Optional<ResourceBundle> resourceBundle = Optional.empty();
 
 		if (propertiesURL != null) {
 			try {
-				resourceBundle = new PropertyResourceBundle(propertiesURL.openStream());
+				resourceBundle = Optional.of(new PropertyResourceBundle(propertiesURL.openStream()));
 
 				resourceBundle = createUtf8Bundle(resourceBundle);
 
-				synchronized (resourceBundleMaps) {
-					resourceBundleMaps.get(bundle.getSymbolicName()).put(classLocaleKey, resourceBundle);
-				}
+				getResourceBundleMap(bundle).put(classLocaleKey, resourceBundle.get());
 			} catch (final IOException e) {
 				e.printStackTrace();
 			}
@@ -127,13 +139,13 @@ public final class Utf8ResourceBundle {
 		return result.toArray(new String[result.size()]);
 	}
 
-	private static ResourceBundle createUtf8Bundle(ResourceBundle bundle) {
-		ResourceBundle result = bundle;
-		if (bundle instanceof PropertyResourceBundle) {
-			final PropertyResourceBundle prb = (PropertyResourceBundle) bundle;
+	private static Optional<ResourceBundle> createUtf8Bundle(Optional<ResourceBundle> bundle) {
+		ResourceBundle result = bundle.get();
+		if (result instanceof PropertyResourceBundle) {
+			final PropertyResourceBundle prb = (PropertyResourceBundle) result;
 			result = new Utf8PropertyResourceBundle(prb);
 		}
-		return result;
+		return Optional.of(result);
 	}
 
 	private static class Utf8PropertyResourceBundle extends ResourceBundle {

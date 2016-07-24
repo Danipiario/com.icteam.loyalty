@@ -6,18 +6,17 @@ import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.ParameterizedType;
-import java.security.AccessController;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
-import java.util.Dictionary;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Stream;
 
@@ -41,24 +40,28 @@ import javax.persistence.metamodel.EntityType;
 import javax.persistence.metamodel.ManagedType;
 import javax.persistence.metamodel.SetAttribute;
 import javax.persistence.metamodel.SingularAttribute;
-import javax.security.auth.Subject;
 
 import org.apache.commons.beanutils.PropertyUtils;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateUtils;
 
+import com.icteam.loyalty.common.annotations.Property;
+import com.icteam.loyalty.common.annotations.Where;
+import com.icteam.loyalty.common.annotations.WhereTemplate;
 import com.icteam.loyalty.common.enums.EDynamicFilterable;
-import com.icteam.loyalty.common.enums.EStatus;
-import com.icteam.loyalty.common.enums.Property;
-import com.icteam.loyalty.common.enums.Where;
-import com.icteam.loyalty.common.enums.WhereTemplate;
 import com.icteam.loyalty.common.interfaces.IFilterPriority;
+import com.icteam.loyalty.common.interfaces.IFromToDateTemplate;
 import com.icteam.loyalty.common.interfaces.IModel;
+import com.icteam.loyalty.common.interfaces.IPrioritized;
+import com.icteam.loyalty.common.interfaces.IStatus;
+import com.icteam.loyalty.common.interfaces.IStatusTemplate;
 import com.icteam.loyalty.common.interfaces.ITemplate;
-import com.icteam.loyalty.common.internal.Messages;
-import com.querydsl.core.support.QueryBase;
-import com.querydsl.sql.RelationalPathBase;
+import com.icteam.loyalty.common.interfaces.IValidDateTemplate;
+import com.icteam.loyalty.common.interfaces.IValidDateTime;
+import com.icteam.loyalty.common.util.Constants;
+import com.icteam.loyalty.common.util.ModelUtil;
 
 /**
  * AbstractTemplate
@@ -183,12 +186,12 @@ public abstract class AbstractTemplate<T extends Serializable> implements ITempl
 	}
 
 	protected void initDefaultDynamicFilterProperties() {
-		List<String> filterableProperties = getFilterableProperties();
-		List<String> defaultDynamicFilterProperties = new ArrayList<>();
+		final List<String> filterableProperties = getFilterableProperties();
+		final List<String> defaultDynamicFilterProperties = new ArrayList<>();
 
-		for (String prop : filterableProperties) {
+		for (final String prop : filterableProperties) {
 			try {
-				Field field = getClass().getDeclaredField(prop);
+				final Field field = getClass().getDeclaredField(prop);
 
 				if (field.getAnnotation(Property.class).dynamicFilterable().equals(EDynamicFilterable.DEFAULT_FILTER)) {
 					defaultDynamicFilterProperties.add(prop);
@@ -207,7 +210,7 @@ public abstract class AbstractTemplate<T extends Serializable> implements ITempl
 		final List<String> filterableProperties = new ArrayList<>();
 
 		Stream.of(getClass().getDeclaredFields()).forEach(field -> {
-			Property property = field.getAnnotation(Property.class);
+			final Property property = field.getAnnotation(Property.class);
 
 			if (property != null && !property.dynamicFilterable().equals(EDynamicFilterable.NO)) {
 				filterableProperties.add(field.getName());
@@ -246,7 +249,7 @@ public abstract class AbstractTemplate<T extends Serializable> implements ITempl
 		try {
 			properties = PropertyUtils.describe(this);
 
-			for (Entry<String, Object> property : properties.entrySet()) {
+			for (final Entry<String, Object> property : properties.entrySet()) {
 				if (initialized(property.getKey(), property.getValue())) {
 					set = true;
 					break;
@@ -376,7 +379,7 @@ public abstract class AbstractTemplate<T extends Serializable> implements ITempl
 	}
 
 	private void buildOrder() {
-		List<Order> orders = new ArrayList<>();
+		final List<Order> orders = new ArrayList<>();
 
 		if (getOrderDirections() != null) {
 			for (int i = 0; i < getOrderDirections().length; i++) {
@@ -404,9 +407,9 @@ public abstract class AbstractTemplate<T extends Serializable> implements ITempl
 	}
 
 	private Expression<?> buildFieldExpression(String expression) {
-		String[] items = expression.split("\\.");
+		final String[] items = expression.split("\\.");
 		Path<?> out = root;
-		for (String item : items) {
+		for (final String item : items) {
 			out = out.get(item);
 		}
 		return out;
@@ -548,9 +551,9 @@ public abstract class AbstractTemplate<T extends Serializable> implements ITempl
 		if (isLightSearch()) {
 			list = getResultListLightSearch(em);
 		} else {
-			CriteriaQuery<R> internalCriteria = buildCriteria(em.getCriteriaBuilder());
+			final CriteriaQuery<R> internalCriteria = buildCriteria(em.getCriteriaBuilder());
 
-			TypedQuery<R> query = em.createQuery(internalCriteria);
+			final TypedQuery<R> query = em.createQuery(internalCriteria);
 
 			handleMaxResults(query);
 			handleFirstResult(query);
@@ -604,7 +607,7 @@ public abstract class AbstractTemplate<T extends Serializable> implements ITempl
 	 */
 	private <R> List<R> filterDistinctValues(List<R> list) {
 		if (getDistinct().equals(Distinct.CODE)) {
-			Set<R> set = new LinkedHashSet<>(list);
+			final Set<R> set = new LinkedHashSet<>(list);
 			list = new ArrayList<>(set);
 		}
 
@@ -622,11 +625,11 @@ public abstract class AbstractTemplate<T extends Serializable> implements ITempl
 	public <R> Long getResultCount(EntityManager em) {
 		setEntityManager(em);
 
-		CriteriaQuery<Long> criteriaCount = buildCriteria(em.getCriteriaBuilder());
+		final CriteriaQuery<Long> criteriaCount = buildCriteria(em.getCriteriaBuilder());
 		criteriaCount.select(getBuilder().countDistinct(getRoot()));
 		criteriaCount.orderBy((List<Order>) null); // annullo l'eventuale
-													// ordinamento, con la count
-													// si rompe
+		// ordinamento, con la count
+		// si rompe
 
 		return em.createQuery(criteriaCount).getSingleResult();
 	}
@@ -653,13 +656,13 @@ public abstract class AbstractTemplate<T extends Serializable> implements ITempl
 	protected <R> List<R> getResultListLightSearch(EntityManager em) {
 		T result = entityManager.find(getTemplateClass(), getId());
 
-		List<T> list = new ArrayList<>();
+		final List<T> list = new ArrayList<>();
 
 		if (result != null) {
 			list.add(result);
 		}
 
-		Iterator<T> iterator = list.iterator();
+		final Iterator<T> iterator = list.iterator();
 		while (iterator.hasNext()) {
 			result = iterator.next();
 
@@ -673,6 +676,9 @@ public abstract class AbstractTemplate<T extends Serializable> implements ITempl
 		return (List<R>) list;
 	}
 
+	/**
+	 * @param result
+	 */
 	protected boolean checkLightSearch(T result) {
 		return true;
 	}
@@ -701,12 +707,12 @@ public abstract class AbstractTemplate<T extends Serializable> implements ITempl
 	 */
 	@Override
 	public <R> R getFirstResult(EntityManager em) {
-		int oldMaxResults = maxResults;
+		final int oldMaxResults = maxResults;
 
 		setMaxResults(1);
 
 		try {
-			List<R> list = getResultList(em);
+			final List<R> list = getResultList(em);
 			if (list.isEmpty()) {
 				return null;
 			}
@@ -740,104 +746,66 @@ public abstract class AbstractTemplate<T extends Serializable> implements ITempl
 
 	private void buildAnnotationWheres() {
 		Stream.of(getClass().getDeclaredFields()).filter(field -> field.isAnnotationPresent(Where.class))
-				.forEach(field -> {
-					Where where = field.getAnnotation(Where.class);
+		.forEach(field -> {
+			final Where where = field.getAnnotation(Where.class);
 
-					if (!field.getName().equals(STATUS_FIELD)) {
-						try {
-							switch (where.value()) {
-							case EQUAL:
-								handleWhereEqual(field.getName(), (Serializable) field.get(AbstractTemplate.this));
-								break;
-							case GREATER_EQUAL:
-								handleWhereGreaterOrEqual(where.fieldName(),
-										(Comparable) field.get(AbstractTemplate.this));
-								break;
-							case LIKE_IGNORE_CASE:
-								handleWhereLikeIgnoreCase(field.getName(), (String) field.get(AbstractTemplate.this));
-								break;
+			if (!field.getName().equals(STATUS_FIELD)) {
+				try {
+					switch (where.value()) {
+					case EQUAL:
+						handleWhereEqual(field.getName(), (Serializable) field.get(AbstractTemplate.this));
+						break;
+					case GREATER_EQUAL:
+						handleWhereGreaterOrEqual(where.fieldName(),
+								(Comparable) field.get(AbstractTemplate.this));
+						break;
+					case LIKE_IGNORE_CASE:
+						handleWhereLikeIgnoreCase(field.getName(), (String) field.get(AbstractTemplate.this));
+						break;
 
-							case I18N:
-								// nel caso di template innestato se il campo e'
-								// un
-								// id ho la chiave e non la traduzione
-								if (isNested() && field.isAnnotationPresent(Id.class)) {
-									handleWhereEqual(field.getName(), (Serializable) field.get(AbstractTemplate.this));
-								} else {
-									handleWhereI18N(field.getName(), (String) field.get(AbstractTemplate.this),
-											where.prefixI18N());
-								}
-								break;
-
-							default:
-								break;
-							}
-						} catch (IllegalArgumentException | IllegalAccessException e) {
-							e.printStackTrace();
-						}
+					default:
+						break;
 					}
-				});
+				} catch (IllegalArgumentException | IllegalAccessException e) {
+					e.printStackTrace();
+				}
+			}
+		});
 
 		Stream.of(getClass().getDeclaredFields()).filter(field -> field.isAnnotationPresent(WhereTemplate.class))
-				.forEach(field -> {
-					try {
-						handleWhereTemplateEqual(field.getName(),
-								(AbstractTemplate<Serializable>) field.get(AbstractTemplate.this));
-					} catch (IllegalArgumentException | IllegalAccessException e) {
-						e.printStackTrace();
-					}
-				});
+		.forEach(field -> {
+			try {
+				handleWhereTemplateEqual(field.getName(),
+						(AbstractTemplate<Serializable>) field.get(AbstractTemplate.this));
+			} catch (IllegalArgumentException | IllegalAccessException e) {
+				e.printStackTrace();
+			}
+		});
 	}
 
 	<Y extends Serializable> void handleWhereEqual(String field, Y value) {
-		SingularAttribute<? super T, Y> singularAttribute = (SingularAttribute<? super T, Y>) getMetamodelClass()
+		final SingularAttribute<? super T, Y> singularAttribute = (SingularAttribute<? super T, Y>) getMetamodelClass()
 				.getSingularAttribute(field);
 
 		buildWhereEqual(singularAttribute, value);
 	}
 
 	<Y extends Comparable<? super Y>> void handleWhereGreaterOrEqual(String field, Y value) {
-		SingularAttribute<? super T, Y> singularAttribute = (SingularAttribute<? super T, Y>) getMetamodelClass()
+		final SingularAttribute<? super T, Y> singularAttribute = (SingularAttribute<? super T, Y>) getMetamodelClass()
 				.getSingularAttribute(field);
 
 		buildWhereGreaterThanOrEqualTo(singularAttribute, value);
 	}
 
 	void handleWhereLikeIgnoreCase(String field, String value) {
-		SingularAttribute<? super T, String> singularAttribute = (SingularAttribute<? super T, String>) getMetamodelClass()
+		final SingularAttribute<? super T, String> singularAttribute = (SingularAttribute<? super T, String>) getMetamodelClass()
 				.getSingularAttribute(field);
 
 		buildWhereLikeIgnoreCase(singularAttribute, value);
 	}
 
-	void handleWhereI18N(String field, String value, String prefixI18N) {
-		if (value != null) {
-			SingularAttribute<? super T, String> singularAttribute = (SingularAttribute<? super T, String>) getMetamodelClass()
-					.getSingularAttribute(field);
-
-			wheres.add(buildWhereI18N(singularAttribute, value, prefixI18N));
-		}
-	}
-
-	private Predicate buildWhereI18N(SingularAttribute<? super T, String> singularAttribute, String value,
-			String prefixI18N) {
-		String keyClass = prefixI18N;
-
-		if (StringUtils.isBlank(keyClass)) {
-			keyClass = getMetamodelClass().getJavaType().getSimpleName() + "Dto";
-		}
-
-		Collection<String> keys = Messages.getKeys(keyClass, value);
-
-		if (keys.size() > ModelProperties.getInstance().inClauseMaxLength()) {
-			throw new AppException(EStatusReason.MAX_LENGTH_IN_IN_CLAUSE_REACHED);
-		}
-
-		return builder.isMember(root.get(singularAttribute), builder.literal(keys));
-	}
-
 	<Y extends Serializable> void handleWhereTemplateEqual(String field, AbstractTemplate<Y> value) {
-		SingularAttribute<? super T, Y> singularAttribute = (SingularAttribute<? super T, Y>) getMetamodelClass()
+		final SingularAttribute<? super T, Y> singularAttribute = (SingularAttribute<? super T, Y>) getMetamodelClass()
 				.getSingularAttribute(field);
 
 		buildWhereTemplate(singularAttribute, value);
@@ -856,60 +824,31 @@ public abstract class AbstractTemplate<T extends Serializable> implements ITempl
 			dynamicFilterProperties = new ArrayList<>();
 		}
 
-		checkDynamicFilters(dynamicFilterProperties, dynamicFilters);
-
 		this.dynamicFilterProperties = dynamicFilterProperties;
 	}
 
-	private void checkDynamicFilters(List<String> dynamicFilterProperties, String[] dynamicFilters) {
-		if (dynamicFilterProperties != null && dynamicFilters != null && dynamicFilters.length > 0) {
-			for (String fieldName : dynamicFilterProperties) {
-				try {
-					Field field = getClass().getDeclaredField(fieldName);
-
-					if (ModelUtil.isI18NField(field)) {
-						for (String dynamicFilter : dynamicFilters) {
-							if (!ModelUtil.checkMinLengthI18N(dynamicFilter)) {
-								throw new AppException(EStatusReason.MIN_CHARACTER_SEARCH_LENGTH,
-										ModelProperties.getInstance().minSearchCharacterI18N());
-							}
-						}
-					}
-				} catch (NoSuchFieldException | SecurityException e) {
-					e.printStackTrace();
-				}
-			}
-		}
-	}
-
 	public void setRawFilter(String rawFilter) {
-		String[] filters = StringUtils.stripAll(StringUtils.split(rawFilter));
-
-		checkDynamicFilters(dynamicFilterProperties, filters);
+		final String[] filters = StringUtils.stripAll(StringUtils.split(rawFilter));
 
 		this.dynamicFilters = filters;
 	}
 
 	protected void buildDynamicFilters() {
 		if (hasDynamicFilters()) {
-			List<Predicate> predicates = new ArrayList<>();
+			final List<Predicate> predicates = new ArrayList<>();
 
-			for (String fieldName : dynamicFilterProperties) {
-				EntityType<T> metaModel = (EntityType<T>) getRoot().getModel();
+			for (final String fieldName : dynamicFilterProperties) {
+				final EntityType<T> metaModel = (EntityType<T>) getRoot().getModel();
 
-				SingularAttribute<? super T, String> attribute = metaModel.getSingularAttribute(fieldName,
+				final SingularAttribute<? super T, String> attribute = metaModel.getSingularAttribute(fieldName,
 						String.class);
 
 				try {
-					Field field = getClass().getDeclaredField(fieldName);
-					Where ann = field.getAnnotation(Where.class);
+					final Field field = getClass().getDeclaredField(fieldName);
+					final Where ann = field.getAnnotation(Where.class);
 
-					for (String filter : dynamicFilters) {
-						if (ann != null && ann.value().isI18N()) {
-							predicates.add(buildWhereI18N(attribute, filter, ann.prefixI18N()));
-						} else {
-							predicates.add(buildPredicateLikeIgnoreCase(attribute, filter));
-						}
+					for (final String filter : dynamicFilters) {
+						predicates.add(buildPredicateLikeIgnoreCase(attribute, filter));
 					}
 				} catch (NoSuchFieldException | SecurityException e) {
 					e.printStackTrace();
@@ -942,9 +881,9 @@ public abstract class AbstractTemplate<T extends Serializable> implements ITempl
 	 */
 	protected void buildWhereStatus() {
 		if (this instanceof IStatusTemplate) {
-			IStatusTemplate template = (IStatusTemplate) this;
+			final IStatusTemplate template = (IStatusTemplate) this;
 
-			buildWhereEqual(getMetamodelClass().getSingularAttribute(STATUS_FIELD, EStatus.class),
+			buildWhereEqual(getMetamodelClass().getSingularAttribute(STATUS_FIELD, IStatus.class),
 					template.getStatus());
 		}
 	}
@@ -954,31 +893,29 @@ public abstract class AbstractTemplate<T extends Serializable> implements ITempl
 	 */
 	protected void buildWhereValidDate() {
 		if (this instanceof IValidDateTemplate) {
-			IValidDateTemplate template = (IValidDateTemplate) this;
+			final IValidDateTemplate template = (IValidDateTemplate) this;
 
 			if (template.getValidDate() != null) {
-				Date validDate = DateUtils.truncate(template.getValidDate(), Calendar.DAY_OF_MONTH);
+				final Date validDate = DateUtils.truncate(template.getValidDate(), Calendar.DAY_OF_MONTH);
 				wheres.add(builder.lessThanOrEqualTo(
-						root.get(getMetamodelClass().getSingularAttribute(IConstants.T_START, Date.class)), validDate));
+						root.get(getMetamodelClass().getSingularAttribute(Constants.T_START, Date.class)), validDate));
 				wheres.add(builder.or(
-						builder.isNull(
-								root.get(getMetamodelClass().getSingularAttribute(IConstants.T_END, Date.class))),
+						builder.isNull(root.get(getMetamodelClass().getSingularAttribute(Constants.T_END, Date.class))),
 						builder.greaterThanOrEqualTo(
-								root.get(getMetamodelClass().getSingularAttribute(IConstants.T_END, Date.class)),
+								root.get(getMetamodelClass().getSingularAttribute(Constants.T_END, Date.class)),
 								validDate)));
 			}
 		} else if (this instanceof IValidDateTime) {
-			IValidDateTime template = (IValidDateTime) this;
+			final IValidDateTime template = (IValidDateTime) this;
 
-			Date validDate = template.getValidDateTime();
+			final Date validDate = template.getValidDateTime();
 			if (validDate != null) {
 				wheres.add(builder.lessThanOrEqualTo(
-						root.get(getMetamodelClass().getSingularAttribute(IConstants.T_START, Date.class)), validDate));
+						root.get(getMetamodelClass().getSingularAttribute(Constants.T_START, Date.class)), validDate));
 				wheres.add(builder.or(
-						builder.isNull(
-								root.get(getMetamodelClass().getSingularAttribute(IConstants.T_END, Date.class))),
+						builder.isNull(root.get(getMetamodelClass().getSingularAttribute(Constants.T_END, Date.class))),
 						builder.greaterThanOrEqualTo(
-								root.get(getMetamodelClass().getSingularAttribute(IConstants.T_END, Date.class)),
+								root.get(getMetamodelClass().getSingularAttribute(Constants.T_END, Date.class)),
 								validDate)));
 			}
 		}
@@ -989,23 +926,20 @@ public abstract class AbstractTemplate<T extends Serializable> implements ITempl
 	 */
 	protected void buildWhereFromToDate() {
 		if (this instanceof IFromToDateTemplate) {
-			IFromToDateTemplate template = (IFromToDateTemplate) this;
+			final IFromToDateTemplate template = (IFromToDateTemplate) this;
 
-			Date from = template.getFrom();
-			if (from != null) {
-				from = ModelUtil.safeSetDateTruncate(from);
+			final Optional<Date> from = ModelUtil.truncate(template.getFrom());
+			if (from.isPresent()) {
 				wheres.add(builder.or(
-						builder.isNull(
-								root.get(getMetamodelClass().getSingularAttribute(IConstants.T_END, Date.class))),
+						builder.isNull(root.get(getMetamodelClass().getSingularAttribute(Constants.T_END, Date.class))),
 						builder.greaterThanOrEqualTo(
-								root.get(getMetamodelClass().getSingularAttribute(IConstants.T_END, Date.class)),
-								from)));
+								root.get(getMetamodelClass().getSingularAttribute(Constants.T_END, Date.class)),
+								from.get())));
 			}
-			Date to = template.getTo();
-			if (to != null) {
-				to = ModelUtil.safeSetDateTruncate(to);
+			final Optional<Date> to = ModelUtil.truncate(template.getTo());
+			if (to.isPresent()) {
 				wheres.add(builder.lessThanOrEqualTo(
-						root.get(getMetamodelClass().getSingularAttribute(IConstants.T_START, Date.class)), to));
+						root.get(getMetamodelClass().getSingularAttribute(Constants.T_START, Date.class)), to.get()));
 			}
 		}
 	}
@@ -1184,23 +1118,6 @@ public abstract class AbstractTemplate<T extends Serializable> implements ITempl
 	}
 
 	/**
-	 * Build where i 18 n.
-	 *
-	 * @param field
-	 *            the field
-	 * @param value
-	 *            the value
-	 */
-	protected void buildWhereI18N(SetAttribute<? super T, Dictionary> field, String value) {
-		if (value != null) {
-			DictionaryTemplate dictionaryTemplate = new DictionaryTemplate();
-			dictionaryTemplate.setValue(value);
-
-			buildWhereTemplate(field, dictionaryTemplate);
-		}
-	}
-
-	/**
 	 * Build where in.
 	 *
 	 * @param field
@@ -1209,13 +1126,13 @@ public abstract class AbstractTemplate<T extends Serializable> implements ITempl
 	 *            the value
 	 */
 	protected <Y extends Serializable> void buildWhereIn(SingularAttribute<? super T, Y> field, Collection<Y> value) {
-		QueryBase<?> queryBase;
-		RelationalPathBase<?> object;
-
-
-		queryBase.where(object.getMetadata(null).).
-
-		if (ModelUtil.safeIsNotEmpty(value)) {
+		//		final QueryBase<?> queryBase;
+		//		final RelationalPathBase<?> object;
+		//
+		//
+		//		queryBase.where(object.getMetadata(null).).
+		//
+		if (CollectionUtils.isNotEmpty(value)) {
 			wheres.add(root.get(field).in(value));
 		}
 	}
@@ -1251,7 +1168,7 @@ public abstract class AbstractTemplate<T extends Serializable> implements ITempl
 	 */
 	protected <Y extends Serializable> void buildWhereInOrNull(SingularAttribute<? super T, Y> field,
 			Collection<Y> value) {
-		if (ModelUtil.safeIsNotEmpty(value)) {
+		if (CollectionUtils.isNotEmpty(value)) {
 			wheres.add(builder.or(builder.isNull(root.get(field)), root.get(field).in(value)));
 		}
 	}
@@ -1276,7 +1193,7 @@ public abstract class AbstractTemplate<T extends Serializable> implements ITempl
 	 */
 	protected <Y extends Serializable> void buildWhereNotIn(SingularAttribute<? super T, Y> field,
 			Collection<Y> value) {
-		if (ModelUtil.safeIsNotEmpty(value)) {
+		if (CollectionUtils.isNotEmpty(value)) {
 			wheres.add(builder.not(root.get(field).in(value)));
 		}
 	}
@@ -1397,9 +1314,9 @@ public abstract class AbstractTemplate<T extends Serializable> implements ITempl
 			return;
 		}
 
-		Class<Y> joinClass = joinEntity.getDeclaringType().getJavaType();
-		Subquery<Y> subquery = criteria.subquery(joinClass);
-		Root<Y> subroot = subquery.from(joinClass);
+		final Class<Y> joinClass = joinEntity.getDeclaringType().getJavaType();
+		final Subquery<Y> subquery = criteria.subquery(joinClass);
+		final Root<Y> subroot = subquery.from(joinClass);
 		subquery.where(builder.equal(root.get(joinField), subroot.get(joinEntity).get(joinField)));
 		subquery.select(subroot);
 
@@ -1506,8 +1423,8 @@ public abstract class AbstractTemplate<T extends Serializable> implements ITempl
 	 */
 	protected <Y extends Serializable> boolean checkWhereIn(T object, SingularAttribute<? super T, Y> field,
 			Collection<Y> values) {
-		if (ModelUtil.safeIsNotEmpty(values)) {
-			Y value = getValue(object, field);
+		if (CollectionUtils.isNotEmpty(values)) {
+			final Y value = getValue(object, field);
 
 			return values.contains(value);
 		}
@@ -1528,9 +1445,9 @@ public abstract class AbstractTemplate<T extends Serializable> implements ITempl
 
 	protected boolean checkStatus(T object) {
 		if (this instanceof IStatusTemplate) {
-			IStatusTemplate template = (IStatusTemplate) this;
+			final IStatusTemplate template = (IStatusTemplate) this;
 
-			return checkWhereEqual(object, getMetamodelClass().getSingularAttribute(IConstants.STATUS, EStatus.class),
+			return checkWhereEqual(object, getMetamodelClass().getSingularAttribute(Constants.STATUS, IStatus.class),
 					template.getStatus());
 		}
 
@@ -1546,20 +1463,20 @@ public abstract class AbstractTemplate<T extends Serializable> implements ITempl
 	 */
 	protected boolean checkValidDate(T object) {
 		if (this instanceof IValidDateTemplate) {
-			IValidDateTemplate template = (IValidDateTemplate) this;
+			final IValidDateTemplate template = (IValidDateTemplate) this;
 
 			if (template.getValidDate() != null) {
-				Date validDate = DateUtils.truncate(template.getValidDate(), Calendar.DAY_OF_MONTH);
+				final Date validDate = DateUtils.truncate(template.getValidDate(), Calendar.DAY_OF_MONTH);
 
-				Date tStart = ModelUtil.safeSetDateTruncate(
-						getValue(object, getMetamodelClass().getSingularAttribute(IConstants.T_START, Date.class)));
-				if (tStart.after(validDate)) {
+				final Optional<Date> tStart = ModelUtil.truncate(
+						getValue(object, getMetamodelClass().getSingularAttribute(Constants.T_START, Date.class)));
+				if (tStart.get().after(validDate)) {
 					return false;
 				}
 
-				Date tEnd = ModelUtil.safeSetDateTruncate(
-						getValue(object, getMetamodelClass().getSingularAttribute(IConstants.T_END, Date.class)));
-				if (tEnd != null && tEnd.before(validDate)) {
+				final Optional<Date> tEnd = ModelUtil.truncate(
+						getValue(object, getMetamodelClass().getSingularAttribute(Constants.T_END, Date.class)));
+				if (tEnd.isPresent() && tEnd.get().before(validDate)) {
 					return false;
 				}
 			}
@@ -1577,22 +1494,22 @@ public abstract class AbstractTemplate<T extends Serializable> implements ITempl
 	 */
 	protected boolean checkFromDate(T object) {
 		if (this instanceof IFromToDateTemplate) {
-			IFromToDateTemplate template = (IFromToDateTemplate) this;
+			final IFromToDateTemplate template = (IFromToDateTemplate) this;
 
 			if (template.getFrom() != null) {
-				Date tEnd = ModelUtil.safeSetDateTruncate(
-						getValue(object, getMetamodelClass().getSingularAttribute(IConstants.T_END, Date.class)));
+				final Optional<Date> tEnd = ModelUtil.truncate(
+						getValue(object, getMetamodelClass().getSingularAttribute(Constants.T_END, Date.class)));
 
-				if (tEnd != null && tEnd.before(template.getFrom())) {
+				if (tEnd.isPresent() && tEnd.get().before(template.getFrom())) {
 					return false;
 				}
 			}
 
 			if (template.getTo() != null) {
-				Date tStart = ModelUtil.safeSetDateTruncate(
-						getValue(object, getMetamodelClass().getSingularAttribute(IConstants.T_START, Date.class)));
+				final Optional<Date> tStart = ModelUtil.truncate(
+						getValue(object, getMetamodelClass().getSingularAttribute(Constants.T_START, Date.class)));
 
-				if (tStart.after(template.getTo())) {
+				if (tStart.get().after(template.getTo())) {
 					return false;
 				}
 			}
@@ -1615,7 +1532,7 @@ public abstract class AbstractTemplate<T extends Serializable> implements ITempl
 	protected <Y extends Serializable> boolean checkWhereEqual(T object, SingularAttribute<? super T, Y> field,
 			Y value) {
 		if (value != null) {
-			Y fieldValue = getValue(object, field);
+			final Y fieldValue = getValue(object, field);
 			return fieldValue != null && fieldValue.equals(value);
 		}
 
@@ -1648,28 +1565,29 @@ public abstract class AbstractTemplate<T extends Serializable> implements ITempl
 	public AbstractTemplate<T> clone() {
 		try {
 			return (AbstractTemplate<T>) super.clone();
-		} catch (CloneNotSupportedException e) {
+		} catch (final CloneNotSupportedException e) {
 			return null;
 		}
 	}
 
-	protected void buildWhereOperatorGroupPermission() {
-		if (this instanceof IOperatorGroupPermission) {
-			Subject subject = Subject.getSubject(AccessController.getContext());
-
-			if (subject != null) {
-				for (Object credential : subject.getPrivateCredentials()) {
-					if (credential instanceof EnhancedEnum<?, ?>) {
-						String match = '"' + ((EnhancedEnum<?, String>) credential).getKey() + '"';
-
-						wheres.add(builder.equal(
-								builder.locate(builder.coalesce(root.get(getMetamodelClass().getSingularAttribute(
-										((IOperatorGroupPermission) this).getOperatorGroupPermissionField(),
-										String.class)), " "), match),
-								0));
-					}
-				}
-			}
-		}
-	}
+	// protected void buildWhereOperatorGroupPermission() {
+	// if (this instanceof IOperatorGroupPermission) {
+	// final Subject subject =
+	// Subject.getSubject(AccessController.getContext());
+	//
+	// if (subject != null) {
+	// for (final Object credential : subject.getPrivateCredentials()) {
+	// if (credential instanceof IEnum) {
+	// final String match = '"' + ((IEnum) credential).name() + '"';
+	//
+	// wheres.add(builder.equal(
+	// builder.locate(builder.coalesce(root.get(getMetamodelClass().getSingularAttribute(
+	// ((IOperatorGroupPermission) this).getOperatorGroupPermissionField(),
+	// String.class)), " "), match),
+	// 0));
+	// }
+	// }
+	// }
+	// }
+	// }
 }

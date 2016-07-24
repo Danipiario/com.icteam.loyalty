@@ -1,7 +1,11 @@
 package com.icteam.loyalty.common.dto;
 
-public class OperatorSearchDTO implements IDTO {
+import com.icteam.loyalty.common.annotations.Where;
+import com.icteam.loyalty.common.enums.EWhereClause;
 
+public class OperatorSearchDTO extends AbstractDTO {
+
+	@Where(value = EWhereClause.LIKE_IGNORE_CASE)
 	private String login;
 
 	public String getLogin() {
@@ -11,16 +15,4 @@ public class OperatorSearchDTO implements IDTO {
 	public void setLogin(String login) {
 		this.login = login;
 	}
-
-	public boolean isDirty() {
-		return false;
-	}
-
-	public boolean is_new() {
-		return false;
-	}
-
-	public void enableTrackChanges() {
-	}
-
 }

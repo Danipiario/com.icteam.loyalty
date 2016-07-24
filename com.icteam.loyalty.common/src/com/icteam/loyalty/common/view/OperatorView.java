@@ -9,7 +9,7 @@ import java.util.stream.Stream;
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
-import org.eclipse.core.databinding.beans.PojoProperties;
+import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.core.databinding.observable.list.IObservableList;
 import org.eclipse.core.databinding.observable.map.IObservableMap;
 import org.eclipse.core.databinding.property.Properties;
@@ -20,10 +20,12 @@ import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.ViewerColumn;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Item;
 
+import com.icteam.loyalty.common.converter.ConvertableObservableMapLabelProvider;
 import com.icteam.loyalty.common.dto.IDTO;
 import com.icteam.loyalty.common.dto.OperatorDTO;
 import com.icteam.loyalty.common.dto.OperatorSearchDTO;
@@ -33,6 +35,8 @@ import com.icteam.loyalty.common.listener.VirtuaTableListener;
 import com.icteam.loyalty.common.nls.NLS;
 import com.icteam.loyalty.common.service.AuthService;
 import com.icteam.loyalty.common.service.DTOService;
+import com.icteam.loyalty.common.util.ControlUtils;
+import com.icteam.loyalty.common.util.ModelUtil;
 import com.icteam.loyalty.common.util.TableTreeUtils;
 
 public class OperatorView {
@@ -47,25 +51,23 @@ public class OperatorView {
 
 	private OperatorSearchDTO operatorSearchDTO;
 
-	@Inject
-	public OperatorView() {
-
-	}
-
 	@PostConstruct
 	public void postConstruct(Composite parent) {
 		operatorSearchDTO = dtoService.newDTO(OperatorSearchDTO.class);
 
 		columnViewer = new TableViewer(parent, SWT.VIRTUAL | SWT.SINGLE | SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER);
 		columnViewer.getControl().setLayoutData(new GridData(GridData.FILL_BOTH));
+		parent.setLayout(new GridLayout(1, false));
 
-		String[] propertyNames = { "login", "name", "surname" };
+		final String[] propertyNames = ModelUtil.collectPropertyNames(getDtoModelClass());
 
 		bindVirtualTableColumn(propertyNames);
 
 		bindLazyContent(propertyNames);
 
 		bindVirtualListener();
+
+		ControlUtils.pack(getColumnViewer());
 	}
 
 	private void bindVirtualListener() {
@@ -76,14 +78,14 @@ public class OperatorView {
 	}
 
 	void bindVirtualTableColumn(String... propertyNames) {
-		Control control = columnViewer.getControl();
+		final Control control = columnViewer.getControl();
 		TableTreeUtils.setHeaderVisible(control, true);
 		TableTreeUtils.setLinesVisible(control, true);
 
-		for (String propertyName : propertyNames) {
-			ViewerColumn viewerColumn = TableTreeUtils.newColumnViewer(columnViewer, SWT.NONE);
+		for (final String propertyName : propertyNames) {
+			final ViewerColumn viewerColumn = TableTreeUtils.newColumnViewer(columnViewer, SWT.NONE);
 
-			Item column = TableTreeUtils.getColumn(viewerColumn);
+			final Item column = TableTreeUtils.getColumn(viewerColumn);
 			TableTreeUtils.setColumnMoveable(column, true);
 			TableTreeUtils.setColumnResizable(column, true);
 
@@ -103,10 +105,10 @@ public class OperatorView {
 	}
 
 	private void bindLazyContent(String... propertyNames) {
-		ObservableListContentProvider listContentProvider = new ObservableListContentProvider();
+		final ObservableListContentProvider listContentProvider = new ObservableListContentProvider();
 
-		IObservableMap<OperatorDTO, ?>[] observeMaps = Stream.of(propertyNames)
-				.map(propertyName -> PojoProperties.value(getDtoModelClass(), propertyName)
+		final IObservableMap<OperatorDTO, ?>[] observeMaps = Stream.of(propertyNames)
+				.map(propertyName -> BeanProperties.value(getDtoModelClass(), propertyName)
 						.observeDetail(listContentProvider.getKnownElements()))
 				.collect(Collectors.toList()).toArray(new IObservableMap[] {});
 
@@ -117,21 +119,18 @@ public class OperatorView {
 		// PojoObservables.observeMaps(listContentProvider.getKnownElements(),
 		// beanClass, propertyNames);
 
-		ObservableMapLabelProvider labelProvider = new ObservableMapLabelProvider(observeMaps);
+		final ObservableMapLabelProvider labelProvider = new ConvertableObservableMapLabelProvider(observeMaps);
 
 		columnViewer.setLabelProvider(labelProvider);
 		columnViewer.setContentProvider(listContentProvider);
 
-		IObservableList<Object> selfList = Properties.selfList(getDtoModelClass()).observe(new ArrayList<>()); // lista
-		// vuota
-		// popolata
-		// in
-		// lazy
+		// lista vuota popolata in lazy
+		final IObservableList<Object> selfList = Properties.selfList(getDtoModelClass()).observe(new ArrayList<>());
 		columnViewer.setInput(selfList);
 
 		bindItemCount();
 
-		for (IObservableMap observableMap : observeMaps) {
+		for (final IObservableMap<OperatorDTO, ?> observableMap : observeMaps) {
 			observableMap.addMapChangeListener(new MapChangeListener(columnViewer));
 		}
 
@@ -139,7 +138,7 @@ public class OperatorView {
 	}
 
 	void bindItemCount() {
-		int itemCount = 1;// handleCount(1);
+		final int itemCount = 1;// handleCount(1);
 
 		TableTreeUtils.setItemCount(columnViewer, itemCount);
 	}

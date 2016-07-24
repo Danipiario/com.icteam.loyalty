@@ -69,8 +69,8 @@ public class LoyaltyLoginModule implements javax.security.auth.spi.LoginModule {
 			authService = serviceTracker.waitForService(1000);
 
 			final OperatorLoginDTO operatorTemplate = new OperatorLoginDTO();
-			operatorTemplate.login = username;
-			operatorTemplate.password = password;
+			operatorTemplate.setLogin(username);
+			operatorTemplate.setPassword(password);
 
 			operatorDTO = authService.login(operatorTemplate);
 

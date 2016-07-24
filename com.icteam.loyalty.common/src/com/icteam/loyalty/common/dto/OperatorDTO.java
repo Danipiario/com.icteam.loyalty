@@ -3,18 +3,24 @@ package com.icteam.loyalty.common.dto;
 import java.security.Principal;
 import java.util.List;
 
+import com.icteam.loyalty.common.annotations.Property;
 import com.icteam.loyalty.common.interfaces.IGroup;
 
 public class OperatorDTO extends AbstractDTO implements Principal {
 
+	@Property(show = true, order = 1)
 	private String login;
 
+	@Property(show = true, order = 2)
 	private String name;
 
+	@Property(show = true, order = 3)
 	private String surname;
 
+	@Property(show = true, order = 4)
 	private Boolean changePassword;
 
+	@Property(show = true, order = 5)
 	private List<IGroup> groups;
 
 	public String getLogin() {
