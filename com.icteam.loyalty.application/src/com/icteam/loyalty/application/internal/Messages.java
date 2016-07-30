@@ -4,6 +4,7 @@ import com.icteam.loyalty.common.nls.NLS;
 
 public class Messages {
 
+	public String page_title;
 	public String login;
 	public String password;
 	public String need_login;

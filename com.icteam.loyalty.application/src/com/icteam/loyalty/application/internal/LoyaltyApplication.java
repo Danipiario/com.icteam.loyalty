@@ -17,7 +17,7 @@ public class LoyaltyApplication implements ApplicationConfiguration {
 	@Override
 	public void configure(Application application) {
 		final Map<String, String> properties = new HashMap<>();
-		properties.put(WebClient.PAGE_TITLE, "Hello RAP");
+		properties.put(WebClient.PAGE_TITLE, Messages.get().page_title);
 		application.setOperationMode(OperationMode.SWT_COMPATIBILITY);
 		application.addEntryPoint("/loyalty",
 				new E4EntryPointFactory(E4ApplicationConfig.create(
