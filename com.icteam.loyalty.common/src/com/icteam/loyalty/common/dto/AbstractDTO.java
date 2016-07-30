@@ -2,9 +2,21 @@ package com.icteam.loyalty.common.dto;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.ParameterizedType;
 import java.util.Objects;
+import java.util.Optional;
 
-public abstract class AbstractDTO implements IDTO {
+import org.eclipse.jetty.util.log.Log;
+import org.eclipse.jetty.util.log.Logger;
+
+import com.querydsl.sql.RelationalPathBase;
+
+public abstract class AbstractDTO<M extends RelationalPathBase<M>> implements IDTO<M> {
+
+	private static final long serialVersionUID = 3428162022541395275L;
+
+	private final Logger logger = Log.getLogger(AbstractDTO.class);
 
 	private final PropertyChangeSupport changeSupport;
 	private boolean _new = true;
@@ -13,6 +25,13 @@ public abstract class AbstractDTO implements IDTO {
 
 	public AbstractDTO() {
 		changeSupport = new PropertyChangeSupport(this);
+
+		changeSupport.addPropertyChangeListener(evt -> {
+			_new = false;
+			if (!evt.getPropertyName().equals("dirty") && !evt.getPropertyName().equals("editable")) {
+				setDirty(true);
+			}
+		});
 	}
 
 	protected void firePropertyChange(String propertyName, Object oldValue, Object newValue) {
@@ -38,13 +57,32 @@ public abstract class AbstractDTO implements IDTO {
 	}
 
 	@Override
-	public void enableTrackChanges() {
-		changeSupport.addPropertyChangeListener(evt -> {
-			_new = false;
-			if (!evt.getPropertyName().equals("dirty") && !evt.getPropertyName().equals("editable")) {
-				setDirty(true);
+	public final Optional<M> newModelInstance() {
+		Optional<Class<M>> modelClass = null;
+		try {
+			modelClass = getModelClass();
+
+			if (modelClass.isPresent()) {
+				return Optional.of(
+						modelClass.get().getConstructor(String.class).newInstance(modelClass.get().getSimpleName()));
 			}
-		});
+		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException
+				| NoSuchMethodException | SecurityException e) {
+			logger.warn("error creating instance for modelClass #" + modelClass, e);
+		}
+
+		return Optional.empty();
+	}
+
+	protected Optional<Class<M>> getModelClass() {
+		try {
+			return Optional
+					.of((Class<M>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0]);
+		} catch (Exception e) {
+			logger.warn("error get modelClass, probably you need to override getModelClass method", e);
+		}
+
+		return Optional.empty();
 	}
 
 	@Override
@@ -70,5 +108,4 @@ public abstract class AbstractDTO implements IDTO {
 	public void setEditable(boolean editable) {
 		firePropertyChange("editable", this.editable, this.editable = editable);
 	}
-
 }

@@ -1,0 +1,14 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+    <changeSet id="0001" author="d.pirola">
+        <insert tableName="OPERATOR">
+            <column name="LOGIN" value="test" />
+            <column name="NAME" value="test" />
+            <column name="SURNAME" value="test" />
+            <column name="PASSWORD" value="7sFri+UTREdjRVe0jk/33w==" /> <!-- Loyalty2015. -->
+            <column name="CHANGE_PASSWORD" valueBoolean="false" />
+            <column name="STATUS" value="ATTIVO" />
+        </insert>
+    </changeSet>
+</databaseChangeLog>

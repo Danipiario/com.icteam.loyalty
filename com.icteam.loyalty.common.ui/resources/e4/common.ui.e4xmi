@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="ASCII"?>
+<fragment:ModelFragments xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:basic="http://www.eclipse.org/ui/2010/UIModel/application/ui/basic" xmlns:fragment="http://www.eclipse.org/ui/2010/UIModel/fragment" xmlns:menu="http://www.eclipse.org/ui/2010/UIModel/application/ui/menu" xmi:id="_Dpw5wDvOEeaQV-YkHvJSVg">
+  <fragments xsi:type="fragment:StringModelFragment" xmi:id="_f5G5YDxHEeadbYlql7oshg" featurename="children" parentElementId="com.icteam.loyalty.application.partstack.left" positionInList="last">
+    <elements xsi:type="basic:Part" xmi:id="_ZhcXQDxIEeadbYlql7oshg" elementId="com.icteam.loyalty.common.ui.part.viewoperator" contributionURI="bundleclass://com.icteam.loyalty.common.ui/com.icteam.loyalty.common.ui.view.OperatorView" label="%view.operator">
+      <toolbar xmi:id="_cbrTwDxIEeadbYlql7oshg" elementId="com.icteam.loyalty.common.ui.toolbar.1">
+        <children xsi:type="menu:DirectToolItem" xmi:id="_v9uhEDvaEeaQV-YkHvJSVg" elementId="com.icteam.loyalty.common.ui.directtoolitem.filterview" label="" iconURI="platform:/plugin/com.icteam.loyalty.application/OSGI-INF/icons/filter.gif" tooltip="%filter.view"/>
+      </toolbar>
+    </elements>
+  </fragments>
+</fragment:ModelFragments>

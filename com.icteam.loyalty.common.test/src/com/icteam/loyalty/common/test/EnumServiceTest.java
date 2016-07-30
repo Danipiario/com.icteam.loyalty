@@ -8,8 +8,8 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.util.tracker.ServiceTracker;
 
-import com.icteam.loyalty.common.interfaces.IStatus;
 import com.icteam.loyalty.common.interfaces.IEnum;
+import com.icteam.loyalty.common.interfaces.IStatus;
 import com.icteam.loyalty.common.service.EnumService;
 
 /**
@@ -26,24 +26,21 @@ public class EnumServiceTest {
 		return st.waitForService(1000);
 	}
 
-	/*
-	 *
-	 */
-	 @Test
-	 public void contextNotNull() throws Exception {
-		 Assert.assertNotNull(context);
+	@Test
+	public void contextNotNull() throws Exception {
+		Assert.assertNotNull(context);
 
-	 }
+	}
 
-	 @Test
-	 public void serviceNotNull() throws InterruptedException {
-		 Assert.assertNotNull(getService(EnumService.class));
-	 }
+	@Test
+	public void serviceNotNull() throws InterruptedException {
+		Assert.assertNotNull(getService(EnumService.class));
+	}
 
-	 @Test
-	 public void valuesOfIAlfa() throws InterruptedException {
-		 final List< ? extends IEnum> values = getService(EnumService.class).values(IStatus.class);
-		 System.out.println(values);
-		 Assert.assertNotNull(values);
-	 }
+	@Test
+	public void valuesOfIStatus() throws InterruptedException {
+		final List<? extends IEnum> values = getService(EnumService.class).values(IStatus.class);
+		System.out.println(values);
+		Assert.assertNotNull(values);
+	}
 }

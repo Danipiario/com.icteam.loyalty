@@ -5,7 +5,6 @@ import org.osgi.framework.BundleContext;
 
 import com.icteam.loyalty.common.internal.tracker.AutomaticExtensionTracker;
 
-
 public class Activator implements BundleActivator {
 
 	private AutomaticExtensionTracker automaticExtensionTracker;

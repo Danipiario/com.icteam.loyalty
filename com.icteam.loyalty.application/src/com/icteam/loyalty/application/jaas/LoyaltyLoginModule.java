@@ -10,6 +10,7 @@ import javax.security.auth.callback.PasswordCallback;
 import javax.security.auth.callback.TextOutputCallback;
 import javax.security.auth.login.LoginException;
 
+import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -17,6 +18,7 @@ import com.icteam.loyalty.application.internal.Messages;
 import com.icteam.loyalty.common.dto.OperatorDTO;
 import com.icteam.loyalty.common.dto.OperatorLoginDTO;
 import com.icteam.loyalty.common.service.AuthService;
+import com.icteam.loyalty.common.service.DTOService;
 
 public class LoyaltyLoginModule implements javax.security.auth.spi.LoginModule {
 
@@ -60,30 +62,43 @@ public class LoyaltyLoginModule implements javax.security.auth.spi.LoginModule {
 			password = String.valueOf(passwordCallback.getPassword());
 		}
 
-		AuthService authService;
-		ServiceTracker<AuthService, AuthService> serviceTracker = null;
+		ServiceTracker<AuthService, AuthService> authServiceTracker = null;
+		ServiceTracker<DTOService, DTOService> dtoServiceTracker = null;
 		try {
-			serviceTracker = new ServiceTracker<>(FrameworkUtil.getBundle(getClass()).getBundleContext(),
-					AuthService.class, null);
-			serviceTracker.open();
-			authService = serviceTracker.waitForService(1000);
+			BundleContext bundleContext = FrameworkUtil.getBundle(getClass()).getBundleContext();
+			authServiceTracker = new ServiceTracker<>(bundleContext, AuthService.class.getName(), null);
+			authServiceTracker.open();
 
-			final OperatorLoginDTO operatorTemplate = new OperatorLoginDTO();
-			operatorTemplate.setLogin(username);
-			operatorTemplate.setPassword(password);
+			AuthService authService = authServiceTracker.waitForService(1000);
 
-			operatorDTO = authService.login(operatorTemplate);
+			if (authService != null) {
+				dtoServiceTracker = new ServiceTracker<>(bundleContext, DTOService.class, null);
+				dtoServiceTracker.open();
 
-			// operatorModel =
-			// ChangePasswordCallbackHandler.checkChangePassword(operatorModel,
-			// authService);
+				DTOService dtoService = dtoServiceTracker.waitForService(1000);
+				if (dtoService != null) {
+
+					final OperatorLoginDTO operatorTemplate = dtoService.newDTO(OperatorLoginDTO.class);
+					operatorTemplate.setLogin(username);
+					operatorTemplate.setPassword(password);
+
+					operatorDTO = authService.login(operatorTemplate);
+
+					// operatorModel =
+					// ChangePasswordCallbackHandler.checkChangePassword(operatorModel,
+					// authService);
+				}
+			}
 
 			loggedIn = operatorDTO != null;
 		} catch (final InterruptedException e) {
 			e.printStackTrace();
 		} finally {
-			if (serviceTracker != null) {
-				serviceTracker.close();
+			if (authServiceTracker != null) {
+				authServiceTracker.close();
+			}
+			if (dtoServiceTracker != null) {
+				dtoServiceTracker.close();
 			}
 		}
 

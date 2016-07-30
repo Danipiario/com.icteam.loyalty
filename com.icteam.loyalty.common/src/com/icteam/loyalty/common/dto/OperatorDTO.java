@@ -2,11 +2,28 @@ package com.icteam.loyalty.common.dto;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import org.apache.commons.lang3.BooleanUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ServiceScope;
 
 import com.icteam.loyalty.common.annotations.Property;
 import com.icteam.loyalty.common.interfaces.IGroup;
+import com.icteam.loyalty.common.model.Operator;
+import com.icteam.loyalty.common.service.EnumService;
+import com.querydsl.core.Tuple;
 
-public class OperatorDTO extends AbstractDTO implements Principal {
+@Component(service = { IDTO.class }, property = { "dtoClass=OperatorDTO" }, scope = ServiceScope.PROTOTYPE)
+public class OperatorDTO extends AbstractDTO<Operator> implements Principal, IModelDTO<Operator> {
+
+	private static final long serialVersionUID = -6963344306951789513L;
+
+	@Reference
+	EnumService enumService;
 
 	@Property(show = true, order = 1)
 	private String login;
@@ -64,4 +81,18 @@ public class OperatorDTO extends AbstractDTO implements Principal {
 		this.groups = groups;
 	}
 
+	@Override
+	public void fill(Tuple tuple, Operator model) {
+		setChangePassword(BooleanUtils.toBooleanObject(tuple.get(model.changePassword)));
+		setLogin(tuple.get(model.login));
+		setName(tuple.get(model.name));
+		setSurname(tuple.get(model.surname));
+
+		final String[] groups = StringUtils.split(StringUtils.defaultString(tuple.get(model.groups)), ",");
+
+		if (enumService != null) {
+			setGroups(Stream.of(groups).map(group -> enumService.value(IGroup.class, group))
+					.collect(Collectors.toList()));
+		}
+	}
 }

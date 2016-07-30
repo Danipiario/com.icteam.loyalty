@@ -1,9 +1,17 @@
 package com.icteam.loyalty.common.dto;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ServiceScope;
+
 import com.icteam.loyalty.common.annotations.Where;
 import com.icteam.loyalty.common.enums.EStatus;
+import com.icteam.loyalty.common.interfaces.IStatus;
+import com.icteam.loyalty.common.model.Operator;
 
-public class OperatorLoginDTO extends AbstractDTO {
+@Component(service = { IDTO.class }, property = { "dtoClass=OperatorLoginDTO" }, scope = ServiceScope.PROTOTYPE)
+public class OperatorLoginDTO extends AbstractDTO<Operator> {
+
+	private static final long serialVersionUID = -6843859391959638215L;
 
 	@Where
 	private String login;
@@ -12,14 +20,14 @@ public class OperatorLoginDTO extends AbstractDTO {
 	private String password;
 
 	@Where
-	private final EStatus status = EStatus.ATTIVO;
+	private final IStatus status = EStatus.ATTIVO;
 
 	public String getLogin() {
 		return login;
 	}
 
 	public void setLogin(String login) {
-		this.login = login;
+		firePropertyChange("login", this.login, this.login = login);
 	}
 
 	public String getPassword() {
@@ -27,10 +35,10 @@ public class OperatorLoginDTO extends AbstractDTO {
 	}
 
 	public void setPassword(String password) {
-		this.password = password;
+		firePropertyChange("password", this.password, this.password = password);
 	}
 
-	public EStatus getStatus() {
+	public IStatus getStatus() {
 		return status;
 	}
 

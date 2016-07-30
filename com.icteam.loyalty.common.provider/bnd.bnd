@@ -1,42 +1,26 @@
-#
-#  BUNDLE 
-#
-
-
 Bundle-Version: 1.0.0.${tstamp}
-
+Bundle-Name: Loyalty Common Provider
+Bundle-Description: Loyalty Common Provider Project
+Bundle-SymbolicName: com.icteam.loyalty.common.provider
 
 Private-Package: \
-	com.icteam.loyalty.common.provider.tracker,\
-	com.icteam.loyalty.common.internal,\
-	com.icteam.loyalty.common.internal.provider,\
-	com.icteam.loyalty.common.internal.builder
+	com.icteam.loyalty.common.provider.internal*
 	
 -buildpath: \
 	osgi.enroute.base.api;version=latest,\
 	org.apache.commons.lang3;version=3.4,\
 	org.eclipse.equinox.common;version=3.8,\
-	com.icteam.loyalty.common.api;version=latest,\
+	com.querydsl.core;version=4.1,\
+	com.querydsl.sql;version=4.1,\
+	javax.inject;version=1.0,\
+	javax.persistence;version=2.1,\
+	org.apache.commons.beanutils;version=1.9,\
+	com.icteam.loyalty.common;version=latest,\
 	org.eclipse.jetty.util;version=9.3,\
-	org.apache.commons.codec;version=1.10
+	org.apache.commons.codec;version=1.10,\
+	org.apache.logging.log4j;version=2.6
 	
 -includeresource: {readme.md},\
-                  OSGI-INF/configuration=resources/configuration
+                  OSGI-INF=resources
 
--runrequires: osgi.identity;filter:='(osgi.identity=com.icteam.loyalty.common.provider)'
-	
--runbundles: \
-	${error;Resolve first}
-Bundle-Name: Loyalty Common Provider
-Bundle-Activator: com.icteam.loyalty.common.internal.Activator
-Enum-Extension: com.icteam.loyalty.common.api.enums.Alfa, com.icteam.loyalty.common.api.enums.Beta
-Tracker-Extension: com.icteam.loyalty.common.provider.tracker.EnumTracker,\
-                   com.icteam.loyalty.common.provider.tracker.ConfigTracker 	
-	
-Export-Package: \
-	com.icteam.loyalty.common.api,\
-	com.icteam.loyalty.common.api.enums,\
-	com.icteam.loyalty.common.api.interfaces,\
-	com.icteam.loyalty.common.api.nls,\
-	com.icteam.loyalty.common.api.model,\
-	com.icteam.loyalty.common.api.dto
+Tracker-Extension: com.icteam.loyalty.common.provider.internal.tracker.EnumTracker

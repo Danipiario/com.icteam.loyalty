@@ -6,7 +6,7 @@ ${Bundle-Description}
 
 ## Configuration
 
-	Pid: com.icteam.loyalty.common
+	Pid: com.icteam.loyalty.common.provider
 	
 	Field					Type				Description
 		

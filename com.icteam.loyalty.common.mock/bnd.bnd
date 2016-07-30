@@ -8,6 +8,12 @@ Bundle-Version: 1.0.0.${tstamp}
 	com.querydsl.sql;version=4.1,\
 	javax.inject;version=1.0,\
 	com.querydsl.core;version=4.1,\
-	org.apache.commons.lang3;version=3.4
+	org.apache.commons.lang3;version=3.4,\
+	org.eclipse.jetty.util;version=9.3
 	
 Private-Package: com.icteam.loyalty.common.mock
+
+-includeresource: OSGI-INF=resources
+
+Liquibase-Persistence: OSGI-INF/changelog/common.mock.changelog.xml
+Liquibase-PrecedenceBundleList: com.icteam.loyalty.common

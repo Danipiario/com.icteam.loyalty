@@ -1,11 +1,15 @@
 package com.icteam.loyalty.common.dto;
 
-public interface IDTO {
+import java.io.Serializable;
+import java.util.Optional;
+
+import com.querydsl.sql.RelationalPathBase;
+
+public interface IDTO<M extends RelationalPathBase<M>> extends Serializable {
 
 	boolean isDirty();
 
 	boolean is_new();
 
-	void enableTrackChanges();
-
+	Optional<M> newModelInstance();
 }

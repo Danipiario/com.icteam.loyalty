@@ -14,4 +14,6 @@ public interface AuthService {
 	OperatorDTO login(OperatorLoginDTO operatorLoginDTO);
 
 	List<OperatorDTO> search(OperatorSearchDTO operatorSearchDTO);
+
+	long count(OperatorSearchDTO operatorSearchDTO);
 }
