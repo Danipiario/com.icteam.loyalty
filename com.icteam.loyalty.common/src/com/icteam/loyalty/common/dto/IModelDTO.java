@@ -6,4 +6,10 @@ import com.querydsl.sql.RelationalPathBase;
 public interface IModelDTO<M extends RelationalPathBase<M>> extends IDTO<M> {
 
 	void fill(Tuple tuple, M model);
+
+	String getValueID();
+
+	String getEditorInstanceID();
+
+	String getEditorID();
 }

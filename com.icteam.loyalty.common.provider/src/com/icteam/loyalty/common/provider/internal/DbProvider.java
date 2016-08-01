@@ -16,9 +16,9 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 import com.icteam.loyalty.common.annotations.Where;
-import com.icteam.loyalty.common.dto.IDTO;
 import com.icteam.loyalty.common.dto.IModelDTO;
 import com.icteam.loyalty.common.interfaces.IEnum;
+import com.icteam.loyalty.common.interfaces.ISearchDTO;
 import com.icteam.loyalty.common.service.CryptService;
 import com.icteam.loyalty.common.service.DTOService;
 import com.icteam.loyalty.common.service.DbService;
@@ -56,21 +56,21 @@ public class DbProvider implements DbService {
 	}
 
 	@Override
-	public <M extends RelationalPathBase<M>, D extends IDTO<M>, MD extends IModelDTO<M>> List<MD> search(D dto,
-			Class<MD> modelDTOClass) {
-		Optional<M> modelOpt = dto.newModelInstance();
+	public <M extends RelationalPathBase<M>, S extends ISearchDTO<M>, MD extends IModelDTO<M>> List<MD> search(
+			S searchDTO, Class<MD> modelDTOClass) {
+		final Optional<M> modelOpt = searchDTO.newModelInstance();
 
 		if (modelOpt.isPresent()) {
-			M model = modelOpt.get();
+			final M model = modelOpt.get();
 
-			SQLQuery<Tuple> from = queryFactory.select(model.all()).from(model);
+			final SQLQuery<Tuple> from = queryFactory.select(model.all()).from(model);
 
-			buildWheres(from, dto, model);
+			buildWheres(from, searchDTO, model);
 
-			List<Tuple> tuples = from.fetch();
+			final List<Tuple> tuples = from.fetch();
 
 			return tuples.stream().map(tuple -> {
-				MD modelDto = dtoService.newDTO(modelDTOClass);
+				final MD modelDto = dtoService.newDTO(modelDTOClass);
 
 				modelDto.fill(tuple, model);
 
@@ -82,20 +82,20 @@ public class DbProvider implements DbService {
 	}
 
 	@Override
-	public <M extends RelationalPathBase<M>, D extends IDTO<M>, MD extends IModelDTO<M>> Optional<MD> searchOne(D dto,
-			Class<MD> modelDTOClass) {
+	public <M extends RelationalPathBase<M>, S extends ISearchDTO<M>, MD extends IModelDTO<M>> Optional<MD> searchOne(
+			S searchDTO, Class<MD> modelDTOClass) {
 		MD modelDto = null;
 
-		Optional<M> modelOpt = dto.newModelInstance();
+		final Optional<M> modelOpt = searchDTO.newModelInstance();
 
 		if (modelOpt.isPresent()) {
-			M model = modelOpt.get();
+			final M model = modelOpt.get();
 
-			SQLQuery<Tuple> from = queryFactory.select(model.all()).from(model);
+			final SQLQuery<Tuple> from = queryFactory.select(model.all()).from(model);
 
-			buildWheres(from, dto, model);
+			buildWheres(from, searchDTO, model);
 
-			Tuple tuple = from.fetchOne();
+			final Tuple tuple = from.fetchOne();
 
 			if (tuple != null) {
 				modelDto = dtoService.newDTO(modelDTOClass);
@@ -108,16 +108,16 @@ public class DbProvider implements DbService {
 	}
 
 	@Override
-	public <M extends RelationalPathBase<M>, D extends IDTO<M>, MD extends IModelDTO<M>> long count(D dto,
+	public <M extends RelationalPathBase<M>, S extends ISearchDTO<M>, MD extends IModelDTO<M>> long count(S searchDTO,
 			Class<MD> modelDTOClass) {
-		Optional<M> modelOpt = dto.newModelInstance();
+		final Optional<M> modelOpt = searchDTO.newModelInstance();
 
 		if (modelOpt.isPresent()) {
-			M model = modelOpt.get();
+			final M model = modelOpt.get();
 
-			SQLQuery<Tuple> from = queryFactory.select(model.all()).from(model);
+			final SQLQuery<Tuple> from = queryFactory.select(model.all()).from(model);
 
-			buildWheres(from, dto, model);
+			buildWheres(from, searchDTO, model);
 
 			return from.fetchCount();
 		}
@@ -125,7 +125,7 @@ public class DbProvider implements DbService {
 		return 0l;
 	}
 
-	private <M extends RelationalPathBase<M>, D extends IDTO<M>> void buildWheres(SQLQuery<Tuple> from, D dto,
+	private <M extends RelationalPathBase<M>, D extends ISearchDTO<M>> void buildWheres(SQLQuery<Tuple> from, D dto,
 			final M model) {
 		final Map<String, Where> wheres = ReflectionUtils.getFields(dto.getClass()).stream()
 				.filter(f -> f.isAnnotationPresent(Where.class))
