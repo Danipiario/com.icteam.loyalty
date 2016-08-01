@@ -82,21 +82,22 @@ public final class Utf8ResourceBundle {
 
 	public static Optional<ResourceBundle> loadResourceBundle(Bundle bundle, String classLocaleKey,
 			final URL propertiesURL) {
-		Optional<ResourceBundle> resourceBundle = Optional.empty();
+		Optional<ResourceBundle> result = Optional.empty();
 
 		if (propertiesURL != null) {
 			try {
-				resourceBundle = Optional.of(new PropertyResourceBundle(propertiesURL.openStream()));
+				ResourceBundle resourceBundle = null;
+				resourceBundle = new PropertyResourceBundle(propertiesURL.openStream());
 
-				resourceBundle = createUtf8Bundle(resourceBundle);
+				result = createUtf8Bundle(resourceBundle);
 
-				getResourceBundleMap(bundle).put(classLocaleKey, resourceBundle.get());
+				result.ifPresent(rb -> getResourceBundleMap(bundle).put(classLocaleKey, rb));
 			} catch (final IOException e) {
 				e.printStackTrace();
 			}
 		}
 
-		return resourceBundle;
+		return result;
 	}
 
 	private static URL getPropertiesURL(Bundle bundle, String baseName, Locale locale) {
@@ -139,12 +140,14 @@ public final class Utf8ResourceBundle {
 		return result.toArray(new String[result.size()]);
 	}
 
-	private static Optional<ResourceBundle> createUtf8Bundle(Optional<ResourceBundle> bundle) {
-		ResourceBundle result = bundle.get();
+	private static Optional<ResourceBundle> createUtf8Bundle(ResourceBundle bundle) {
+		ResourceBundle result = bundle;
+
 		if (result instanceof PropertyResourceBundle) {
 			final PropertyResourceBundle prb = (PropertyResourceBundle) result;
 			result = new Utf8PropertyResourceBundle(prb);
 		}
+
 		return Optional.of(result);
 	}
 

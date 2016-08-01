@@ -84,7 +84,7 @@ public abstract class AbstractDTO<M extends RelationalPathBase<M>> implements ID
 		try {
 			return Optional
 					.of((Class<M>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0]);
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			logger.warn("error get modelClass, probably you need to override getModelClass method", e);
 		}
 
@@ -114,4 +114,6 @@ public abstract class AbstractDTO<M extends RelationalPathBase<M>> implements ID
 	public void setEditable(boolean editable) {
 		firePropertyChange("editable", this.editable, this.editable = editable);
 	}
+
+
 }

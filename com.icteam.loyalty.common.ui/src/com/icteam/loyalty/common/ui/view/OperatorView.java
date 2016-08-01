@@ -2,7 +2,10 @@ package com.icteam.loyalty.common.ui.view;
 
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.inject.Inject;
+
+import org.eclipse.swt.widgets.Composite;
 
 import com.icteam.loyalty.common.dto.OperatorDTO;
 import com.icteam.loyalty.common.dto.OperatorSearchDTO;
@@ -12,6 +15,14 @@ public class OperatorView extends VirtualView<OperatorDTO, OperatorSearchDTO> {
 
 	@Inject
 	private AuthService authService;
+
+	@Override
+	@PostConstruct
+	public void postConstruct(Composite parent) {
+		super.postConstruct(parent);
+	}
+
+
 
 	@Override
 	public List<OperatorDTO> search() {

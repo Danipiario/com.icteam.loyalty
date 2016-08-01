@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import javax.persistence.Id;
+
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.osgi.service.component.annotations.Component;
@@ -19,13 +21,14 @@ import com.icteam.loyalty.common.service.EnumService;
 import com.querydsl.core.Tuple;
 
 @Component(service = { IDTO.class }, property = { "dtoClass=OperatorDTO" }, scope = ServiceScope.PROTOTYPE)
-public class OperatorDTO extends AbstractDTO<Operator> implements Principal, IModelDTO<Operator> {
+public class OperatorDTO extends AbstractModelDTO<Operator> implements Principal {
 
 	private static final long serialVersionUID = -6963344306951789513L;
 
 	@Reference
 	EnumService enumService;
 
+	@Id
 	@Property(show = true, order = 1)
 	private String login;
 
@@ -108,4 +111,6 @@ public class OperatorDTO extends AbstractDTO<Operator> implements Principal, IMo
 					.collect(Collectors.toList()));
 		}
 	}
+
+
 }

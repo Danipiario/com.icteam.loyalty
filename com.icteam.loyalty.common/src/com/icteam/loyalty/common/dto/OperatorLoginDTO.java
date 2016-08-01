@@ -9,7 +9,7 @@ import com.icteam.loyalty.common.interfaces.IStatus;
 import com.icteam.loyalty.common.model.Operator;
 
 @Component(service = { IDTO.class }, property = { "dtoClass=OperatorLoginDTO" }, scope = ServiceScope.PROTOTYPE)
-public class OperatorLoginDTO extends AbstractDTO<Operator> {
+public class OperatorLoginDTO extends AbstractSearchDTO<Operator> {
 
 	private static final long serialVersionUID = -6843859391959638215L;
 
