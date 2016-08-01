@@ -58,6 +58,8 @@ public abstract class VirtualView<MD extends IModelDTO<? extends RelationalPathB
 
 	protected final S getSearchDTO() {
 		if (searchDTO == null) {
+			searchDTO = dtoService.newDTO(getSearchDTOClass(), false);
+
 			initSearchDTO();
 		}
 
@@ -65,7 +67,7 @@ public abstract class VirtualView<MD extends IModelDTO<? extends RelationalPathB
 	}
 
 	protected void initSearchDTO() {
-		searchDTO = dtoService.newDTO(getSearchDTOClass());
+		searchDTO.enableTrackChanges();
 	}
 
 	protected Class<S> getSearchDTOClass() {
@@ -97,7 +99,7 @@ public abstract class VirtualView<MD extends IModelDTO<? extends RelationalPathB
 	private void bindVirtualListener() {
 		if (columnViewer instanceof TableViewer) {
 			columnViewer.getControl().addListener(SWT.SetData,
-					new VirtuaTableListener<>(this, dtoService.newDTO(getModelDTOClass())));
+					new VirtuaTableListener<>(this, dtoService.newDTO(getModelDTOClass(), false)));
 		}
 	}
 

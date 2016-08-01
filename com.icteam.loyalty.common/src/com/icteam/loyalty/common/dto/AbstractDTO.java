@@ -23,15 +23,21 @@ public abstract class AbstractDTO<M extends RelationalPathBase<M>> implements ID
 	private boolean dirty = false;
 	private boolean editable = true;
 
+	private transient final PropertyChangeListener dirtyListener = evt -> {
+		_new = false;
+		if (!evt.getPropertyName().equals("dirty") && !evt.getPropertyName().equals("editable")) {
+			setDirty(true);
+		}
+	};
+
 	public AbstractDTO() {
 		changeSupport = new PropertyChangeSupport(this);
+	}
 
-		changeSupport.addPropertyChangeListener(evt -> {
-			_new = false;
-			if (!evt.getPropertyName().equals("dirty") && !evt.getPropertyName().equals("editable")) {
-				setDirty(true);
-			}
-		});
+	@Override
+	public void enableTrackChanges() {
+		changeSupport.removePropertyChangeListener(dirtyListener);
+		changeSupport.addPropertyChangeListener(dirtyListener);
 	}
 
 	protected void firePropertyChange(String propertyName, Object oldValue, Object newValue) {

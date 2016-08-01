@@ -13,6 +13,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 
 import com.icteam.loyalty.common.annotations.Property;
 import com.icteam.loyalty.common.interfaces.IGroup;
+import com.icteam.loyalty.common.interfaces.ILanguage;
 import com.icteam.loyalty.common.model.Operator;
 import com.icteam.loyalty.common.service.EnumService;
 import com.querydsl.core.Tuple;
@@ -39,6 +40,9 @@ public class OperatorDTO extends AbstractDTO<Operator> implements Principal, IMo
 
 	@Property(show = true, order = 5)
 	private List<IGroup> groups;
+
+	@Property(show = false)
+	private ILanguage language;
 
 	public String getLogin() {
 		return login;
@@ -81,12 +85,21 @@ public class OperatorDTO extends AbstractDTO<Operator> implements Principal, IMo
 		this.groups = groups;
 	}
 
+	public ILanguage getLanguage() {
+		return language;
+	}
+
+	public void setLanguage(ILanguage language) {
+		firePropertyChange("language", this.language, this.language = language);
+	}
+
 	@Override
 	public void fill(Tuple tuple, Operator model) {
 		setChangePassword(BooleanUtils.toBooleanObject(tuple.get(model.changePassword)));
 		setLogin(tuple.get(model.login));
 		setName(tuple.get(model.name));
 		setSurname(tuple.get(model.surname));
+		setLanguage(enumService.value(ILanguage.class, tuple.get(model.language)));
 
 		final String[] groups = StringUtils.split(StringUtils.defaultString(tuple.get(model.groups)), ",");
 

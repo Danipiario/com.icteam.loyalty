@@ -70,9 +70,10 @@ public class DbProvider implements DbService {
 			List<Tuple> tuples = from.fetch();
 
 			return tuples.stream().map(tuple -> {
-				MD modelDto = dtoService.newDTO(modelDTOClass);
+				MD modelDto = dtoService.newDTO(modelDTOClass, false);
 
 				modelDto.fill(tuple, model);
+				modelDto.enableTrackChanges();
 
 				return modelDto;
 			}).collect(Collectors.toList());
@@ -98,9 +99,9 @@ public class DbProvider implements DbService {
 			Tuple tuple = from.fetchOne();
 
 			if (tuple != null) {
-				modelDto = dtoService.newDTO(modelDTOClass);
-
+				modelDto = dtoService.newDTO(modelDTOClass, false);
 				modelDto.fill(tuple, model);
+				modelDto.enableTrackChanges();
 			}
 		}
 
