@@ -20,7 +20,6 @@ Private-Package: \
 	org.apache.commons.codec;version=1.10,\
 	org.apache.logging.log4j;version=2.6
 	
--includeresource: {readme.md},\
-                  OSGI-INF=resources
+-includeresource: {readme.md}
 
 Tracker-Extension: com.icteam.loyalty.common.provider.internal.tracker.EnumTracker

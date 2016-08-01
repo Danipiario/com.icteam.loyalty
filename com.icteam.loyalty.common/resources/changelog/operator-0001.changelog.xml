@@ -1,28 +1,27 @@
-<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
-	<changeSet id="0001" author="d.pirola">
-		<createTable tableName="OPERATOR">
-			<column name="LOGIN" type="varchar(50)">
-				<constraints primaryKey="true" primaryKeyName="PK_OPERATOR" />
-			</column>
-			<column name="NAME" type="varchar(50)"></column>
-			<column name="SURNAME" type="varchar(50)"></column>
-			<column name="PASSWORD" type="varchar(50)"></column>
-			<column name="CHANGE_PASSWORD" type="boolean"></column>
-		</createTable>
-	</changeSet>
-	<changeSet id="0002" author="d.pirola">
-		<addColumn tableName="OPERATOR">
-			<column name="GROUPS" type="varchar(2000)"></column>
-		</addColumn>
-	</changeSet>
-	<changeSet id="0003" author="d.pirola">
-		<addColumn tableName="OPERATOR">
-			<column name="STATUS" type="varchar(50)"></column>
-		</addColumn>
-	</changeSet>
+    <changeSet id="0001" author="d.pirola">
+        <createTable tableName="OPERATOR">
+            <column name="LOGIN" type="varchar(50)">
+                <constraints primaryKey="true" primaryKeyName="PK_OPERATOR" />
+            </column>
+            <column name="NAME" type="varchar(50)"></column>
+            <column name="SURNAME" type="varchar(50)"></column>
+            <column name="PASSWORD" type="varchar(50)"></column>
+            <column name="CHANGE_PASSWORD" type="boolean"></column>
+        </createTable>
+    </changeSet>
+    <changeSet id="0002" author="d.pirola">
+        <addColumn tableName="OPERATOR">
+            <column name="GROUPS" type="varchar(2000)"></column>
+        </addColumn>
+    </changeSet>
+    <changeSet id="0003" author="d.pirola">
+        <addColumn tableName="OPERATOR">
+            <column name="STATUS" type="varchar(50)"></column>
+        </addColumn>
+    </changeSet>
     <changeSet id="0004" author="d.pirola">
         <insert tableName="OPERATOR">
             <column name="LOGIN" value="manager" />
@@ -33,5 +32,17 @@
             <column name="STATUS" value="ATTIVO" />
         </insert>
     </changeSet>
-        
+    <changeSet id="0005" author="d.pirola">
+        <addColumn tableName="OPERATOR">
+            <column name="LANGUAGE" type="varchar(50)" defaultValue="ITALIAN"></column>
+        </addColumn>
+        <addNotNullConstraint tableName="OPERATOR" columnName="NAME" />
+        <addNotNullConstraint tableName="OPERATOR" columnName="SURNAME" />
+        <addNotNullConstraint tableName="OPERATOR" columnName="PASSWORD" />
+        <addNotNullConstraint tableName="OPERATOR" columnName="CHANGE_PASSWORD" />
+        <update tableName="OPERATOR">
+            <column name="LANGUAGE" value="ITALIAN" />
+        </update>
+        <addNotNullConstraint tableName="OPERATOR" columnName="LANGUAGE" />
+    </changeSet>
 </databaseChangeLog>

@@ -2,6 +2,7 @@ package com.icteam.loyalty.common.mock;
 
 import java.util.Optional;
 
+import org.apache.commons.lang3.StringUtils;
 import org.osgi.framework.Constants;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ServiceScope;
@@ -16,14 +17,24 @@ public class OperatorLoginDTOMock extends OperatorLoginDTO {
 
 	private static final long serialVersionUID = 1251387801513444919L;
 
-	@Override
-	public String getLogin() {
-		return "manager";
+	public OperatorLoginDTOMock() {
+		super();
+
 	}
 
 	@Override
-	public String getPassword() {
-		return null;
+	public void enableTrackChanges() {
+		// prima della init così non marco l'oggetto come dirty
+		setLogin("manager");
+
+		super.enableTrackChanges();
+	}
+
+	@Override
+	public void setLogin(String login) {
+		if (StringUtils.isNotBlank(login)) {
+			super.setLogin(login);
+		}
 	}
 
 	@Override

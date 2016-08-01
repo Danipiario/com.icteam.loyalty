@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.eclipse.rap.e4.E4ApplicationConfig;
-import org.eclipse.rap.e4.E4EntryPointFactory;
 import org.eclipse.rap.rwt.application.Application;
 import org.eclipse.rap.rwt.application.Application.OperationMode;
 import org.eclipse.rap.rwt.application.ApplicationConfiguration;
@@ -20,7 +19,7 @@ public class LoyaltyApplication implements ApplicationConfiguration {
 		properties.put(WebClient.PAGE_TITLE, Messages.get().page_title);
 		application.setOperationMode(OperationMode.SWT_COMPATIBILITY);
 		application.addEntryPoint("/loyalty",
-				new E4EntryPointFactory(E4ApplicationConfig.create(
+				new LoyaltyEntryPointFactory(E4ApplicationConfig.create(
 						"platform:/plugin/com.icteam.loyalty.application/OSGI-INF/e4/LoyaltyApplication.e4xmi",
 						"bundleclass://com.icteam.loyalty.application/com.icteam.loyalty.application.internal.LoginLifecycle")),
 				properties);

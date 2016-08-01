@@ -2,6 +2,7 @@ package com.icteam.loyalty.common.nls;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
+import java.text.MessageFormat;
 import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.Locale;
@@ -110,7 +111,11 @@ public class NLS implements ManagedService {
 
 		logger.warn("Failed to get localized message for class {} and field {}", clazz.getName(), key);
 
-		return "???"+ key+ "???";
+		return "???" + key + "???";
+	}
+
+	public static String getFormatted(String translatedMsg, Object... arguments) {
+		return MessageFormat.format(translatedMsg, arguments);
 	}
 
 	@Override

@@ -12,4 +12,6 @@ public interface IDTO<M extends RelationalPathBase<M>> extends Serializable {
 	boolean is_new();
 
 	Optional<M> newModelInstance();
+
+	void enableTrackChanges();
 }

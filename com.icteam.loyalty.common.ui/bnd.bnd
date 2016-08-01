@@ -7,7 +7,9 @@ Export-Package: \
 	com.icteam.loyalty.common.ui.view,\
 	com.icteam.loyalty.common.ui.listener,\
 	com.icteam.loyalty.common.ui.converter,\
-	com.icteam.loyalty.common.ui.util
+	com.icteam.loyalty.common.ui.util,\
+	com.icteam.loyalty.common.ui.service,\
+	com.icteam.loyalty.common.ui.control
 
 -buildpath: \
 	org.apache.commons.lang3;version=3.4,\
@@ -33,6 +35,12 @@ Export-Package: \
 	com.querydsl.sql;version=4.1,\
 	com.querydsl.core;version=4.1,\
 	org.eclipse.e4.ui.workbench.renderers.swt;version=0.13
+	
+Private-Package: \
+    com.icteam.loyalty.common.ui.internal*
+	
+Tracker-Extension: com.icteam.loyalty.common.ui.internal.tracker.IconTracker
+	
 -includeresource: {readme.md},\
                   OSGI-INF=resources,\
                   plugin.xml                      

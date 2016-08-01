@@ -7,6 +7,7 @@ import javax.security.auth.login.LoginException;
 import org.apache.felix.jaas.LoginContextFactory;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.ui.workbench.lifecycle.PostContextCreate;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.rap.rwt.RWT;
@@ -19,7 +20,7 @@ import com.icteam.loyalty.application.jaas.LoginCallbackHandler;
 public class LoginLifecycle {
 
 	@PostContextCreate
-	boolean login(Display display) {
+	boolean login(Display display, IEclipseContext eclipseContext) {
 		final ServiceTracker<LoginContextFactory, LoginContextFactory> serviceTracker = new ServiceTracker<>(
 				FrameworkUtil.getBundle(getClass()).getBundleContext(), LoginContextFactory.class, null);
 		try {
@@ -39,6 +40,8 @@ public class LoginLifecycle {
 					secureContext.login();
 
 					RWT.getUISession(display).setAttribute("secureContext", secureContext);
+					eclipseContext.set("secureContext", secureContext);
+
 					break;
 				} catch (final LoginException | InterruptedException exception) {
 					exception.printStackTrace();

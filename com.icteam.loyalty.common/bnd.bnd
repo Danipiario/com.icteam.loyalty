@@ -46,4 +46,5 @@ Provide-Capability: osgi.service;effective:=active;objectClass=com.querydsl.sql.
 Liquibase-Persistence: OSGI-INF/changelog/common.changelog.xml
 Tracker-Extension: com.icteam.loyalty.common.internal.tracker.ConfigTracker,\
                    com.icteam.loyalty.common.internal.tracker.MessageTracker
-Enum-Extension: com.icteam.loyalty.common.enums.EStatus
+Enum-Extension: com.icteam.loyalty.common.enums.EStatus,\
+                com.icteam.loyalty.common.enums.ELanguage

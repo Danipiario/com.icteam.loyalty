@@ -7,4 +7,12 @@
       </toolbar>
     </elements>
   </fragments>
+  <fragments xsi:type="fragment:StringModelFragment" xmi:id="_oFCwEFfSEea-8_Zh1fXSNg" featurename="children" parentElementId="com.icteam.loyalty.application.trimbar.bottom">
+    <elements xsi:type="menu:ToolControl" xmi:id="_x5dp8FfyEea-8_Zh1fXSNg" elementId="com.icteam.loyalty.common.ui.toolcontrol.spacer" contributionURI="bundleclass://com.icteam.loyalty.common.ui/com.icteam.loyalty.common.ui.control.SpacerControl">
+      <tags>stretch</tags>
+    </elements>
+    <elements xsi:type="menu:ToolControl" xmi:id="_sCVsEFfSEea-8_Zh1fXSNg" elementId="com.icteam.loyalty.common.ui.toolcontrol.login" contributionURI="bundleclass://com.icteam.loyalty.common.ui/com.icteam.loyalty.common.ui.control.LoginStatusLine"/>
+    <elements xsi:type="menu:ToolControl" xmi:id="_vW6VAFfvEea-8_Zh1fXSNg" elementId="com.icteam.loyalty.common.ui.toolcontrol.separator" contributionURI="bundleclass://com.icteam.loyalty.common.ui/com.icteam.loyalty.common.ui.control.SeparatorControl"/>
+    <elements xsi:type="menu:ToolControl" xmi:id="_4g22sFfcEea-8_Zh1fXSNg" elementId="com.icteam.loyalty.common.ui.toolcontrol.language" contributionURI="bundleclass://com.icteam.loyalty.common.ui/com.icteam.loyalty.common.ui.control.LanguageStatusLine"/>
+  </fragments>
 </fragment:ModelFragments>

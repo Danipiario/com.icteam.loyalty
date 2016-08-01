@@ -1,6 +1,7 @@
 package com.icteam.loyalty.common.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -16,4 +17,6 @@ public interface AuthService {
 	List<OperatorDTO> search(OperatorSearchDTO operatorSearchDTO);
 
 	long count(OperatorSearchDTO operatorSearchDTO);
+
+	Optional<OperatorDTO> getPrincipal();
 }

@@ -78,7 +78,7 @@ public class LoyaltyLoginModule implements javax.security.auth.spi.LoginModule {
 				DTOService dtoService = dtoServiceTracker.waitForService(1000);
 				if (dtoService != null) {
 
-					final OperatorLoginDTO operatorTemplate = dtoService.newDTO(OperatorLoginDTO.class);
+					final OperatorLoginDTO operatorTemplate = dtoService.newDTO(OperatorLoginDTO.class, true);
 					operatorTemplate.setLogin(username);
 					operatorTemplate.setPassword(password);
 
@@ -108,9 +108,9 @@ public class LoyaltyLoginModule implements javax.security.auth.spi.LoginModule {
 	@Override
 	public boolean commit() {
 		subject.getPrincipals().add(operatorDTO);
-		// subject.getPrivateCredentials().addAll(operatorModel.getOperatorGroupList());
-		//
-		// RWT.getUISession().setLocale(operatorModel.getLanguage().getLocale());
+		// subject.getPrivateCredentials().addAll(operatorDTO.getGroups());
+
+		// RWT.getUISession().setLocale(operatorDTO.getLanguage().getLocale());
 
 		return loggedIn;
 	}
