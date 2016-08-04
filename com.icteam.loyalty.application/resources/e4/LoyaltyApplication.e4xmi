@@ -4,10 +4,12 @@
     <persistedState key="styleOverride" value="8"/>
     <tags>shellMaximized</tags>
     <children xsi:type="advanced:PerspectiveStack" xmi:id="_gJjVMDiOEeaMONTLrsbb4w" elementId="com.icteam.loyalty.application.perspectivestack.0">
-      <children xsi:type="advanced:Perspective" xmi:id="_hxPEsDiOEeaMONTLrsbb4w" elementId="com.icteam.loyalty.application.perspective.administration" label="%administration">
-        <children xsi:type="basic:PartSashContainer" xmi:id="_x8bg8DiOEeaMONTLrsbb4w" elementId="com.icteam.loyalty.application.partsashcontainer.0" horizontal="true">
-          <children xsi:type="basic:PartStack" xmi:id="_0vL8cDiOEeaMONTLrsbb4w" elementId="com.icteam.loyalty.application.partstack.left" containerData="30"/>
-          <children xsi:type="advanced:Area" xmi:id="_98XcMDxIEeadbYlql7oshg" elementId="com.icteam.loyalty.application.area.main" containerData="70"/>
+      <children xsi:type="advanced:Perspective" xmi:id="_hxPEsDiOEeaMONTLrsbb4w" elementId="com.icteam.loyalty.application.perspective.administration" label="%administration.perspective" iconURI="platform:/plugin/com.icteam.loyalty.application/OSGI-INF/icons/administration.gif" tooltip="%administration.perspective">
+        <children xsi:type="basic:PartSashContainer" xmi:id="_x8bg8DiOEeaMONTLrsbb4w" elementId="com.icteam.loyalty.application.perspective.administration.partsashcontainer" horizontal="true">
+          <children xsi:type="basic:PartStack" xmi:id="_0vL8cDiOEeaMONTLrsbb4w" elementId="com.icteam.loyalty.application.perspective.administration.partstack.left" containerData="30"/>
+          <children xsi:type="basic:PartStack" xmi:id="_HQFB8FiSEeaxUMyXn621Nw" elementId="com.icteam.loyalty.application.perspective.administration.partstack.center" containerData="70">
+            <tags>NoAutoCollapse</tags>
+          </children>
         </children>
       </children>
     </children>
@@ -16,7 +18,9 @@
         <children xsi:type="menu:HandledMenuItem" xmi:id="_JDH6QDiQEeaMONTLrsbb4w" elementId="org.eclipse.ui.file.exit" label="%exit" command="_dCObEDiSEeaMONTLrsbb4w"/>
       </children>
     </mainMenu>
-    <trimBars xmi:id="_HfgvsFfPEea-8_Zh1fXSNg" elementId="com.icteam.loyalty.application.trimbar.bottom" side="Bottom"/>
+    <trimBars xmi:id="_HfgvsFfPEea-8_Zh1fXSNg" elementId="com.icteam.loyalty.application.trimbar.bottom" side="Bottom">
+      <children xsi:type="menu:ToolControl" xmi:id="_cnRzAFgkEea-8_Zh1fXSNg" elementId="com.icteam.loyalty.application.toolcontrol.0" contributionURI="bundleclass://org.eclipse.e4.ui.workbench.perspectiveswitcher/org.eclipse.e4.ui.workbench.perspectiveswitcher.tools.PerspectiveSwitcherSwtTrim"/>
+    </trimBars>
   </children>
   <handlers xmi:id="_dL18ADiQEeaMONTLrsbb4w" elementId="com.icteam.loyalty.application.handler.0" contributionURI="bundleclass://com.icteam.loyalty.application/com.icteam.loyalty.application.handler.ExitHandler" command="_dCObEDiSEeaMONTLrsbb4w"/>
   <commands xmi:id="_dCObEDiSEeaMONTLrsbb4w" elementId="org.eclipse.ui.file.exit" commandName="exit"/>

@@ -238,7 +238,7 @@ public abstract class VirtualEMFView<T extends AbstractEMFTemplate< ? >, D exten
 //            }
 //        });
 //
-//        text.setMessage(Messages.get().filter_message);
+//        text.setMessage(Messages.get().filterMessage);
 
         cmdFilterColumns = (Button) SWTRenderUtil.renderControl(filterComp, getVirtualViewEMFModel(), UIModelPackage.Literals.VIRTUAL_VIEW_EMF_MODEL__FILTER_COLUMNS_ACTION);
         GridData gd_cmdFilterColumns = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
@@ -489,7 +489,7 @@ public abstract class VirtualEMFView<T extends AbstractEMFTemplate< ? >, D exten
 //
 //            ControlUtils.pack(columnViewer, true);
 //        } catch (AppException e) {
-//            MessageDialog.openError(getSite().getShell(), Messages.get().load_error, e.getLocalizedMessage());
+//            MessageDialog.openError(getSite().getShell(), Messages.get().loadError, e.getLocalizedMessage());
 //            return false;
 //        }
 //

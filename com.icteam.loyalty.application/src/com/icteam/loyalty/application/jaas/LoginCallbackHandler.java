@@ -48,7 +48,7 @@ public class LoginCallbackHandler extends AbstractLoginDialog {
 	@Override
 	protected void configureShell(Shell shell) {
 		super.configureShell(shell);
-		shell.setText(Messages.get().login_title);
+		shell.setText(Messages.get().loginTitle);
 	}
 
 	@Override

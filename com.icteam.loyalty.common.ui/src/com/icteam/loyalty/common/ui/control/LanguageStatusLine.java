@@ -13,10 +13,10 @@ import org.eclipse.swt.widgets.Composite;
 
 import com.icteam.loyalty.common.dto.OperatorDTO;
 import com.icteam.loyalty.common.interfaces.ILanguage;
+import com.icteam.loyalty.common.nls.Messages;
 import com.icteam.loyalty.common.nls.NLS;
 import com.icteam.loyalty.common.service.AuthService;
 import com.icteam.loyalty.common.ui.service.IconService;
-import com.icteam.loyalty.common.util.Messages;
 
 public class LanguageStatusLine {
 
@@ -26,20 +26,23 @@ public class LanguageStatusLine {
 	@Inject
 	private IconService iconService;
 
+	/**
+	 * @param control
+	 */
 	@PostConstruct
 	void createControl(Composite parent, MToolControl control) {
-		CLabel label = new CLabel(parent, SWT.SHADOW_NONE);
+		final CLabel label = new CLabel(parent, SWT.SHADOW_NONE);
 		label.setData(RWT.TOOLTIP_MARKUP_ENABLED, true);
 		label.setTopMargin(1);
 		label.setBottomMargin(5);
 
-		Optional<OperatorDTO> optPrincipal = authService.getPrincipal();
+		final Optional<OperatorDTO> optPrincipal = authService.getPrincipal();
 
 		if (optPrincipal.isPresent()) {
-			ILanguage language = optPrincipal.get().getLanguage();
+			final ILanguage language = optPrincipal.get().getLanguage();
 
 			label.setToolTipText(
-					NLS.getFormatted(Messages.get().language_status_line, NLS.get(ILanguage.class, language.name())));
+					NLS.getFormatted(Messages.get().languageStatusLine, NLS.get(ILanguage.class, language.name())));
 
 			label.setImage(iconService.getIcon(language.name().toLowerCase() + ".gif"));
 		}

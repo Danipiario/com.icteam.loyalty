@@ -20,6 +20,7 @@ import org.eclipse.e4.core.services.translation.TranslationService;
 import org.eclipse.e4.ui.model.application.ui.advanced.MPerspective;
 import org.eclipse.e4.ui.workbench.IResourceUtilities;
 import org.eclipse.e4.ui.workbench.perspectiveswitcher.E4PerspectiveSwitcherActivator;
+import org.eclipse.e4.ui.workbench.perspectiveswitcher.E4WorkbenchMessages;
 import org.eclipse.e4.ui.workbench.perspectiveswitcher.tools.E4Util;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.jface.resource.ImageDescriptor;
@@ -98,8 +99,7 @@ public class PerspectiveLabelProvider extends LabelProvider implements ITableLab
 			}
 
 			if (markActive && E4Util.isSelectedElement(perspective)) {
-				label = label + "\t(" + translationService.translate("active",
-						"platform:/plugin/" + E4PerspectiveSwitcherActivator.PLUGIN_ID) + ")"; //$NON-NLS-1$
+				label = label + "\t(" + E4WorkbenchMessages.get().active + ")"; //$NON-NLS-1$
 			}
 		}
 		return label;

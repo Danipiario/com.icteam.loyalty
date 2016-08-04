@@ -25,6 +25,7 @@ import org.eclipse.e4.core.di.annotations.Creatable;
 import org.eclipse.e4.ui.model.application.ui.advanced.MPerspective;
 import org.eclipse.e4.ui.model.application.ui.basic.MWindow;
 import org.eclipse.e4.ui.services.IServiceConstants;
+import org.eclipse.e4.ui.workbench.perspectiveswitcher.E4WorkbenchMessages;
 import org.eclipse.e4.ui.workbench.perspectiveswitcher.commands.E4WorkbenchCommandConstants;
 import org.eclipse.e4.ui.workbench.perspectiveswitcher.commands.E4WorkbenchParameterConstants;
 import org.eclipse.jface.dialogs.Dialog;
@@ -45,8 +46,7 @@ import org.eclipse.swt.widgets.Shell;
  * A dialog for perspective creation
  */
 @Creatable
-public class SelectPerspectiveDialog extends Dialog implements
-ISelectionChangedListener {
+public class SelectPerspectiveDialog extends Dialog implements ISelectionChangedListener {
 
 	@Inject
 	private IEclipseContext context;
@@ -73,7 +73,8 @@ ISelectionChangedListener {
 	/**
 	 * PerspectiveDialog constructor comment.
 	 *
-	 * @param parentShell the parent shell
+	 * @param parentShell
+	 *            the parent shell
 	 */
 	@Inject
 	public SelectPerspectiveDialog(@Named(IServiceConstants.ACTIVE_SHELL) Shell shell) {
@@ -89,7 +90,7 @@ ISelectionChangedListener {
 
 	@Override
 	protected void configureShell(Shell shell) {
-		shell.setText("Open Perspective");
+		shell.setText(E4WorkbenchMessages.get().selectPerspectiveWindow);
 		setBlockOnOpen(false);
 		super.configureShell(shell);
 	}
@@ -98,7 +99,8 @@ ISelectionChangedListener {
 	 * Creates and returns the contents of the upper part of this dialog (above
 	 * the button bar).
 	 *
-	 * @param parent the parent composite to contain the dialog area
+	 * @param parent
+	 *            the parent composite to contain the dialog area
 	 * @return the dialog area control
 	 */
 	@Override
@@ -117,7 +119,8 @@ ISelectionChangedListener {
 	/**
 	 * Create a new viewer in the parent.
 	 *
-	 * @param parent the parent <code>Composite</code>.
+	 * @param parent
+	 *            the parent <code>Composite</code>.
 	 */
 	private void createViewer(Composite parent) {
 		// Add perspective list.
@@ -135,8 +138,7 @@ ISelectionChangedListener {
 			}
 		});
 
-		viewer.setContentProvider(
-				ContextInjectionFactory.make(PerspectiveContentProvider.class, context));
+		viewer.setContentProvider(ContextInjectionFactory.make(PerspectiveContentProvider.class, context));
 		// list.addFilter(activityViewerFilter);
 		viewer.setComparator(new ViewerComparator());
 		viewer.setInput(window);
@@ -154,7 +156,8 @@ ISelectionChangedListener {
 	/**
 	 * Layout the top control.
 	 *
-	 * @param control the control.
+	 * @param control
+	 *            the control.
 	 */
 	private void layoutTopControl(Control control) {
 		final GridData spec = new GridData(GridData.FILL_BOTH);
@@ -165,11 +168,9 @@ ISelectionChangedListener {
 
 	@Override
 	protected void createButtonsForButtonBar(Composite parent) {
-		okButton = createButton(parent, IDialogConstants.OK_ID, IDialogConstants.get().OK_LABEL,
-				true);
+		okButton = createButton(parent, IDialogConstants.OK_ID, IDialogConstants.get().OK_LABEL, true);
 		okButton.setEnabled(false);
-		createButton(parent, IDialogConstants.CANCEL_ID,
-				IDialogConstants.get().CANCEL_LABEL, false);
+		createButton(parent, IDialogConstants.CANCEL_ID, IDialogConstants.get().CANCEL_LABEL, false);
 	}
 	// @Override
 	// protected void createButtonsForButtonBar(Composite parent) {
@@ -184,14 +185,14 @@ ISelectionChangedListener {
 	/**
 	 * Notifies that the selection has changed.
 	 *
-	 * @param event event object describing the change
+	 * @param event
+	 *            event object describing the change
 	 */
 	@Override
 	public void selectionChanged(SelectionChangedEvent event) {
 		updateSelection(event);
 		updateButtons();
 	}
-
 
 	/**
 	 * Update the button enablement state.
@@ -217,10 +218,8 @@ ISelectionChangedListener {
 	@Override
 	protected void okPressed() {
 		final HashMap<String, Object> parameters = new HashMap<>(2);
-		parameters.put(E4WorkbenchParameterConstants.COMMAND_PERSPECTIVE_ID,
-				((MPerspective) selection).getElementId());
-		parameters.put(E4WorkbenchParameterConstants.COMMAND_PERSPECTIVE_NEW_WINDOW,
-				"false");
+		parameters.put(E4WorkbenchParameterConstants.COMMAND_PERSPECTIVE_ID, ((MPerspective) selection).getElementId());
+		parameters.put(E4WorkbenchParameterConstants.COMMAND_PERSPECTIVE_NEW_WINDOW, "false");
 
 		final ParameterizedCommand command = commandService
 				.createCommand(E4WorkbenchCommandConstants.PERSPECTIVES_SHOW_PERSPECTIVE, parameters);

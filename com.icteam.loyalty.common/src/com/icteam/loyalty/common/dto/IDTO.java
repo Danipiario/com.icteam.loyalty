@@ -1,17 +1,34 @@
 package com.icteam.loyalty.common.dto;
 
+import java.beans.PropertyChangeListener;
 import java.io.Serializable;
-import java.util.Optional;
 
-import com.querydsl.sql.RelationalPathBase;
-
-public interface IDTO<M extends RelationalPathBase<M>> extends Serializable {
-
-	boolean isDirty();
+public interface IDTO extends Serializable {
 
 	boolean is_new();
 
-	Optional<M> newModelInstance();
+	boolean isDirty();
+
+	void setDirty(boolean dirty);
 
 	void enableTrackChanges();
+
+	boolean isEditable();
+
+	void setEditable(boolean editable);
+
+	String getPermissionObject();
+
+	String getLabel();
+
+	<C extends IDTO> void copyTo(C dest);
+
+	void removePropertyChangeListener(String propertyName, PropertyChangeListener listener);
+
+	void addPropertyChangeListener(String propertyName, PropertyChangeListener listener);
+
+	void removePropertyChangeListener(PropertyChangeListener listener);
+
+	void addPropertyChangeListener(PropertyChangeListener listener);
+
 }

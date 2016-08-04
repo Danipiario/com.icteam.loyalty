@@ -33,15 +33,15 @@ public class IconProvider implements IconService {
 
 	@Override
 	public synchronized void addIcon(File iconFile) {
-		String iconName = iconFile.getName();
+		final String iconName = iconFile.getName();
 
 		if (icons.containsKey(iconName)) {
 			logger.warn("Duplicated icon #{0} not loaded", iconName);
 		} else {
 			try (FileInputStream stream = new FileInputStream(iconFile)) {
-				ImageData imageData = new ImageData(stream);
+				final ImageData imageData = new ImageData(stream);
 				icons.put(iconName, imageData);
-			} catch (IOException e) {
+			} catch (final IOException e) {
 				logger.warn("error adding icon #" + iconName, e);
 			}
 		}
@@ -54,7 +54,7 @@ public class IconProvider implements IconService {
 
 	@Override
 	public synchronized Image getIcon(String iconName) {
-		ImageData imageData = icons.get(iconName);
+		final ImageData imageData = icons.get(iconName);
 
 		if (imageData != null) {
 			return new Image(Display.getCurrent(), imageData);

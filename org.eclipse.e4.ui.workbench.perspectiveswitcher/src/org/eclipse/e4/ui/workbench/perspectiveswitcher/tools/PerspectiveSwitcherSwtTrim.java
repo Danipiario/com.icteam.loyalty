@@ -10,7 +10,6 @@
  ******************************************************************************/
 package org.eclipse.e4.ui.workbench.perspectiveswitcher.tools;
 
-import java.net.URL;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -21,8 +20,6 @@ import javax.annotation.PreDestroy;
 import javax.inject.Inject;
 
 import org.eclipse.core.commands.ParameterizedCommand;
-import org.eclipse.core.runtime.FileLocator;
-import org.eclipse.core.runtime.Path;
 import org.eclipse.e4.core.commands.ECommandService;
 import org.eclipse.e4.core.commands.EHandlerService;
 import org.eclipse.e4.core.di.extensions.Preference;
@@ -61,8 +58,8 @@ import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
+
+import com.icteam.loyalty.common.ui.service.IconService;
 
 public class PerspectiveSwitcherSwtTrim implements IPerspectiveSwitcherControl {
 
@@ -86,6 +83,9 @@ public class PerspectiveSwitcherSwtTrim implements IPerspectiveSwitcherControl {
 
 	@Inject
 	private MWindow window;
+
+	@Inject
+	private IconService iconService;
 
 	@Inject
 	EPerspectiveSwitcher perspectiveSwitcher;
@@ -193,7 +193,7 @@ public class PerspectiveSwitcherSwtTrim implements IPerspectiveSwitcherControl {
 
 		final ToolItem perspectiveDialog = new ToolItem(toolBar, SWT.PUSH);
 		perspectiveDialog.setImage(getOpenPerspectiveImage());
-		perspectiveDialog.setToolTipText(E4WorkbenchMessages.OpenSelectPerspectiveWindow);
+		perspectiveDialog.setToolTipText(E4WorkbenchMessages.get().openSelectPerspectiveWindow);
 		perspectiveDialog.addSelectionListener(new SelectionAdapter() {
 
 			@Override
@@ -459,18 +459,7 @@ public class PerspectiveSwitcherSwtTrim implements IPerspectiveSwitcherControl {
 	 * @return the image
 	 */
 	Image getOpenPerspectiveImage() {
-		if (openPerspectiveImage == null || openPerspectiveImage.isDisposed()) {
-			final Bundle bundle = FrameworkUtil.getBundle(this.getClass());
-			final URL url = FileLocator.find(bundle, new Path("OSGI-INF/icons/full/eview16/new_persp.gif"), null);
-			final ImageDescriptor imageDescr = ImageDescriptor.createFromURL(url);
-			return imageDescr.createImage();
-			// ImageDescriptor desc =
-			// WorkbenchImages.getImageDescriptor(IWorkbenchGraphicConstants.IMG_ETOOL_NEW_PAGE);
-			// openPerspectiveImage = desc.createImage();
-		}
-		// return openPerspectiveImage;
-		// TODO fill image
-		return null;
+		return iconService.getIcon("new_persp.gif");
 	}
 
 	Color getContainerCurveColor(PaintEvent event) {

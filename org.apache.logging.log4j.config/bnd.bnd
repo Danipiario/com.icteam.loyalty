@@ -4,3 +4,6 @@ Bundle-Version: 1.0.0
 Fragment-Host: org.apache.logging.log4j
 
 -includeresource: log4j2.xml=resources/log4j2.xml
+-buildpath: org.apache.logging.log4j;version=2.6
+
+-releaserepo: Libraries

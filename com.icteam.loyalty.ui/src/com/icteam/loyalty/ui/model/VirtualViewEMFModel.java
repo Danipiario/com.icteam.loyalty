@@ -416,7 +416,7 @@ public interface VirtualViewEMFModel<T extends AbstractEMFTemplate< ? >, D exten
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @model annotation="http://www.eclipse.org/emf/2002/GenModel body='try {\r\n            eUnset(UIModelPackage.VIRTUAL_VIEW_EMF_MODEL__LIST);\r\n            eUnset(UIModelPackage.VIRTUAL_VIEW_EMF_MODEL__SELECTED_LIST);\r\n            eUnset(UIModelPackage.VIRTUAL_VIEW_EMF_MODEL__ITEM_COUNT);\r\n\r\n\t    if (closeEditors) {\r\n               closeEditors();\r\n           }\r\n        } catch (AppException e) {\r\n            MessageDialog.openError(null, com.icteam.loyalty.api.Messages.get().load_error, e.getLocalizedMessage());\r\n            return false;\r\n        }\r\n\r\n        return true;'"
+     * @model annotation="http://www.eclipse.org/emf/2002/GenModel body='try {\r\n            eUnset(UIModelPackage.VIRTUAL_VIEW_EMF_MODEL__LIST);\r\n            eUnset(UIModelPackage.VIRTUAL_VIEW_EMF_MODEL__SELECTED_LIST);\r\n            eUnset(UIModelPackage.VIRTUAL_VIEW_EMF_MODEL__ITEM_COUNT);\r\n\r\n\t    if (closeEditors) {\r\n               closeEditors();\r\n           }\r\n        } catch (AppException e) {\r\n            MessageDialog.openError(null, com.icteam.loyalty.api.Messages.get().loadError, e.getLocalizedMessage());\r\n            return false;\r\n        }\r\n\r\n        return true;'"
      * @generated
      */
     boolean reload(boolean closeEditors);

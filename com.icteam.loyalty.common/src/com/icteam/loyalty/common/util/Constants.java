@@ -11,6 +11,8 @@ public class Constants {
 	public static final String T_END = "tEnd";
 	public static final String T_START = "tStart";
 
+	public static final String VIEW = "view";
+	public static final String EDIT = "edit";
 	// String DATASOURCE = "java:/LoyaltyDataSource";
 	// String WS_CONTEXT_ROOT = "loyaltyws";
 	//
@@ -87,8 +89,6 @@ public class Constants {
 	// String ADD = "add";
 	// String REFRESH = "refresh";
 	// String RUN = "run";
-	// String VIEW = "view";
-	// String EDIT = "edit";
 	// String TOOLTIP = "tooltip";
 	//
 	// String ICON_PATH_PREFIX = "/icons/";

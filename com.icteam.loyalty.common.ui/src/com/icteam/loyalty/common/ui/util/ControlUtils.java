@@ -1,74 +1,78 @@
 package com.icteam.loyalty.common.ui.util;
 
 import org.eclipse.jface.viewers.ColumnViewer;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Item;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Layout;
+
+import com.icteam.loyalty.common.ui.interfaces.ILabelControl;
 
 public final class ControlUtils {
 
-	//    public static void adjustLayout(final Composite c) {
-	//        Display.getDefault().timerExec(100, new Runnable() {
-	//            @Override
-	//            public void run() {
-	//                adjustLayoutInternal(c);
-	//
-	//                c.layout(true, true);
-	//            }
-	//        });
-	//    }
-	//
-	//    static void adjustLayoutInternal(Control p) {
-	//        if (p instanceof Composite) {
-	//            Composite composite = (Composite) p;
-	//            Layout layout = ((Composite) p).getLayout();
-	//
-	//            if (layout instanceof GridLayout) {
-	//                GridLayout gridLayout = (GridLayout) layout;
-	//
-	//                Control[][] grid = buildGrid(composite, gridLayout);
-	//
-	//                int[] maxWidths = new int[grid.length];
-	//                for (Control[] element : grid) {
-	//                    for (int j = 0; j < element.length; j++) {
-	//                        Control control = element[j];
-	//
-	//                        if (control instanceof ILabelControl) {
-	//                            Label labelControl = ((ILabelControl) control).getLabelControl();
-	//
-	//                            Point size = labelControl.computeSize(SWT.DEFAULT, SWT.DEFAULT, true);
-	//
-	//                            maxWidths[j] = Math.max(maxWidths[j], size.x);
-	//                        }
-	//                    }
-	//                }
-	//
-	//                for (Control[] element : grid) {
-	//                    for (int j = 0; j < element.length; j++) {
-	//                        Control control = element[j];
-	//
-	//                        if (control instanceof ILabelControl) {
-	//                            Object layoutData = ((ILabelControl) control).getLabelControl().getLayoutData();
-	//
-	//                            if (layoutData instanceof FormData) {
-	//                                ((FormData) layoutData).width = maxWidths[j];
-	//                            } else if (layoutData instanceof GridData) {
-	//                                ((GridData) layoutData).widthHint = maxWidths[j];
-	//                                ((GridData) layoutData).minimumWidth = maxWidths[j];
-	//                            }
-	//                        }
-	//                    }
-	//                }
-	//            }
-	//
-	//            for (Control control : composite.getChildren()) {
-	//                adjustLayoutInternal(control);
-	//            }
-	//        }
-	//    }
+	public static void adjustLayout(final Composite c) {
+		Display.getDefault().timerExec(100, () -> {
+			adjustLayoutInternal(c);
+
+			c.layout(true, true);
+		});
+	}
+
+	static void adjustLayoutInternal(Control p) {
+		if (p instanceof Composite) {
+			Composite composite = (Composite) p;
+			Layout layout = ((Composite) p).getLayout();
+
+			if (layout instanceof GridLayout) {
+				GridLayout gridLayout = (GridLayout) layout;
+
+				Control[][] grid = buildGrid(composite, gridLayout);
+
+				int[] maxWidths = new int[grid.length];
+				for (Control[] element : grid) {
+					for (int j = 0; j < element.length; j++) {
+						Control control = element[j];
+
+						if (control instanceof ILabelControl) {
+							Label labelControl = ((ILabelControl) control).getLabelControl();
+
+							Point size = labelControl.computeSize(SWT.DEFAULT, SWT.DEFAULT, true);
+
+							maxWidths[j] = Math.max(maxWidths[j], size.x);
+						}
+					}
+				}
+
+				for (Control[] element : grid) {
+					for (int j = 0; j < element.length; j++) {
+						Control control = element[j];
+
+						if (control instanceof ILabelControl) {
+							Object layoutData = ((ILabelControl) control).getLabelControl().getLayoutData();
+
+							if (layoutData instanceof FormData) {
+								((FormData) layoutData).width = maxWidths[j];
+							} else if (layoutData instanceof GridData) {
+								((GridData) layoutData).widthHint = maxWidths[j];
+								((GridData) layoutData).minimumWidth = maxWidths[j];
+							}
+						}
+					}
+				}
+			}
+
+			for (Control control : composite.getChildren()) {
+				adjustLayoutInternal(control);
+			}
+		}
+	}
 
 	private static Control[][] buildGrid(Composite composite, GridLayout gridLayout) {
 		/* Build the grid */
@@ -137,7 +141,8 @@ public final class ControlUtils {
 			final Control control = columnViewer.getControl();
 
 			for (final Item column : TableTreeUtils.getColumns(control)) {
-				// gestisco il filtro sulle colonne altrimenti il pack ne ripristina la dimensione
+				// gestisco il filtro sulle colonne altrimenti il pack ne
+				// ripristina la dimensione
 				final Object zeroLength = column.getData(ControlData.ZERO_LENGTH);
 
 				if (zeroLength == null) {

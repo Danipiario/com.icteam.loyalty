@@ -6,9 +6,10 @@ import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 
 import com.icteam.loyalty.common.interfaces.ISearchDTO;
-import com.querydsl.sql.RelationalPathBase;
 
-public class AbstractSearchDTO<M extends RelationalPathBase<M>> extends AbstractDTO<M> implements ISearchDTO<M> {
+public abstract class AbstractSearchDTO extends AbstractDTO implements ISearchDTO {
+
+	private static final long serialVersionUID = 3476747311923453173L;
 
 	private String[] dynamicFilters;
 

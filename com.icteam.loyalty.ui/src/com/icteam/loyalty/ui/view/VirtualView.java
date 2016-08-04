@@ -249,7 +249,7 @@ public abstract class VirtualView<T extends AbstractTemplate< ? >, D extends Dto
             }
         });
 
-        text.setMessage(Messages.get().filter_message);
+        text.setMessage(Messages.get().filterMessage);
 
         cmdFilters = createFilterTableCommand(filterComp);
 
@@ -521,7 +521,7 @@ public abstract class VirtualView<T extends AbstractTemplate< ? >, D extends Dto
                 closeEditors();
             }
         } catch (AppException e) {
-            MessageDialog.openError(getSite().getShell(), Messages.get().load_error, e.getLocalizedMessage());
+            MessageDialog.openError(getSite().getShell(), Messages.get().loadError, e.getLocalizedMessage());
             return false;
         }
 

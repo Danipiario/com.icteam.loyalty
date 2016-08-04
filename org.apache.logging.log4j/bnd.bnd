@@ -1,6 +1,8 @@
-Bundle-Version: 2.6.1.${tstamp}
+Bundle-Version: 2.6.2.${tstamp}
 Bundle-Name: Apache Logging Log4j Api & Core
 Bundle-SymbolicName: org.apache.logging.log4j
+
+-releaserepo: Libraries
 
 -buildpath: \
 	osgi.enroute.base.api;version=1.6,\
@@ -21,7 +23,10 @@ Bundle-SymbolicName: org.apache.logging.log4j
 	
 -includeresource: META-INF/services=resources/services,\
                   META-INF/log4j-provider.properties=resources/log4j-provider.properties,\
-                  resources/schema	
+                  resources/schema,\
+                  log4j2.xml.template=resources/log4j2.xml.template
+                  
+                  
 Export-Package: \
 	org.apache.logging.log4j,\
 	org.apache.logging.log4j.core,\

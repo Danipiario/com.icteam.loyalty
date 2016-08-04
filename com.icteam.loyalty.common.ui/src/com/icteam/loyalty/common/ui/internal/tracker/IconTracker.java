@@ -63,15 +63,15 @@ public class IconTracker extends BundleTracker<Bundle> {
 					while (icons.hasMoreElements()) {
 						final URL iconURL = icons.nextElement();
 
-						String iconFile = iconURL.getFile();
+						final String iconFile = iconURL.getFile();
 
 						if (iconFile.endsWith(GIF_SUFFIX) || iconFile.endsWith(PNG_SUFFIX)) {
 							final String iconFileName = iconFile.substring(iconFile.lastIndexOf('/') + 1);
 
-							IconService iconService = serviceTracker.waitForService(1000);
+							final IconService iconService = serviceTracker.waitForService(1000);
 
 							if (iconService != null) {
-								iconService.removeIcon(iconFile);
+								iconService.removeIcon(iconFileName);
 
 								logger.info("bundle #{} - remove icon file #{}", bundle.getSymbolicName(),
 										iconFileName);
@@ -79,7 +79,7 @@ public class IconTracker extends BundleTracker<Bundle> {
 						}
 					}
 				}
-			} catch (InterruptedException e) {
+			} catch (final InterruptedException e) {
 				logger.warn("error remove icon files for bundle #" + bundle.getSymbolicName(), e);
 			}
 		}).start();
@@ -94,10 +94,10 @@ public class IconTracker extends BundleTracker<Bundle> {
 					while (icons.hasMoreElements()) {
 						final URL iconURL = icons.nextElement();
 						final File iconFile = new File(FileLocator.toFileURL(iconURL).toURI());
-						String iconFileName = iconFile.getName();
+						final String iconFileName = iconFile.getName();
 
 						if (iconFileName.endsWith(GIF_SUFFIX) || iconFileName.endsWith(PNG_SUFFIX)) {
-							IconService iconService = serviceTracker.waitForService(10000);
+							final IconService iconService = serviceTracker.waitForService(10000);
 
 							if (iconService != null) {
 								iconService.addIcon(iconFile);

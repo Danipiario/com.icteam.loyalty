@@ -77,8 +77,7 @@ public class NLS implements ManagedService {
 								}
 							} catch (final MissingResourceException mre) {
 								fields[i].setAccessible(true);
-								fields[i].set(result, "");
-								throw mre;
+								fields[i].set(result, missingKey(fieldName));
 							}
 						}
 					} catch (final Exception ex) {
@@ -101,6 +100,12 @@ public class NLS implements ManagedService {
 			return resourceBundle.get().getString(key);
 		}
 
+		logger.warn("Failed to get localized message for class {} and field {}", clazz.getName(), key);
+
+		return get(key);
+	}
+
+	public static String get(String key) {
 		for (final Map<String, ResourceBundle> map : Utf8ResourceBundle.getResourceBundleMaps().values()) {
 			for (final ResourceBundle rb : map.values()) {
 				if (rb.containsKey(key)) {
@@ -109,8 +114,10 @@ public class NLS implements ManagedService {
 			}
 		}
 
-		logger.warn("Failed to get localized message for class {} and field {}", clazz.getName(), key);
+		return missingKey(key);
+	}
 
+	public static String missingKey(String key) {
 		return "???" + key + "???";
 	}
 

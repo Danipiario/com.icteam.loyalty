@@ -27,7 +27,7 @@ public class ExitHandler extends AbstractHandler {
                 RWT.getClient().getService(JavaScriptExecutor.class).execute(browserText);
             }
         } else {
-            MessageDialog.openInformation(null, null, Messages.get().exit_not_allowed);
+            MessageDialog.openInformation(null, null, Messages.get().exitNotAllowed);
         }
 
         return null;

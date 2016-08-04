@@ -4,14 +4,14 @@ import com.icteam.loyalty.common.nls.NLS;
 
 public class Messages {
 
-	public String page_title;
+	public String pageTitle;
 	public String login;
 	public String password;
-	public String need_login;
-	public String login_title;
-	public String exit_not_allowed;
+	public String needLogin;
+	public String loginTitle;
+	public String exitNotAllowed;
 	public String confirm;
-	public String confirm_exit;
+	public String confirmExit;
 
 	public static Messages get() {
 		return NLS.getUTF8Encoded(Messages.class);

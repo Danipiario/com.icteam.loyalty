@@ -5,10 +5,9 @@ import org.osgi.service.component.annotations.ServiceScope;
 
 import com.icteam.loyalty.common.annotations.Where;
 import com.icteam.loyalty.common.enums.EWhereClause;
-import com.icteam.loyalty.common.model.Operator;
 
 @Component(service = { IDTO.class }, property = { "dtoClass=OperatorSearchDTO" }, scope = ServiceScope.PROTOTYPE)
-public class OperatorSearchDTO extends AbstractSearchDTO<Operator> {
+public class OperatorSearchDTO extends AbstractSearchDTO {
 
 	private static final long serialVersionUID = 2763790535162752634L;
 

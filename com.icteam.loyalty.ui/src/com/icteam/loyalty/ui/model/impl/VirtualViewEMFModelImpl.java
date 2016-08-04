@@ -628,7 +628,7 @@ public class VirtualViewEMFModelImpl<T extends AbstractEMFTemplate< ? >, D exten
                 closeEditors();
             }
         } catch (AppException e) {
-            MessageDialog.openError(null, com.icteam.loyalty.api.Messages.get().load_error, e.getLocalizedMessage());
+            MessageDialog.openError(null, com.icteam.loyalty.api.Messages.get().loadError, e.getLocalizedMessage());
             return false;
         }
 

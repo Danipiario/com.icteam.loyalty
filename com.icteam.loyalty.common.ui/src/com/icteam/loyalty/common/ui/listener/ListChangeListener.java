@@ -11,7 +11,7 @@ import org.eclipse.swt.widgets.Item;
 import com.icteam.loyalty.common.dto.IDTO;
 import com.icteam.loyalty.common.ui.util.TableTreeUtils;
 
-public class ListChangeListener<D extends IDTO<?>> implements IListChangeListener<D> {
+public class ListChangeListener<D extends IDTO> implements IListChangeListener<D> {
 	private final WeakReference<ColumnViewer> columnViewerRef;
 
 	public ListChangeListener(ColumnViewer columnViewer) {

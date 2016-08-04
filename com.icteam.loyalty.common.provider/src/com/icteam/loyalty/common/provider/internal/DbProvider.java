@@ -11,11 +11,14 @@ import java.util.stream.Collectors;
 import javax.sql.DataSource;
 
 import org.apache.commons.beanutils.PropertyUtils;
+import org.eclipse.jetty.util.log.Log;
+import org.eclipse.jetty.util.log.Logger;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 import com.icteam.loyalty.common.annotations.Where;
+import com.icteam.loyalty.common.dto.AbstractModelDTO;
 import com.icteam.loyalty.common.dto.IModelDTO;
 import com.icteam.loyalty.common.interfaces.IEnum;
 import com.icteam.loyalty.common.interfaces.ISearchDTO;
@@ -35,6 +38,8 @@ import com.querydsl.sql.SQLQueryFactory;
 
 @Component
 public class DbProvider implements DbService {
+
+	private final Logger logger = Log.getLogger(AbstractModelDTO.class);
 
 	@Reference
 	private CryptService cryptService;
@@ -56,9 +61,9 @@ public class DbProvider implements DbService {
 	}
 
 	@Override
-	public <M extends RelationalPathBase<M>, S extends ISearchDTO<M>, MD extends IModelDTO<M>> List<MD> search(
-			S searchDTO, Class<MD> modelDTOClass) {
-		final Optional<M> modelOpt = searchDTO.newModelInstance();
+	public <M extends RelationalPathBase<M>, S extends ISearchDTO, MD extends IModelDTO<M>> List<MD> search(S searchDTO,
+			Class<MD> modelDTOClass) {
+		final Optional<M> modelOpt = getNewModelInstance(modelDTOClass);
 
 		if (modelOpt.isPresent()) {
 			final M model = modelOpt.get();
@@ -83,11 +88,11 @@ public class DbProvider implements DbService {
 	}
 
 	@Override
-	public <M extends RelationalPathBase<M>, S extends ISearchDTO<M>, MD extends IModelDTO<M>> Optional<MD> searchOne(
+	public <M extends RelationalPathBase<M>, S extends ISearchDTO, MD extends IModelDTO<M>> Optional<MD> searchOne(
 			S searchDTO, Class<MD> modelDTOClass) {
 		MD modelDto = null;
 
-		final Optional<M> modelOpt = searchDTO.newModelInstance();
+		final Optional<M> modelOpt = getNewModelInstance(modelDTOClass);
 
 		if (modelOpt.isPresent()) {
 			final M model = modelOpt.get();
@@ -109,9 +114,9 @@ public class DbProvider implements DbService {
 	}
 
 	@Override
-	public <M extends RelationalPathBase<M>, S extends ISearchDTO<M>, MD extends IModelDTO<M>> long count(S searchDTO,
+	public <M extends RelationalPathBase<M>, S extends ISearchDTO, MD extends IModelDTO<M>> long count(S searchDTO,
 			Class<MD> modelDTOClass) {
-		final Optional<M> modelOpt = searchDTO.newModelInstance();
+		final Optional<M> modelOpt = getNewModelInstance(modelDTOClass);
 
 		if (modelOpt.isPresent()) {
 			final M model = modelOpt.get();
@@ -126,15 +131,28 @@ public class DbProvider implements DbService {
 		return 0l;
 	}
 
-	private <M extends RelationalPathBase<M>, D extends ISearchDTO<M>> void buildWheres(SQLQuery<Tuple> from, D dto,
+	protected <M extends RelationalPathBase<M>, MD extends IModelDTO<M>> Optional<M> getNewModelInstance(
+			Class<MD> modelDTOClass) {
+		Optional<M> newModelInstance = Optional.empty();
+
+		try {
+			newModelInstance = modelDTOClass.newInstance().newModelInstance();
+		} catch (InstantiationException | IllegalAccessException e) {
+			logger.warn("error creating model instance for class #" + modelDTOClass.getName(), e);
+		}
+
+		return newModelInstance;
+	}
+
+	private <M extends RelationalPathBase<M>, S extends ISearchDTO> void buildWheres(SQLQuery<Tuple> from, S searchDTO,
 			final M model) {
-		final Map<String, Where> wheres = ReflectionUtils.getFields(dto.getClass()).stream()
+		final Map<String, Where> wheres = ReflectionUtils.getFields(searchDTO.getClass()).stream()
 				.filter(f -> f.isAnnotationPresent(Where.class))
 				.collect(Collectors.toMap(Field::getName, f -> f.getAnnotation(Where.class)));
 		model.getColumns().stream().filter(p -> wheres.containsKey(p.getMetadata().getName())).forEach(path -> {
 			final String name = path.getMetadata().getName();
 			try {
-				where(from, path, wheres.get(name), PropertyUtils.getProperty(dto, name));
+				where(from, path, wheres.get(name), PropertyUtils.getProperty(searchDTO, name));
 			} catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
 				e.printStackTrace();
 			}

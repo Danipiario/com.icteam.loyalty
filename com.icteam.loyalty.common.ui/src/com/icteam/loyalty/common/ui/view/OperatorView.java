@@ -22,8 +22,6 @@ public class OperatorView extends VirtualView<OperatorDTO, OperatorSearchDTO> {
 		super.postConstruct(parent);
 	}
 
-
-
 	@Override
 	public List<OperatorDTO> search() {
 		return authService.search(getSearchDTO());

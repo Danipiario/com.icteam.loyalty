@@ -13,11 +13,11 @@ import org.osgi.service.component.annotations.Reference;
 import com.icteam.loyalty.common.dto.OperatorDTO;
 import com.icteam.loyalty.common.dto.OperatorLoginDTO;
 import com.icteam.loyalty.common.dto.OperatorSearchDTO;
+import com.icteam.loyalty.common.nls.Messages;
 import com.icteam.loyalty.common.service.AuthService;
 import com.icteam.loyalty.common.service.DTOService;
 import com.icteam.loyalty.common.service.DbService;
 import com.icteam.loyalty.common.util.Constants;
-import com.icteam.loyalty.common.util.Messages;
 
 @Component
 public class AuthProvider implements AuthService {
@@ -36,7 +36,7 @@ public class AuthProvider implements AuthService {
 			operatorDTO = dbService.searchOne(operatorLoginDTO, OperatorDTO.class);
 		}
 
-		return operatorDTO.orElseThrow(() -> new IllegalArgumentException(Messages.get().operator_not_found));
+		return operatorDTO.orElseThrow(() -> new IllegalArgumentException(Messages.get().operatorNotFound));
 	}
 
 	@Override

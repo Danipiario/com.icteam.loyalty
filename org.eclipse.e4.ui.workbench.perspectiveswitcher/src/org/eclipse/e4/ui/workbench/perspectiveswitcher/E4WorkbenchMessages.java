@@ -7,11 +7,18 @@
  *
  * Contributors:
  *     Joseph Carroll <jdsalingerjr@gmail.com> - initial API and implementation
- ******************************************************************************/ 
+ ******************************************************************************/
 package org.eclipse.e4.ui.workbench.perspectiveswitcher;
+
+import com.icteam.loyalty.common.nls.NLS;
 
 public class E4WorkbenchMessages {
 
-	public static final String OpenSelectPerspectiveWindow = "Open Perspective...";
-	
+	public String openSelectPerspectiveWindow;
+	public String selectPerspectiveWindow;
+	public String active;
+
+	public static E4WorkbenchMessages get() {
+		return NLS.getUTF8Encoded(E4WorkbenchMessages.class);
+	}
 }

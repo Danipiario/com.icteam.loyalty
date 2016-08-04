@@ -13,7 +13,7 @@ public class ExitHandler {
 	@Execute
 	public void execute(IWorkbench workbench, Shell shell) {
 		if (!ApplicationUtils.isImpersonate()) {
-			if (MessageDialog.openConfirm(shell, Messages.get().confirm, Messages.get().confirm_exit)) {
+			if (MessageDialog.openConfirm(shell, Messages.get().confirm, Messages.get().confirmExit)) {
 				shell.getDisplay().asyncExec(() -> {
 					workbench.close();
 					//					final String defaultUrl = MessageFormat.format("{0}://{1}:{2}{3}",
@@ -27,7 +27,7 @@ public class ExitHandler {
 
 			}
 		} else {
-			MessageDialog.openInformation(null, null, Messages.get().exit_not_allowed);
+			MessageDialog.openInformation(null, null, Messages.get().exitNotAllowed);
 		}
 	}
 }

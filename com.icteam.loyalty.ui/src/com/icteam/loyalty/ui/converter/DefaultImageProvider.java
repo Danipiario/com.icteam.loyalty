@@ -8,15 +8,15 @@ import com.icteam.loyalty.ui.interfaces.IImageProvider;
 
 public class DefaultImageProvider implements IImageProvider {
 
-    @Override
-    public Image getColumnImage(Object element, int columnIndex) {
-        if (element == null) {
-            return null;
-        }
+	@Override
+	public Image getColumnImage(Object element, int columnIndex) {
+		if (element == null) {
+			return null;
+		}
 
-        String imagePath = ((IImageDtoModel) element).getImagePath();
+		String imagePath = ((IImageDtoModel) element).getImagePath();
 
-        return SWTResourceManager.getImage(element.getClass(), imagePath);
-    }
+		return SWTResourceManager.getImage(element.getClass(), imagePath);
+	}
 
 }

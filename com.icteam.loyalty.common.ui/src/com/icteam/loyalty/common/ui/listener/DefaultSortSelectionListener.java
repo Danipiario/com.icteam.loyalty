@@ -1,4 +1,5 @@
 package com.icteam.loyalty.common.ui.listener;
+
 // package com.icteam.loyalty.ui.listener;
 //
 // import org.eclipse.jface.viewers.TableViewer;

@@ -10,9 +10,9 @@ import org.eclipse.swt.custom.CLabel;
 import org.eclipse.swt.widgets.Composite;
 
 import com.icteam.loyalty.common.dto.OperatorDTO;
+import com.icteam.loyalty.common.nls.Messages;
 import com.icteam.loyalty.common.nls.NLS;
 import com.icteam.loyalty.common.service.AuthService;
-import com.icteam.loyalty.common.util.Messages;
 
 public class LoginStatusLine {
 
@@ -30,12 +30,12 @@ public class LoginStatusLine {
 		//
 		// composite.setLayout(rowLayout);
 
-		CLabel label = new CLabel(parent, SWT.SHADOW_NONE);
+		final CLabel label = new CLabel(parent, SWT.SHADOW_NONE);
 		label.setData(RWT.MARKUP_ENABLED, true);
 		label.setTopMargin(3);
 		label.setBottomMargin(9);
 
-		label.setText(NLS.getFormatted(Messages.get().login_status_line,
+		label.setText(NLS.getFormatted(Messages.get().loginStatusLine,
 				authService.getPrincipal().orElse(new OperatorDTO()).getName()));
 	}
 

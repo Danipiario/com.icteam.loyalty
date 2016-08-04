@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="ASCII"?>
-<fragment:ModelFragments xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:basic="http://www.eclipse.org/ui/2010/UIModel/application/ui/basic" xmlns:fragment="http://www.eclipse.org/ui/2010/UIModel/fragment" xmlns:menu="http://www.eclipse.org/ui/2010/UIModel/application/ui/menu" xmi:id="_Dpw5wDvOEeaQV-YkHvJSVg">
-  <fragments xsi:type="fragment:StringModelFragment" xmi:id="_f5G5YDxHEeadbYlql7oshg" featurename="children" parentElementId="com.icteam.loyalty.application.partstack.left" positionInList="last">
+<fragment:ModelFragments xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:basic="http://www.eclipse.org/ui/2010/UIModel/application/ui/basic" xmlns:basic_1="http://www.eclipse.org/ui/2010/UIModel/application/descriptor/basic" xmlns:commands="http://www.eclipse.org/ui/2010/UIModel/application/commands" xmlns:fragment="http://www.eclipse.org/ui/2010/UIModel/fragment" xmlns:menu="http://www.eclipse.org/ui/2010/UIModel/application/ui/menu" xmi:id="_Dpw5wDvOEeaQV-YkHvJSVg">
+  <fragments xsi:type="fragment:StringModelFragment" xmi:id="_f5G5YDxHEeadbYlql7oshg" featurename="children" parentElementId="com.icteam.loyalty.application.perspective.administration.partstack.left" positionInList="last">
     <elements xsi:type="basic:Part" xmi:id="_ZhcXQDxIEeadbYlql7oshg" elementId="com.icteam.loyalty.common.ui.part.viewoperator" contributionURI="bundleclass://com.icteam.loyalty.common.ui/com.icteam.loyalty.common.ui.view.OperatorView" label="%view.operator">
       <toolbar xmi:id="_cbrTwDxIEeadbYlql7oshg" elementId="com.icteam.loyalty.common.ui.toolbar.1">
-        <children xsi:type="menu:DirectToolItem" xmi:id="_v9uhEDvaEeaQV-YkHvJSVg" elementId="com.icteam.loyalty.common.ui.directtoolitem.filterview" label="" iconURI="platform:/plugin/com.icteam.loyalty.application/OSGI-INF/icons/filter.gif" tooltip="%filter.view"/>
+        <children xsi:type="menu:DirectToolItem" xmi:id="_v9uhEDvaEeaQV-YkHvJSVg" elementId="com.icteam.loyalty.common.ui.directtoolitem.filterview" label="" iconURI="platform:/plugin/com.icteam.loyalty.common.ui/OSGI-INF/icons/filter.gif" tooltip="%filter.view"/>
       </toolbar>
     </elements>
   </fragments>
@@ -12,7 +12,18 @@
       <tags>stretch</tags>
     </elements>
     <elements xsi:type="menu:ToolControl" xmi:id="_sCVsEFfSEea-8_Zh1fXSNg" elementId="com.icteam.loyalty.common.ui.toolcontrol.login" contributionURI="bundleclass://com.icteam.loyalty.common.ui/com.icteam.loyalty.common.ui.control.LoginStatusLine"/>
-    <elements xsi:type="menu:ToolControl" xmi:id="_vW6VAFfvEea-8_Zh1fXSNg" elementId="com.icteam.loyalty.common.ui.toolcontrol.separator" contributionURI="bundleclass://com.icteam.loyalty.common.ui/com.icteam.loyalty.common.ui.control.SeparatorControl"/>
+    <elements xsi:type="menu:ToolControl" xmi:id="_vW6VAFfvEea-8_Zh1fXSNg" elementId="com.icteam.loyalty.common.ui.toolcontrol.separator1" contributionURI="bundleclass://com.icteam.loyalty.common.ui/com.icteam.loyalty.common.ui.control.SeparatorControl"/>
     <elements xsi:type="menu:ToolControl" xmi:id="_4g22sFfcEea-8_Zh1fXSNg" elementId="com.icteam.loyalty.common.ui.toolcontrol.language" contributionURI="bundleclass://com.icteam.loyalty.common.ui/com.icteam.loyalty.common.ui.control.LanguageStatusLine"/>
+    <elements xsi:type="menu:ToolControl" xmi:id="_plFqoFiPEeaxUMyXn621Nw" elementId="com.icteam.loyalty.common.ui.toolcontrol.separator2" contributionURI="bundleclass://com.icteam.loyalty.common.ui/com.icteam.loyalty.common.ui.control.SeparatorControl"/>
+    <elements xsi:type="menu:ToolControl" xmi:id="_qeILcFiPEeaxUMyXn621Nw" elementId="com.icteam.loyalty.common.ui.toolcontrol.database" contributionURI="bundleclass://com.icteam.loyalty.common.ui/com.icteam.loyalty.common.ui.control.DatabaseStatusLine"/>
+  </fragments>
+  <fragments xsi:type="fragment:StringModelFragment" xmi:id="_ppIyQFiREeaxUMyXn621Nw" featurename="descriptors" parentElementId="com.icteam.loyalty.application.application">
+    <elements xsi:type="basic_1:PartDescriptor" xmi:id="_uKHqIFiREeaxUMyXn621Nw" elementId="com.icteam.loyalty.common.dto.OperatorDTO" label="Operatore" allowMultiple="true" closeable="true" dirtyable="true" contributionURI="bundleclass://com.icteam.loyalty.common.ui/com.icteam.loyalty.common.ui.editor.OperatorEditor">
+      <tags>removeOnHide</tags>
+    </elements>
+  </fragments>
+  <fragments xsi:type="fragment:StringModelFragment" xmi:id="_Qn-fkFm9EeaaRqLX-rbQJg" featurename="commands" parentElementId="com.icteam.loyalty.application.application">
+    <elements xsi:type="commands:Command" xmi:id="_UdVnkFm9EeaaRqLX-rbQJg" elementId="save" commandName="%save"/>
+    <elements xsi:type="commands:Command" xmi:id="_A1tEMFm-EeaaRqLX-rbQJg" elementId="cancel" commandName="%cancel"/>
   </fragments>
 </fragment:ModelFragments>

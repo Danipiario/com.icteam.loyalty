@@ -40,7 +40,7 @@ public class LoyaltyLoginModule implements javax.security.auth.spi.LoginModule {
 
 	@Override
 	public boolean login() throws LoginException {
-		final Callback label = new TextOutputCallback(TextOutputCallback.INFORMATION, Messages.get().need_login);
+		final Callback label = new TextOutputCallback(TextOutputCallback.INFORMATION, Messages.get().needLogin);
 		final NameCallback nameCallback = new NameCallback(Messages.get().login);
 		final PasswordCallback passwordCallback = new PasswordCallback(Messages.get().password, false);
 		try {

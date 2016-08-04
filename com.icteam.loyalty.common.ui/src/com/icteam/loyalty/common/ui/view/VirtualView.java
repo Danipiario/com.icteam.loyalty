@@ -25,6 +25,8 @@ import org.eclipse.e4.ui.workbench.modeling.EModelService;
 import org.eclipse.e4.ui.workbench.modeling.EPartService;
 import org.eclipse.e4.ui.workbench.modeling.EPartService.PartState;
 import org.eclipse.e4.ui.workbench.modeling.ESelectionService;
+import org.eclipse.jetty.util.log.Log;
+import org.eclipse.jetty.util.log.Logger;
 import org.eclipse.jface.databinding.viewers.ObservableListContentProvider;
 import org.eclipse.jface.databinding.viewers.ObservableMapLabelProvider;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -51,10 +53,10 @@ import org.eclipse.swt.widgets.Text;
 import com.icteam.loyalty.common.dto.IModelDTO;
 import com.icteam.loyalty.common.dto.OperatorDTO;
 import com.icteam.loyalty.common.interfaces.ISearchDTO;
+import com.icteam.loyalty.common.nls.Messages;
 import com.icteam.loyalty.common.nls.NLS;
 import com.icteam.loyalty.common.service.DTOService;
 import com.icteam.loyalty.common.ui.converter.ConvertableObservableMapLabelProvider;
-import com.icteam.loyalty.common.ui.internal.Messages;
 import com.icteam.loyalty.common.ui.listener.ListChangeListener;
 import com.icteam.loyalty.common.ui.listener.MapChangeListener;
 import com.icteam.loyalty.common.ui.listener.VirtuaTableListener;
@@ -63,7 +65,9 @@ import com.icteam.loyalty.common.ui.util.TableTreeUtils;
 import com.icteam.loyalty.common.util.ModelUtil;
 import com.querydsl.sql.RelationalPathBase;
 
-public abstract class VirtualView<MD extends IModelDTO<? extends RelationalPathBase<?>>, S extends ISearchDTO<? extends RelationalPathBase<?>>> {
+public abstract class VirtualView<MD extends IModelDTO<? extends RelationalPathBase<?>>, S extends ISearchDTO> {
+
+	private final Logger logger = Log.getLogger(VirtualView.class);
 
 	protected ColumnViewer columnViewer;
 
@@ -81,6 +85,19 @@ public abstract class VirtualView<MD extends IModelDTO<? extends RelationalPathB
 	private Button cmdFilters;
 
 	private String filter;
+
+	@Inject
+	protected EPartService partService;
+
+	@Inject
+	protected ESelectionService selectionService;
+
+	@Inject
+	protected MPerspective perspective;
+
+	@Inject
+	protected EModelService modelService;
+	private Composite tableViewerArea;
 
 	public abstract long count();
 
@@ -153,7 +170,7 @@ public abstract class VirtualView<MD extends IModelDTO<? extends RelationalPathB
 			}
 		});
 
-		text.setMessage(Messages.get().filter_message);
+		text.setMessage(Messages.get().filterMessage);
 
 		// cmdFilters = createFilterTableCommand(filterComp);
 		//
@@ -210,17 +227,12 @@ public abstract class VirtualView<MD extends IModelDTO<? extends RelationalPathB
 				closeEditors();
 			}
 		} catch (final Exception e) {
-			MessageDialog.openError(shell, Messages.get().load_error, e.getLocalizedMessage());
+			MessageDialog.openError(shell, Messages.get().loadError, e.getLocalizedMessage());
 			return false;
 		}
 
 		return true;
 	}
-
-	@Inject
-	protected EPartService partService;
-
-	private Composite tableViewerArea;
 
 	protected void closeEditors() {
 		partService.getParts().stream().filter(part -> part.getElementId().startsWith(getModelDTO().getEditorID()))
@@ -285,7 +297,7 @@ public abstract class VirtualView<MD extends IModelDTO<? extends RelationalPathB
 	}
 
 	protected MD getModelDTO() {
-		return dtoService.newDTO(getModelDTOClass());
+		return dtoService.newDTO(getModelDTOClass(), false);
 	}
 
 	private void bindVirtualTableColumn(String... propertyNames) {
@@ -315,15 +327,6 @@ public abstract class VirtualView<MD extends IModelDTO<? extends RelationalPathB
 		// }
 	}
 
-	@Inject
-	protected ESelectionService selectionService;
-
-	@Inject
-	protected MPerspective perspective;
-
-	@Inject
-	protected EModelService modelService;
-
 	protected void bindViewTableSelection() {
 		final ColumnViewer columnViewer = getColumnViewer();
 
@@ -336,16 +339,21 @@ public abstract class VirtualView<MD extends IModelDTO<? extends RelationalPathB
 				MPart part = partService.findPart(editorInstanceID);
 
 				if (part == null) {
-					part = partService.createPart(modelDTO.getEditorID());
+
+					final String editorID = modelDTO.getEditorID();
+					part = partService.createPart(editorID);
 
 					if (part != null) {
 						part.setLabel(modelDTO.getValueID());
 						part.setElementId(editorInstanceID);
-						part.getTransientData().put("modelDTO", modelDTO);
+
+						perspective.getContext().set("dto", modelDTO);
 
 						final MPartStack partStack = (MPartStack) modelService
-								.find("com.icteam.loyalty.application.partstack.center", perspective);
+								.find(perspective.getElementId() + ".partstack.center", perspective);
 						partStack.getChildren().add(part);
+					} else {
+						logger.warn("unable to find part with id #" + editorID);
 					}
 				}
 

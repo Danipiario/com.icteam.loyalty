@@ -3,22 +3,17 @@ package com.icteam.loyalty.common.dto;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.ParameterizedType;
 import java.util.Objects;
-import java.util.Optional;
 
-import org.eclipse.jetty.util.log.Log;
-import org.eclipse.jetty.util.log.Logger;
+import org.apache.commons.beanutils.PropertyUtils;
+import org.apache.commons.lang3.StringUtils;
 
-import com.querydsl.sql.RelationalPathBase;
-
-public abstract class AbstractDTO<M extends RelationalPathBase<M>> implements IDTO<M> {
+public abstract class AbstractDTO implements IDTO {
 
 	private static final long serialVersionUID = 3428162022541395275L;
 
-	private final Logger logger = Log.getLogger(AbstractDTO.class);
-
 	private final PropertyChangeSupport changeSupport;
+
 	private boolean _new = true;
 	private boolean dirty = false;
 	private boolean editable = true;
@@ -46,49 +41,24 @@ public abstract class AbstractDTO<M extends RelationalPathBase<M>> implements ID
 		}
 	}
 
+	@Override
 	public void addPropertyChangeListener(PropertyChangeListener listener) {
 		changeSupport.addPropertyChangeListener(listener);
 	}
 
+	@Override
 	public void removePropertyChangeListener(PropertyChangeListener listener) {
 		changeSupport.removePropertyChangeListener(listener);
 	}
 
+	@Override
 	public void addPropertyChangeListener(String propertyName, PropertyChangeListener listener) {
 		changeSupport.addPropertyChangeListener(propertyName, listener);
 	}
 
+	@Override
 	public void removePropertyChangeListener(String propertyName, PropertyChangeListener listener) {
 		changeSupport.removePropertyChangeListener(propertyName, listener);
-	}
-
-	@Override
-	public final Optional<M> newModelInstance() {
-		Optional<Class<M>> modelClass = null;
-		try {
-			modelClass = getModelClass();
-
-			if (modelClass.isPresent()) {
-				return Optional.of(
-						modelClass.get().getConstructor(String.class).newInstance(modelClass.get().getSimpleName()));
-			}
-		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException
-				| NoSuchMethodException | SecurityException e) {
-			logger.warn("error creating instance for modelClass #" + modelClass, e);
-		}
-
-		return Optional.empty();
-	}
-
-	protected Optional<Class<M>> getModelClass() {
-		try {
-			return Optional
-					.of((Class<M>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0]);
-		} catch (final Exception e) {
-			logger.warn("error get modelClass, probably you need to override getModelClass method", e);
-		}
-
-		return Optional.empty();
 	}
 
 	@Override
@@ -101,19 +71,44 @@ public abstract class AbstractDTO<M extends RelationalPathBase<M>> implements ID
 		return dirty && editable;
 	}
 
+	@Override
 	public void setDirty(boolean dirty) {
 		if (editable || !dirty) {
 			firePropertyChange("dirty", this.dirty, this.dirty = dirty);
 		}
 	}
 
+	@Override
 	public boolean isEditable() {
 		return editable;
 	}
 
+	@Override
 	public void setEditable(boolean editable) {
 		firePropertyChange("editable", this.editable, this.editable = editable);
 	}
 
+	@Override
+	public <C extends IDTO> void copyTo(C dest) {
+		try {
+			PropertyUtils.copyProperties(dest, this);
+			dest.setDirty(this.isDirty());
+		} catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+			e.printStackTrace();
+		}
+	}
 
+	@Override
+	public String getLabel() {
+		return "";
+	}
+
+	@Override
+	public String getPermissionObject() {
+		return getObjectClassName().toLowerCase();
+	}
+
+	protected String getObjectClassName() {
+		return StringUtils.removeEnd(getClass().getSimpleName(), "DTO");
+	}
 }

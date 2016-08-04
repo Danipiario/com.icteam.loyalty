@@ -82,12 +82,12 @@ public class Messages extends ServiceTracker<DynamicMessagesService, DynamicMess
     public String database_status_line;
     public String database_status_line_tooltip;
 
-    public String filter_message;
-    public String filter_message_warning;
+    public String filterMessage;
+    public String filterMessage_warning;
 
-    public String load_error;
+    public String loadError;
 
-    public String exit_not_allowed;
+    public String exitNotAllowed;
 
     private final static List<ServiceReference<DynamicMessagesService>> referencesToAdd = new ArrayList<>();
     private final static List<ServiceReference<DynamicMessagesService>> referencesToRemove = new ArrayList<>();

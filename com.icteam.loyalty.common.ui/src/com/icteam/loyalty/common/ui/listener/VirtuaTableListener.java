@@ -31,24 +31,24 @@ public class VirtuaTableListener<MD extends IModelDTO<? extends RelationalPathBa
 	@Override
 	public void handleEvent(Event event) {
 		final TableViewer tableViewer = (TableViewer) getVirtualView().getColumnViewer();
-		Table table = (Table) tableViewer.getControl();
+		final Table table = (Table) tableViewer.getControl();
 		final int itemCount = table.getItemCount();
 
-		int index = event.index;
-		List<MD> input = (List<MD>) tableViewer.getInput();
+		final int index = event.index;
+		final List<MD> input = (List<MD>) tableViewer.getInput();
 
 		if (index <= itemCount && (index >= input.size() || placeholderDto.equals(input.get(index)))) {
-			int start = Math.max(index - HALF_PAGE_SIZE, 0);
-			int end = Math.min(start + PAGE_SIZE, itemCount);
+			final int start = Math.max(index - HALF_PAGE_SIZE, 0);
+			final int end = Math.min(start + PAGE_SIZE, itemCount);
 
 			// T template = (T) getVirtualView().getTemplate().clone();
 			// template.setFirstResult(start);
 			// template.setMaxResults(end - start);
 
-			List<MD> ops = getVirtualView().search();
+			final List<MD> ops = getVirtualView().search();
 
-			int startToFill = input.size();
-			int endToFill = end;
+			final int startToFill = input.size();
+			final int endToFill = end;
 
 			boolean changed = false;
 			for (int i = startToFill; i < endToFill; i++) {
@@ -58,10 +58,10 @@ public class VirtuaTableListener<MD extends IModelDTO<? extends RelationalPathBa
 
 			for (int i = 0, j = start; i < ops.size() && j < end; i++, j++) {
 				if (placeholderDto.equals(input.get(j))) {
-					MD element = ops.get(i);
+					final MD element = ops.get(i);
 					try {
 						input.set(j, element);
-					} catch (SWTException e) {
+					} catch (final SWTException e) {
 						e.printStackTrace();
 						// ignore
 					}
@@ -73,12 +73,9 @@ public class VirtuaTableListener<MD extends IModelDTO<? extends RelationalPathBa
 			if (changed) {
 				tableViewer.setItemCount(itemCount);
 
-				Display.getCurrent().asyncExec(new Runnable() {
-					@Override
-					public void run() {
-						tableViewer.refresh();
-						tableViewer.setItemCount(itemCount);
-					}
+				Display.getCurrent().asyncExec(() -> {
+					tableViewer.refresh();
+					tableViewer.setItemCount(itemCount);
 				});
 			}
 		}

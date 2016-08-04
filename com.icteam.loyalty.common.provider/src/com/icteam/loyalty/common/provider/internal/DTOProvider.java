@@ -20,7 +20,7 @@ public class DTOProvider implements DTOService {
 	private final Logger logger = Log.getLogger(DTOProvider.class);
 
 	@Override
-	public <D extends IDTO<?>> D newDTO(Class<D> dtoClass, boolean enableTrackChanges) {
+	public <D extends IDTO> D newDTO(Class<D> dtoClass, boolean enableTrackChanges) {
 		BundleContext bundleContext = FrameworkUtil.getBundle(getClass()).getBundleContext();
 
 		ServiceTracker<D, D> serviceTracker = null;

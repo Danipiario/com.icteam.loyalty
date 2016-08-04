@@ -1,31 +1,43 @@
 
 package com.icteam.loyalty.common.ui.editor;
 
-import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
-import javax.inject.Inject;
-
-import org.eclipse.e4.ui.model.application.ui.basic.MPart;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 
-public class OperatorEditor {
-	@Inject
-	public OperatorEditor() {
+import com.icteam.loyalty.common.dto.OperatorDTO;
+import com.icteam.loyalty.common.ui.control.LabelText;
+
+public class OperatorEditor extends AbstractEditor<OperatorDTO> {
+
+	private LabelText<OperatorDTO, String> loginTxt;
+	private LabelText<OperatorDTO, String> nameTxt;
+	private LabelText<OperatorDTO, String> surnameTxt;
+
+	@Override
+	protected void fillEditorArea(Composite ea) {
+		loginTxt = new LabelText<>(ea, SWT.NONE);
+		nameTxt = new LabelText<>(ea, SWT.NONE);
+		surnameTxt = new LabelText<>(ea, SWT.NONE);
 	}
 
-	@Inject
-	MPart part;
+	@Override
+	protected void initCustomBindings() {
+		super.initCustomBindings();
 
-	@PostConstruct
-	public void postConstruct(Composite parent) {
-		System.out.println(part.getTransientData().get("modelDTO"));
-
-
+		loginTxt.setModelProperty(dto, "login");
+		nameTxt.setModelProperty(dto, "name");
+		surnameTxt.setModelProperty(dto, "surname");
 	}
 
-	@PreDestroy
-	public void preDestroy() {
-		System.out.println("destroy");
+	@Override
+	protected OperatorDTO internalSave() {
+		return null;
+	}
+
+	@Override
+	protected Control getFocusControl() {
+		return null;
 	}
 
 }
