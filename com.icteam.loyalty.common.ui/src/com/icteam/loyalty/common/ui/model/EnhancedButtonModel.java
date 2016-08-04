@@ -5,14 +5,8 @@ import javax.inject.Inject;
 
 import org.eclipse.core.commands.Command;
 import org.eclipse.core.commands.common.NotDefinedException;
-import org.eclipse.core.expressions.EvaluationResult;
-import org.eclipse.core.expressions.IEvaluationContext;
-import org.eclipse.core.internal.expressions.ReferenceExpression;
-import org.eclipse.core.runtime.CoreException;
 import org.eclipse.e4.core.commands.ECommandService;
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.services.IEvaluationService;
 
 import com.icteam.loyalty.common.dto.IDTO;
 import com.icteam.loyalty.common.ui.service.IconService;
@@ -68,7 +62,7 @@ public class EnhancedButtonModel<D extends IDTO> {
 	public String getToolTipText() {
 		try {
 			return command.getDescription();
-		} catch (NotDefinedException e) {
+		} catch (final NotDefinedException e) {
 			e.printStackTrace();
 		}
 
@@ -78,7 +72,7 @@ public class EnhancedButtonModel<D extends IDTO> {
 	public String getText() {
 		try {
 			return command.getName();
-		} catch (NotDefinedException e) {
+		} catch (final NotDefinedException e) {
 			e.printStackTrace();
 		}
 
@@ -98,20 +92,23 @@ public class EnhancedButtonModel<D extends IDTO> {
 	}
 
 	public boolean isVisible() {
-		IEvaluationService evaluationService = PlatformUI.getWorkbench().getService(IEvaluationService.class);
+		// IEvaluationService evaluationService =
+		// PlatformUI.getWorkbench().getService(IEvaluationService.class);
+		//
+		// IEvaluationContext currentState =
+		// evaluationService.getCurrentState();
+		//
+		// ReferenceExpression referenceExpression = new
+		// ReferenceExpression(permission);
+		// EvaluationResult result;
+		// try {
+		// result = referenceExpression.evaluate(currentState);
+		// return EvaluationResult.TRUE.equals(result);
+		// } catch (CoreException e) {
+		// e.printStackTrace();
+		// }
 
-		IEvaluationContext currentState = evaluationService.getCurrentState();
-
-		ReferenceExpression referenceExpression = new ReferenceExpression(permission);
-		EvaluationResult result;
-		try {
-			result = referenceExpression.evaluate(currentState);
-			return EvaluationResult.TRUE.equals(result);
-		} catch (CoreException e) {
-			e.printStackTrace();
-		}
-
-		return false;
+		return true;
 	}
 
 }
