@@ -5,60 +5,48 @@
 #
 
 
-javac.source: 			1.8
-javac.target: 			1.8
--runee:					JavaSE-1.8
+javac.source:           1.8
+javac.target:           1.8
+-runee:                 JavaSE-1.8
 
-Service-Component: 		*
--dsannotations: 		*
--metatypeannotations:	*
--contract:				*
+Service-Component:      *
+-dsannotations:         *
+-metatypeannotations:   *
+-contract:              *
 
 
-test-cases: 			${classes;NAMED;*Test}
--resolve.effective:		resolve, active
+test-cases:             ${classes;NAMED;*Test}
+-resolve.effective:     resolve, active
 -releaserepo:                   Release
 
 -plugin.4.Central:  \
 \
         aQute.bnd.deployer.repository.wrapper.Plugin; \
-            location            =	"${build}/cache/wrapper"; \
-            reindex				=	true, \
+            location            =   "${build}/cache/wrapper"; \
+            reindex             =   true, \
 \
         aQute.bnd.jpm.Repository; \
-	        includeStaged   	=       true; \
-	        name                =       Central; \
-	        location            =       ~/.bnd/shacache; \
-	        index               =       ${build}/central.json
-	        
+            includeStaged       =       true; \
+            name                =       Central; \
+            location            =       ~/.bnd/shacache; \
+            index               =       ${build}/central.json
+            
 -plugin.6.Local: \
         aQute.bnd.deployer.repository.LocalIndexedRepo; \
             name                =       Local ; \
             pretty              =       true ; \
             local               =       ${build}/local
 
-	        
+            
 
 -plugin.9.Release: \
 \
-        aQute.bnd.deployer.obr.NexusOBR; \
-            readonly=false; \
-            repositoryUrl=http://nexus:8090/nexus/content/repositories/obr-releases; \
-            username=maven; \
-            password=Gennaio2010.; \
-            name=Release, \
-        aQute.bnd.deployer.obr.NexusOBR; \
-            readonly=false; \
-            repositoryUrl=http://nexus:8090/nexus/content/repositories/obr-libraries; \
-            username=maven; \
-            password=Gennaio2010.; \
-            name=Libraries, \
-        aQute.bnd.deployer.obr.NexusOBR; \
-            readonly=false; \
-            repositoryUrl=http://nexus:8090/nexus/content/repositories/obr-development; \
-            username=maven; \
-            password=Gennaio2010.; \
-            name=Development
+        aQute.bnd.deployer.repository.LocalIndexedRepo; \
+            name                =       Release ; \
+            pretty              =       true ; \
+            local               =       ${build}/release
+
+
 
 
 # Temporary bug fix for bndtools 

@@ -1,3 +1,48 @@
 #
 # This file is left open for you to define your macros
 #
+
+-plugin.6.Local: \
+            aQute.bnd.repository.maven.provider.MavenBndRepository; \
+            index=${build}/local.maven; \
+            name=Local
+
+-plugin.8.OBR: \
+        aQute.bnd.deployer.obr.NexusOBR; \
+            readonly=false; \
+            repositoryUrl=http://nexus:8090/nexus/content/repositories/obr-releases; \
+            username=maven; \
+            password=Gennaio2010.; \
+            name=ReleaseOBR, \
+        aQute.bnd.deployer.obr.NexusOBR; \
+            readonly=false; \
+            repositoryUrl=http://nexus:8090/nexus/content/repositories/obr-libraries; \
+            username=maven; \
+            password=Gennaio2010.; \
+            name=LibrariesOBR, \
+        aQute.bnd.deployer.obr.NexusOBR; \
+            readonly=false; \
+            repositoryUrl=http://nexus:8090/nexus/content/repositories/obr-development; \
+            username=maven; \
+            password=Gennaio2010.; \
+            name=DevelopmentOBR
+
+-plugin.9.Release: \
+        aQute.bnd.repository.maven.provider.MavenBndRepository; \
+            releaseUrl=http://nexus:8090/nexus/content/repositories/releases/    ; \
+            snapshotUrl=http://nexus:8090/nexus/content/repositories/snapshots/   ; \
+            index=${build}/release.maven; \
+            name=Release
+    
+-pom: \
+      groupid=com.icteam.loyalty
+    
+-maven-release: \
+    remote, \
+    javadoc;path=NONE
+        
+        
+-releaserepo: Release
+-buildrepo: Local
+
+    
