@@ -2,6 +2,7 @@
 package com.icteam.loyalty.common.ui.editor;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 
@@ -16,9 +17,12 @@ public class OperatorEditor extends AbstractEditor<OperatorDTO> {
 
 	@Override
 	protected void fillEditorArea(Composite ea) {
-		loginTxt = new LabelText<>(ea, SWT.NONE);
-		nameTxt = new LabelText<>(ea, SWT.NONE);
-		surnameTxt = new LabelText<>(ea, SWT.NONE);
+		final Composite topComp = new Composite(ea, SWT.BORDER);
+		topComp.setLayout(new GridLayout(3, false));
+
+		loginTxt = new LabelText<>(topComp, SWT.NONE);
+		nameTxt = new LabelText<>(topComp, SWT.NONE);
+		surnameTxt = new LabelText<>(topComp, SWT.NONE);
 	}
 
 	@Override
