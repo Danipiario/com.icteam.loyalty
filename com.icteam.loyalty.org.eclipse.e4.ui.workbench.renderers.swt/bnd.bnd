@@ -1,0 +1,9 @@
+Bundle-Version: 1.0.0.${tstamp}
+Bundle-Name: Loyalty Fragment - Eclipse e4 Workbench SWT Renderer
+Bundle-Description: Loyalty Fragment - Eclipse e4 Workbench SWT Renderer Project
+Bundle-SymbolicName: com.icteam.loyalty.org.eclipse.e4.ui.workbench.renderers.swt
+Fragment-Host: org.eclipse.e4.ui.workbench.renderers.swt
+
+Export-Package: org.eclipse.e4.ui.internal.workbench.renderers.swt
+
+Provide-Capability: type;type:=osgi.fragment

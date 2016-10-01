@@ -6,10 +6,10 @@ import java.beans.PropertyDescriptor;
 import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.annotation.PostConstruct;
 import javax.persistence.Id;
 
 import org.apache.commons.beanutils.BeanUtilsBean;
@@ -18,6 +18,7 @@ import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.beanutils.expression.Resolver;
 import org.apache.commons.lang3.StringUtils;
 import org.eclipse.core.databinding.conversion.IConverter;
+import org.eclipse.core.runtime.Assert;
 
 import com.icteam.loyalty.common.annotations.Editable;
 import com.icteam.loyalty.common.annotations.Password;
@@ -61,31 +62,29 @@ public class DTOProperty<M extends IDTO, S extends Object> implements IDTOProper
 	public DTOProperty(M model, String property) {
 		this.model = model;
 		this.property = property;
-
-		initialize();
 	}
 
 	@Override
+	@PostConstruct
 	public void initialize() {
 		try {
 			initNestedListeners();
 
 			final PropertyDescriptor propertyDescriptor = PropertyUtils.getPropertyDescriptor(model, property);
-			final Method readPropertyMethod = propertyDescriptor.getReadMethod();
 
 			setFieldProperty(propertyDescriptor);
 
 			final Object value = PropertyUtils.getProperty(model, property);
 
-			final boolean id = readPropertyMethod.isAnnotationPresent(Id.class);
-			final boolean req = readPropertyMethod.isAnnotationPresent(Required.class);
-			final boolean pwd = readPropertyMethod.isAnnotationPresent(Password.class);
+			final boolean id = fieldProperty.isAnnotationPresent(Id.class);
+			final boolean req = fieldProperty.isAnnotationPresent(Required.class);
+			final boolean pwd = fieldProperty.isAnnotationPresent(Password.class);
 
 			setEnabled(model.isEditable() && !(id && value != null));
 			setRequired(id || req && isEnabled());
 			setPassword(pwd);
-			setEditable(readPropertyMethod.getAnnotation(Editable.class));
-			setValidated(readPropertyMethod.getAnnotation(Validated.class));
+			setEditable(fieldProperty.getAnnotation(Editable.class));
+			setValidated(fieldProperty.getAnnotation(Validated.class));
 
 			setModelConverter(ConverterUtils.computePropertyConverter(propertyDescriptor, false));
 			setTargetConverter(ConverterUtils.computePropertyConverter(propertyDescriptor, true));
@@ -99,6 +98,7 @@ public class DTOProperty<M extends IDTO, S extends Object> implements IDTOProper
 	}
 
 	private void setFieldProperty(PropertyDescriptor propertyDescriptor) {
+		Assert.isNotNull(propertyDescriptor);
 		fieldProperty = getFieldProperty(getNestedModelClass(), propertyDescriptor.getName());
 	}
 

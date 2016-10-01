@@ -6,6 +6,9 @@ import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.internal.databinding.BindingStatus;
+import org.eclipse.e4.core.contexts.ContextInjectionFactory;
+import org.eclipse.e4.core.contexts.EclipseContextFactory;
+import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.jface.databinding.fieldassist.ControlDecorationSupport;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.rap.rwt.RWT;
@@ -16,6 +19,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Layout;
 import org.eclipse.swt.widgets.Text;
+import org.osgi.framework.FrameworkUtil;
 
 import com.icteam.loyalty.common.dto.IDTO;
 import com.icteam.loyalty.common.ui.converter.StringToLabelConverter;
@@ -26,14 +30,14 @@ import com.icteam.loyalty.common.ui.model.LabelTextModel;
 import com.icteam.loyalty.common.ui.util.BinderUtils;
 import com.icteam.loyalty.common.ui.validator.MultiPropertyValidator;
 
-public class LabelText<M extends IDTO, S extends Object> extends Composite
-		implements IBindedControl, ILabelControl, IDTOControl<M, S, LabelTextModel<M, S>> {
+public class LabelText<D extends IDTO, S extends Object> extends Composite
+implements IBindedControl, ILabelControl, IDTOControl<D, S, LabelTextModel<D, S>> {
 	private static final long serialVersionUID = 4106014725142032588L;
 
 	private Text txtControl;
 	private final Label labelControl;
 
-	private LabelTextModel<M, S> modelProperty;
+	private LabelTextModel<D, S> modelProperty;
 
 	private DataBindingContext bindingContext;
 
@@ -84,8 +88,14 @@ public class LabelText<M extends IDTO, S extends Object> extends Composite
 	}
 
 	@Override
-	public void setModelProperty(M dtoModel, String property) {
+	public void setModelProperty(D dtoModel, String property) {
 		modelProperty = new LabelTextModel<>(dtoModel, property);
+
+		final IEclipseContext osgiContext = EclipseContextFactory
+				.getServiceContext(FrameworkUtil.getBundle(getClass()).getBundleContext());
+
+		ContextInjectionFactory.inject(modelProperty, osgiContext);
+
 
 		if (modelProperty.isRequired()) {
 			labelControl.setData(RWT.CUSTOM_VARIANT, "required");
@@ -112,7 +122,7 @@ public class LabelText<M extends IDTO, S extends Object> extends Composite
 	}
 
 	@Override
-	public LabelTextModel<M, S> getModelProperty() {
+	public LabelTextModel<D, S> getModelProperty() {
 		return modelProperty;
 	}
 

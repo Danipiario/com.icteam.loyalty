@@ -1,0 +1,7 @@
+Bundle-Version: 1.0.4.${tstamp}
+Bundle-Name: Loyalty Fragment - Eclipse JFace
+Bundle-Description: Loyalty Fragment - Eclipse JFace Project
+Bundle-SymbolicName: com.icteam.loyalty.org.eclipse.jface
+Fragment-Host: org.eclipse.rap.jface;bundle-version="[3.0.0,4.0.0)"	
+
+Export-Package: org.eclipse.jface

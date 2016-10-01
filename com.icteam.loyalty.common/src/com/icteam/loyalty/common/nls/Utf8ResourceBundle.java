@@ -86,8 +86,7 @@ public final class Utf8ResourceBundle {
 
 		if (propertiesURL != null) {
 			try {
-				ResourceBundle resourceBundle = null;
-				resourceBundle = new PropertyResourceBundle(propertiesURL.openStream());
+				final ResourceBundle resourceBundle = new PropertyResourceBundle(propertiesURL.openStream());
 
 				result = createUtf8Bundle(resourceBundle);
 
