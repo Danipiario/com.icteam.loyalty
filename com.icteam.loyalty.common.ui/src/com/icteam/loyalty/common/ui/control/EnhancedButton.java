@@ -59,6 +59,8 @@ public class EnhancedButton<D extends IDTO> extends Button implements IBindedCon
 	public void setModel(D dtoModel, String action, String iconPath) {
 		modelProperty = new EnhancedButtonModel<>(dtoModel, action, iconPath);
 
+		ContextInjectionFactory.inject(modelProperty, context);
+
 		initDataBindings();
 	}
 

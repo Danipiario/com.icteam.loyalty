@@ -94,15 +94,32 @@ public class NLS implements ManagedService {
 	}
 
 	public static <T> String get(Class<T> clazz, String key) {
+		final Optional<String> value = getInternal(clazz, key);
+
+		return value.orElseGet(() -> {
+			for (final Class<?> iClazz : clazz.getInterfaces()) {
+				final Optional<String> v = getInternal(iClazz, key);
+
+				if (v.isPresent()) {
+					return v.get();
+				}
+			}
+
+			logger.warn("Failed to get localized message for class {} and field {}, try without class", clazz.getName(),
+					key);
+
+			return get(key);
+		});
+	}
+
+	protected static <T> Optional<String> getInternal(Class<T> clazz, String key) {
 		final Optional<ResourceBundle> resourceBundle = Utf8ResourceBundle.getBundle(clazz, getLocale());
 
 		if (resourceBundle.isPresent() && resourceBundle.get().containsKey(key)) {
-			return resourceBundle.get().getString(key);
+			return Optional.of(resourceBundle.get().getString(key));
 		}
 
-		logger.warn("Failed to get localized message for class {} and field {}", clazz.getName(), key);
-
-		return get(key);
+		return Optional.empty();
 	}
 
 	public static String get(String key) {

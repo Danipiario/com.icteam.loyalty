@@ -1,5 +1,7 @@
 package com.icteam.loyalty.common.ui.model;
 
+import javax.annotation.PostConstruct;
+
 import com.icteam.loyalty.common.dto.IDTO;
 import com.icteam.loyalty.common.nls.NLS;
 
@@ -11,11 +13,13 @@ public class LabelModel<M extends IDTO, S extends Object> extends DTOProperty<M,
 
 	public LabelModel(M model, String property) {
 		super(model, property);
-
-		initLabel();
 	}
 
-	protected void initLabel() {
+	@Override
+	@PostConstruct
+	public void initialize() {
+		super.initialize();
+
 		setLabel(NLS.get(getNestedModelClass(), getNestedProperty())); // $NON-NLS-1$
 	}
 

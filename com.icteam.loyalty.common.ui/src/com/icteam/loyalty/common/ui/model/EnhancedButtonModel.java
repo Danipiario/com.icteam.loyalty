@@ -41,7 +41,8 @@ public class EnhancedButtonModel<D extends IDTO> {
 	}
 
 	@PostConstruct
-	void initialize() {
+	protected void initialize() {
+
 		setEnabled(getModel().isEditable());
 
 		command = commandService.getCommand(commandId);
